@@ -2,13 +2,16 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import HeroText from "@/components/HeroText";
 import TrustedBy from "@/components/TrustedBy";
+import AboutSection from "@/components/AboutSection";
+import CircularFlow from "@/components/CircularFlow";
+import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
     <main className="relative w-full overflow-x-hidden bg-[#eae4d6]">
       {/* 100vh Hero Banner Container */}
-      <section className="relative w-full h-screen overflow-hidden">
+      <section className="relative w-full h-screen min-h-[650px] sm:min-h-[750px] md:min-h-0 overflow-hidden">
         {/* Navbar overlay */}
         <Navbar />
 
@@ -34,7 +37,7 @@ export default function Home() {
         <div className="absolute bottom-0 inset-x-0 h-[24%] bg-gradient-to-t from-[#eae4d6] via-[#eae4d6]/75 to-transparent pointer-events-none z-[4]" />
 
         {/* Hero Content Overlay with Scroll Animations */}
-        <div className="absolute inset-0 pt-[130px] md:pt-[150px] px-8 md:px-16 lg:px-24 flex items-start justify-start z-10 pointer-events-none">
+        <div className="absolute inset-0 pt-[90px] px-6 sm:px-12 md:px-16 lg:px-24 flex items-center md:items-start md:pt-[150px] justify-start z-10 pointer-events-none">
           <HeroText />
         </div>
          <div
@@ -45,6 +48,15 @@ export default function Home() {
 
       {/* Trusted By Section */}
       <TrustedBy />
+
+      {/* About & Mission Section */}
+      <AboutSection />
+
+      {/* Circular Flow Interactive Section */}
+      <CircularFlow />
+
+      {/* FAQ Accordion Section */}
+      <FAQ />
 
       {/* Footer Component */}
       <Footer />
