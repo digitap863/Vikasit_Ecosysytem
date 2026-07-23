@@ -3,7 +3,11 @@ import Navbar from "@/components/Navbar";
 import HeroText from "@/components/HeroText";
 import TrustedBy from "@/components/TrustedBy";
 import AboutSection from "@/components/AboutSection";
+import ServicesSection from "@/components/ServicesSection";
 import CircularFlow from "@/components/CircularFlow";
+import ProprietaryTech from "@/components/ProprietaryTech";
+import LiveDemoSection from "@/components/LiveDemoSection";
+import Campaigns from "@/components/Campaigns";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 
@@ -17,7 +21,7 @@ export default function Home() {
 
         {/* Top-Left Ambient Warm Radial Glow (295x500 shape) */}
         <div className="absolute top-[-40px] left-[1%] w-[320px] h-[520px] bg-[#e89b74]/30 rounded-full blur-[95px] pointer-events-none z-[2]" />
-        
+
         {/* Lower-Left Ambient Warm Radial Glow (295x432 Figma shape) */}
         <div className="absolute top-[240px] left-[-30px] w-[460px] h-[380px] bg-[#EAE3D2]/40 rounded-full blur-[95px] pointer-events-none z-[2]" />
 
@@ -40,10 +44,10 @@ export default function Home() {
         <div className="absolute inset-0 pt-[90px] px-6 sm:px-12 md:px-16 lg:px-24 flex items-center md:items-start md:pt-[150px] justify-start z-10 pointer-events-none">
           <HeroText />
         </div>
-         <div
-    className="absolute bottom-0 -left-[160px] rounded-full bg-[#EAE3D2] blur-2xl z-0"
-    style={{ width: '295px', height: '432px' }}
-  />
+        <div
+          className="absolute bottom-0 -left-[160px] rounded-full bg-[#EAE3D2] blur-2xl z-0"
+          style={{ width: '295px', height: '432px' }}
+        />
       </section>
 
       {/* Trusted By Section */}
@@ -52,8 +56,23 @@ export default function Home() {
       {/* About & Mission Section */}
       <AboutSection />
 
+
       {/* Circular Flow Interactive Section */}
       <CircularFlow />
+
+
+
+      {/* Campaigns Section */}
+      <Campaigns />
+
+      {/* Live Demo Banner Section */}
+      <LiveDemoSection />
+
+      {/* Proprietary Technology Section */}
+      <ProprietaryTech />
+
+      {/* Services & Products Section */}
+      <ServicesSection />
 
       {/* FAQ Accordion Section */}
       <FAQ />

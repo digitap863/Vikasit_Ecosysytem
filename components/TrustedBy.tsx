@@ -149,7 +149,7 @@ export default function TrustedBy() {
           className="flex flex-col items-center justify-center text-center space-y-6"
         >
           {/* Section Header */}
-          <h2 className="text-2xl sm:text-md font-bold tracking-[0.18em] uppercase text-neutral-800 font-farro max-w-[80%] leading-relaxed select-none">
+          <h2 className="text-sm md:text-2xl  font-bold tracking-[0.18em] uppercase text-neutral-800 font-farro max-w-[80%] leading-relaxed select-none">
             TRUSTED BY TEAMS BUILDING WASTE-FREE COMMUNITIES
           </h2>
         </motion.div>

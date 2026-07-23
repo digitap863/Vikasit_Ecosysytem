@@ -70,8 +70,12 @@ export default function Navbar() {
 
         {/* Right: Contact Us Button - Hidden on mobile/tablet */}
         <div className="hidden lg:flex items-center h-full relative z-20">
-          <button className="px-7 py-2.5 rounded-full border border-gray-800 text-gray-900 font-semibold hover:bg-gray-900 hover:text-white transition-all text-base shadow-sm">
-            Contact Us
+          <button className="group relative px-7 py-2.5 rounded-full border border-gray-800 text-gray-900 font-semibold overflow-hidden transition-all text-base shadow-sm hover:shadow-md cursor-pointer">
+            {/* Animated Fill Background */}
+            <span className="absolute inset-0 bg-gray-900 -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-out rounded-full" />
+            <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+              Contact Us
+            </span>
           </button>
         </div>
 
@@ -126,8 +130,12 @@ export default function Navbar() {
                   );
                 })}
               </nav>
-              <button className="w-full py-3.5 rounded-full border border-gray-800 text-gray-900 font-bold hover:bg-gray-900 hover:text-white transition-all text-base shadow-sm">
-                Contact Us
+              <button className="group relative w-full py-3.5 rounded-full border border-gray-800 text-gray-900 font-bold overflow-hidden transition-all text-base shadow-sm hover:shadow-md">
+                {/* Animated Fill Background */}
+                <span className="absolute inset-0 bg-gray-900 -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-out rounded-full" />
+                <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+                  Contact Us
+                </span>
               </button>
             </motion.div>
           </>
