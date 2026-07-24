@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface Testimonial {
   id: number;
@@ -37,9 +36,9 @@ const testimonials: Testimonial[] = [
       "Outstanding engineering and fast turnaround. The organic compost produced right on site has transformed our community landscaping while reducing landfill dumping to zero.",
     avatar: "/avatar3.png",
   },
-    {
+  {
     id: 4,
-    name: "RAMESH ",
+    name: "RAMESH",
     role: "FACILITY MANAGER, MANIPAL ACADEMY",
     quote:
       "The Soil maker machine has been a game-changer for our waste management process. It efficiently converts wet waste into nutrient-rich soil, helping us maintain a cleaner and greener campus.",
@@ -47,7 +46,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 5,
-    name: "ANITA ",
+    name: "ANITA",
     role: "SUSTAINABILITY HEAD, BRIGADE GROUP",
     quote:
       "Partnering with Vikasit Ecosystems eliminated our legacy waste issues. Their automated WMaaS subscription keeps our premises 100% eco-compliant effortlessly day in and day out.",
@@ -55,7 +54,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 6,
-    name: "VIKRAM ",
+    name: "VIKRAM",
     role: "OPERATIONS DIRECTOR, SOBHA DEVELOPERS",
     quote:
       "Outstanding engineering and fast turnaround. The organic compost produced right on site has transformed our community landscaping while reducing landfill dumping to zero.",
@@ -63,45 +62,92 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-export default function ClientTestimonials() {
+interface ClientTestimonialsProps {
+  autoPlayInterval?: number; // default 5000ms
+}
+
+export default function ClientTestimonials({ autoPlayInterval = 3000 }: ClientTestimonialsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const total = testimonials.length;
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+    setActiveIndex((prev) => (prev === 0 ? total - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setActiveIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+    setActiveIndex((prev) => (prev === total - 1 ? 0 : prev + 1));
+  };
+
+  // Autoplay Effect (Pauses on hover)
+  useEffect(() => {
+    if (isHovered || total <= 1) return;
+
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev === total - 1 ? 0 : prev + 1));
+    }, autoPlayInterval);
+
+    return () => clearInterval(timer);
+  }, [activeIndex, isHovered, total, autoPlayInterval]);
+
+  // Touch Swipe Handlers for mobile & desktop drag
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const distance = touchStartX.current - touchEndX.current;
+    if (distance > 40) handleNext(); // Swiped Left
+    if (distance < -40) handlePrev(); // Swiped Right
+    touchStartX.current = null;
+    touchEndX.current = null;
   };
 
   return (
-    <section className="w-full bg-[#eae4d6] px-3 sm:px-6 lg:px-12 relative overflow-hidden select-none">
+    <section
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      className="w-full bg-[#eae4d6] px-3 sm:px-6 lg:px-12 relative overflow-hidden select-none py-6 sm:py-10"
+    >
       <div className="max-w-[1320px] mx-auto">
         {/* Section Header */}
         <h2 className="text-2xl sm:text-4xl md:text-[44px] font-bold text-center text-[#2d2f2f] font-ferro mb-6 sm:mb-14 tracking-tight">
           What Our Clients Say.
         </h2>
 
-        {/* Carousel Container */}
+        {/* 3D Carousel Container */}
         <div className="relative flex items-center justify-center min-h-[300px] sm:min-h-[390px] md:min-h-[440px] overflow-hidden py-2 sm:py-4">
           {testimonials.map((item, index) => {
             // Calculate relative offset from active index
             let position = index - activeIndex;
-            if (position < -1) position += testimonials.length;
-            if (position > 1) position -= testimonials.length;
+            if (position < -1) position += total;
+            if (position > 1) position -= total;
 
             const isActive = position === 0;
-            const isLeft = position === -1 || (activeIndex === 0 && index === testimonials.length - 1);
-            const isRight = position === 1 || (activeIndex === testimonials.length - 1 && index === 0);
+            const isLeft = position === -1 || (activeIndex === 0 && index === total - 1);
+            const isRight = position === 1 || (activeIndex === total - 1 && index === 0);
 
-            // Determine rendering style for 3D carousel effect
+            // 3D positioning classes
             let transformClass = "scale-90 opacity-0 pointer-events-none blur-none";
             if (isActive) {
               transformClass = "scale-100 opacity-100 z-20 shadow-2xl translate-x-0 blur-none filter-none";
             } else if (isLeft) {
-              transformClass = "scale-90 opacity-25 z-10 -translate-x-[65%] sm:-translate-x-[55%] md:-translate-x-[50%] blur-[2px] cursor-pointer hover:opacity-40";
+              transformClass =
+                "scale-90 opacity-25 z-10 -translate-x-[65%] sm:-translate-x-[55%] md:-translate-x-[50%] blur-[2px] cursor-pointer hover:opacity-40";
             } else if (isRight) {
-              transformClass = "scale-90 opacity-25 z-10 translate-x-[65%] sm:translate-x-[55%] md:translate-x-[50%] blur-[2px] cursor-pointer hover:opacity-40";
+              transformClass =
+                "scale-90 opacity-25 z-10 translate-x-[65%] sm:translate-x-[55%] md:translate-x-[50%] blur-[2px] cursor-pointer hover:opacity-40";
             }
 
             return (
@@ -113,7 +159,7 @@ export default function ClientTestimonials() {
                 }}
                 className={`absolute transition-all duration-500 ease-out w-[92%] sm:w-[90%] max-w-[340px] sm:max-w-[580px] md:max-w-[680px] h-[280px] sm:h-[380px] md:h-[430px] rounded-[18px] sm:rounded-[24px] overflow-hidden ${transformClass}`}
               >
-                {/* Background Image: client_bg.png */}
+                {/* Background Image */}
                 <Image
                   src="/client_bg.png"
                   alt="Client Background"
@@ -124,7 +170,7 @@ export default function ClientTestimonials() {
 
                 {/* White Speech Bubble Container */}
                 <div className="absolute bottom-2 left-2 right-2 sm:bottom-5 sm:left-6 sm:right-6 bg-white rounded-[14px] sm:rounded-[20px] pt-5 sm:pt-9 pb-3.5 sm:pb-6 px-3 sm:px-8 text-center shadow-xl">
-                  {/* Overlapping Round Avatar */}
+                  {/* Avatar */}
                   <div className="absolute -top-5 sm:-top-8 left-1/2 -translate-x-1/2 w-11 h-11 sm:w-16 sm:h-16 rounded-full border-2 sm:border-4 border-white overflow-hidden shadow-md bg-neutral-200">
                     <Image
                       src={item.avatar}

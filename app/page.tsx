@@ -12,6 +12,7 @@ import LiveDemoSection from "@/components/LiveDemoSection";
 import Campaigns from "@/components/Campaigns";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
+import SuccessStories from "@/components/SuccessStories";
 
 export default function Home() {
   return (
@@ -58,11 +59,8 @@ export default function Home() {
       {/* About & Mission Section */}
       <AboutSection />
 
-
       {/* Circular Flow Interactive Section */}
       <CircularFlow />
-
-
 
       {/* Campaigns Section */}
       <Campaigns />
@@ -76,12 +74,16 @@ export default function Home() {
       {/* Services & Products Section */}
       <ServicesSection />
 
+
       {/* Impact Stats Counter Section */}
       <StatsSection />
 
       {/* What Our Clients Say - Testimonials Section */}
       <ClientTestimonials />
 
+      {/* Real Projects / Success Stories Section */}
+      <SuccessStories />
+      
       {/* FAQ Accordion Section */}
       <FAQ />
 
