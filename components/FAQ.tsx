@@ -92,7 +92,7 @@ export default function FAQ() {
   };
 
   return (
-    <section className="w-full bg-[#eae4d6] py-16 md:py-24 border-t border-[#c4beaf]/30 relative z-10">
+    <section className="w-full bg-[#eae4d6] py-16 md:py-24 relative z-10">
       <div className="max-w-[1320px] mx-auto px-6 lg:px-12">
         {/* Title */}
         <h2 className="text-4xl sm:text-[46px] font-normal text-center text-[#2d2f2f] font-farro mb-12 md:mb-16">

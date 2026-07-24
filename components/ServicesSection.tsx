@@ -85,7 +85,7 @@ export default function ServicesSection() {
   };
 
   return (
-    <section className="w-full bg-[#eae4d6] py-16 md:py-24 px-4 sm:px-6 lg:px-12 relative overflow-hidden z-10 select-none">
+    <section className="w-full bg-[#eae4d6] py-10 md:py-14 px-4 sm:px-6 lg:px-12 relative overflow-hidden z-10 select-none">
       <div className="max-w-[1320px] mx-auto">
 
         {/* ==================== DESKTOP VIEW (>= 768px) ==================== */}

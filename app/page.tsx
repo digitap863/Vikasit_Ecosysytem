@@ -4,6 +4,8 @@ import HeroText from "@/components/HeroText";
 import TrustedBy from "@/components/TrustedBy";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
+import StatsSection from "@/components/StatsSection";
+import ClientTestimonials from "@/components/ClientTestimonials";
 import CircularFlow from "@/components/CircularFlow";
 import ProprietaryTech from "@/components/ProprietaryTech";
 import LiveDemoSection from "@/components/LiveDemoSection";
@@ -73,6 +75,12 @@ export default function Home() {
 
       {/* Services & Products Section */}
       <ServicesSection />
+
+      {/* Impact Stats Counter Section */}
+      <StatsSection />
+
+      {/* What Our Clients Say - Testimonials Section */}
+      <ClientTestimonials />
 
       {/* FAQ Accordion Section */}
       <FAQ />
