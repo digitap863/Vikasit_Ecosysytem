@@ -4,36 +4,49 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef } from "react";
 
+export interface CampaignStat {
+  value: string;
+  label: string;
+}
+
 export interface Campaign {
   id: string;
   title: string;
-  date: string;
+  location: string;
   image: string;
-  readUrl: string;
+  readUrl?: string;
+  stats: CampaignStat[];
+  hasArrow?: boolean;
 }
 
-// Temporary static campaigns data (ready for backend API integration)
 const defaultCampaigns: Campaign[] = [
   {
     id: "1",
-    title: "Green Communities Start With Smart Waste Management",
-    date: "July 31, 2026",
+    title: "Municipal Academy",
+    location: "Place, District",
     image: "/campaigns/Rectangle 4011.png",
     readUrl: "#",
+    hasArrow: true,
+    stats: [
+      { value: "120 Tons", label: "Food waste saved" },
+      { value: "40 Tons", label: "Food waste saved" },
+    ],
   },
   {
     id: "2",
-    title: "Experience The Soil Maker Live",
-    date: "August 1, 2026",
+    title: "ABC Group",
+    location: "Bangalore",
     image: "/campaigns/cmapaign2.png",
     readUrl: "#",
+    stats: [{ value: "90%", label: "Landfill Waste Reduced" }],
   },
   {
     id: "3",
-    title: "CSR for Sustainable Waste Management",
-    date: "August 3, 2026",
+    title: "Green Campus Initiative",
+    location: "Bangalore",
     image: "/campaigns/campaign3.png",
     readUrl: "#",
+    stats: [{ value: "250+", label: "Communities Impacted" }],
   },
 ];
 
@@ -65,124 +78,139 @@ export default function Campaigns({ campaigns = defaultCampaigns }: CampaignsPro
   };
 
   return (
-    <section className="w-full bg-[#eae4d6] py-6 md:py-10 relative overflow-hidden z-10">
-      <div className="max-w-[1320px] mx-auto px-6 lg:px-12">
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
-          <div className="max-w-[700px] space-y-3">
-            {/* Tagline */}
-            <span className="text-[10px] sm:text-[11px] tracking-[0.22em] uppercase text-neutral-500 font-farro">
-              OUR CAMPAIGNS
-            </span>
-            {/* Title */}
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold font-farro leading-[1.12] text-[#2a2d2a]">
-              Creating A Waste–Free Future,
-              <br />
-              <span className="font-normal">One Community At A Time</span>
+    <section className="w-full bg-[#ffff] py-8 sm:py-12 md:py-16 relative overflow-hidden select-none">
+      <div className="max-w-[1320px] mx-auto px-6 sm:px-10 lg:px-12">
+        {/* Section Header */}
+        <div className="flex items-end justify-between gap-4 mb-8 sm:mb-10">
+          <div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-farro text-[#2a2d2a] tracking-tight">
+              Our Impact
             </h2>
-            {/* Subtitle */}
-            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-satoshi pt-1 max-w-[580px]">
-              Every campaign is designed to educate, inspire, and empower communities to transform
-              organic waste into valuable resources. Join us in building a cleaner, greener, and more
-              sustainable India.
+            <p className="text-xs sm:text-sm text-neutral-600 font-satoshi mt-1.5 sm:mt-2">
+              Real impact, Healthier communities
             </p>
           </div>
 
-          {/* View All Button — Desktop top right only */}
-          <div className="hidden md:block shrink-0 pt-2 md:pt-0">
-            <Link
-              href="#"
-              className="group relative inline-flex items-center gap-2.5 border border-[#2a2d2a]/80 rounded-full px-6 py-2.5 text-xs sm:text-sm  font-farro text-[#2a2d2a] overflow-hidden transition-all duration-300 shadow-sm hover:shadow-md"
-            >
-              {/* Animated Fill Background */}
-              <span className="absolute inset-0 bg-[#2a2d2a] -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-out rounded-full" />
-
-              <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
-                View All Campaigns
-              </span>
-              <span className="relative z-10 text-base leading-none transition-all duration-300 group-hover:text-white group-hover:translate-x-1">
-                →
-              </span>
-            </Link>
-          </div>
-        </div>
-
-        {/* Campaign Cards Container — Swiper on mobile (< md), 3-Column Grid on desktop (>= md) */}
-        <div
-          ref={scrollRef}
-          onScroll={handleScroll}
-          className="flex md:grid md:grid-cols-3 gap-5 md:gap-6 lg:gap-8 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory py-2 pb-4 md:py-0 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden -mx-6 px-6 md:mx-0 md:px-0"
-        >
-          {campaigns.map((item) => (
-            <div
-              key={item.id}
-              className="group flex flex-col rounded-2xl overflow-hidden shadow-md border border-[#c4beaf]/40 bg-[#eae4d6] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl shrink-0 w-[86vw] max-w-[370px] md:w-auto snap-center"
-            >
-              {/* Card Image */}
-              <div className="relative w-full h-[195px] sm:h-[190px] overflow-hidden bg-neutral-200">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-
-              {/* Title Section (Dark Green Banner) */}
-              <div className="bg-[#045922] px-4.5 py-3.5 sm:px-5 sm:py-4 min-h-[82px] sm:min-h-[88px] flex items-center">
-                <h3 className="text-white font-thin text-sm sm:text-base md:text-[17px] leading-snug font-farro line-clamp-2">
-                  {item.title}
-                </h3>
-              </div>
-
-              {/* Card Footer */}
-              <div className="px-4.5 py-3 sm:px-5 sm:py-3.5 flex items-center justify-between bg-[#eae4d6] border-t border-[#045922]/10 mt-auto">
-                <span className="text-xs sm:text-[13px] text-neutral-600 font-farro">
-                  {item.date}
-                </span>
-                <Link
-                  href={item.readUrl}
-                  className="text-xs sm:text-[13px] font-semibold text-[#3b66d4] hover:underline font-farro"
-                >
-                  Read
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Mobile Swiper Pagination Indicators */}
-        <div className="flex md:hidden justify-center items-center gap-2 mt-4">
-          {campaigns.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => scrollToSlide(idx)}
-              aria-label={`Go to campaign slide ${idx + 1}`}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                activeIndex === idx ? "w-6 bg-[#045922]" : "w-2 bg-neutral-400/50"
-              }`}
-            />
-          ))}
-        </div>
-
-        {/* View All Button — Mobile bottom centered only */}
-        <div className="flex md:hidden justify-center mt-6">
           <Link
             href="#"
-            className="group relative inline-flex items-center gap-2.5 border border-[#2a2d2a]/80 rounded-full px-6 py-2.5 text-xs  font-farro text-[#2a2d2a] overflow-hidden transition-all duration-300 shadow-sm hover:shadow-md"
+            className="group relative inline-flex items-center gap-2 border border-[#2a2d2a]/80 rounded-full px-5 py-2 sm:px-6 sm:py-2.5 text-xs sm:text-sm font-farro text-[#2a2d2a] overflow-hidden transition-all duration-300 shadow-sm hover:shadow-md shrink-0"
           >
             {/* Animated Fill Background */}
-            <span className="absolute inset-0 bg-[#2a2d2a] -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-out rounded-full" />
+            <span className="absolute inset-0 bg-[#2a2d2a] -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out rounded-full" />
 
             <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
-              View All Campaigns
+              View All
             </span>
             <span className="relative z-10 text-base leading-none transition-all duration-300 group-hover:text-white group-hover:translate-x-1">
               →
             </span>
           </Link>
         </div>
+
+        {/* Cards Grid / Swiper */}
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="flex md:grid md:grid-cols-3 gap-5 lg:gap-6 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory py-2 pb-4 md:py-0 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden -mx-6 px-6 md:mx-0 md:px-0"
+        >
+          {campaigns.map((item) => (
+            <div
+              key={item.id}
+              className="group relative rounded-[22px] overflow-hidden shadow-md border border-black/10 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl shrink-0 w-[85vw] max-w-[380px] md:w-auto snap-center h-[150px] sm:h-[125px] md:h-[150px]"
+            >
+              {/* Background Image */}
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+
+              {/* Dark Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/30 transition-opacity duration-300 group-hover:from-black/90" />
+
+              {/* Card Header Content (Title & Location) */}
+              <div className="absolute top-0 inset-x-0 p-5 sm:p-6 z-10">
+                <h3 className="text-white  text-base sm:text-lg md:text-[19px] font-farro leading-snug drop-shadow-sm">
+                  {item.title}
+                </h3>
+                <div className="flex items-center gap-1.5 text-white/90 text-xs sm:text-sm font-satoshi mt-1">
+                  <svg
+                    className="w-3.5 h-3.5 fill-current shrink-0 text-white/80"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                  </svg>
+                  <span>{item.location}</span>
+                </div>
+              </div>
+
+              {/* Card Bottom Stats */}
+              <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 z-10">
+                {item.hasArrow && item.stats.length === 2 ? (
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div>
+                      <div className="text-xl sm:text-2xl md:text-[26px]  text-white font-farro leading-none drop-shadow-sm">
+                        {item.stats[0].value}
+                      </div>
+                      <div className="text-[11px] sm:text-xs text-white/80 font-satoshi mt-1">
+                        {item.stats[0].label}
+                      </div>
+                    </div>
+
+                    <svg
+                      className="w-5 h-5 text-white/90 shrink-0 mt-[-10px]"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      />
+                    </svg>
+
+                    <div>
+                      <div className="text-xl sm:text-2xl md:text-[26px]  text-white font-farro leading-none drop-shadow-sm">
+                        {item.stats[1].value}
+                      </div>
+                      <div className="text-[11px] sm:text-xs text-white/80 font-satoshi mt-1">
+                        {item.stats[1].label}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="text-2xl sm:text-3xl md:text-[32px]  text-white font-farro leading-none drop-shadow-sm">
+                      {item.stats[0].value}
+                    </div>
+                    <div className="text-[11px] sm:text-xs text-white/80 font-satoshi mt-1">
+                      {item.stats[0].label}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Mobile Pagination Indicators */}
+        <div className="flex md:hidden justify-center items-center gap-2 mt-4">
+          {campaigns.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => scrollToSlide(idx)}
+              aria-label={`Go to impact slide ${idx + 1}`}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                activeIndex === idx ? "w-6 bg-[#2a2d2a]" : "w-2 bg-neutral-400/50"
+              }`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
 }
+

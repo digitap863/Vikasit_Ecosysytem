@@ -27,7 +27,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full bg-[#131414] text-white font-farro overflow-hidden">
+    <footer id="footer" className="w-full bg-[#131414] text-white font-farro overflow-hidden">
       {/* ================= TOP SECTION: CONTACT FORM & INFO ================= */}
       <div className="max-w-[1320px] mx-auto px-6 lg:px-12 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start border-b border-neutral-800/80">
         

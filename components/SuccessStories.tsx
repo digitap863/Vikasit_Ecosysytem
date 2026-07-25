@@ -132,7 +132,7 @@ export default function SuccessStories({
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
-      className="w-full bg-[#eae4d6] py-8 sm:py-10 md:py-12 relative overflow-hidden select-none"
+      className="w-full bg-[#eae4d6] py-4 sm:py-6 md:py-8 relative overflow-hidden select-none"
     >
       {/* Container matching site standard max-width (1320px) */}
       <div className="max-w-[1320px] mx-auto px-6 sm:px-10 lg:px-12">
@@ -185,8 +185,8 @@ export default function SuccessStories({
 
           {/* Main Grid: Left Card (Big) + Right Card (Short, Bottom-Aligned) */}
           <div className="flex flex-col md:flex-row items-stretch md:items-end gap-6 lg:gap-8">
+            {/* LEFT CARD (FEATURED) */}
             <AnimatePresence mode="wait">
-              {/* LEFT CARD (FEATURED) */}
               <motion.div
                 key={`left-${leftStory.id}`}
                 initial={{ opacity: 0.4, x: -12, scale: 0.98 }}
@@ -243,8 +243,10 @@ export default function SuccessStories({
                   </div>
                 </div>
               </motion.div>
+            </AnimatePresence>
 
-              {/* RIGHT CARD (SHORTER & BOTTOM-ALIGNED) */}
+            {/* RIGHT CARD (SHORTER & BOTTOM-ALIGNED) */}
+            <AnimatePresence mode="wait">
               <motion.div
                 key={`right-${rightStory.id}`}
                 initial={{ opacity: 0.4, x: 12, scale: 0.97 }}

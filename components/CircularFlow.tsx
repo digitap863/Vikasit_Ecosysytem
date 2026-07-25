@@ -81,9 +81,11 @@ const ARROW_BEARINGS = STAGE_BEARINGS.map((b, i) => {
 
 function pointOnLoop(bearingDeg: number, radius = LOOP_RADIUS) {
   const rad = (bearingDeg * Math.PI) / 180;
+  const rawX = LOOP_CENTER.x + radius * Math.sin(rad);
+  const rawY = LOOP_CENTER.y - radius * Math.cos(rad);
   return {
-    x: LOOP_CENTER.x + radius * Math.sin(rad),
-    y: LOOP_CENTER.y - radius * Math.cos(rad),
+    x: Math.round(rawX * 100) / 100,
+    y: Math.round(rawY * 100) / 100,
   };
 }
 
@@ -279,6 +281,7 @@ export default function CircularFlow() {
               return (
                 <div
                   key={stage.id}
+                  suppressHydrationWarning
                   style={{
                     top: `${y}px`,
                     left: `${x}px`,

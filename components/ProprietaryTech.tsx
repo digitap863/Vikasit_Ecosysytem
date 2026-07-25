@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function ProprietaryTech() {
   return (
-    <section className="w-full bg-[#eae4d6] py-6 md:py-10 px-4 sm:px-6 lg:px-12 relative overflow-hidden z-10">
+    <section id="products" className="w-full bg-[#eae4d6] py-6 md:py-10 px-4 sm:px-6 lg:px-12 relative overflow-hidden z-10">
       <div className="max-w-[1320px] mx-auto">
         {/* Banner Card */}
         <div className="relative w-full rounded-[24px] sm:rounded-[32px] overflow-hidden shadow-none min-h-[480px] sm:min-h-[540px] md:min-h-[580px] flex flex-col justify-end p-6 sm:p-10 md:p-14 lg:p-16 border border-neutral-800/40">

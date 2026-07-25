@@ -62,9 +62,6 @@ export default function Home() {
       {/* Circular Flow Interactive Section */}
       <CircularFlow />
 
-      {/* Campaigns Section */}
-      <Campaigns />
-
       {/* Live Demo Banner Section */}
       <LiveDemoSection />
 
@@ -74,9 +71,11 @@ export default function Home() {
       {/* Services & Products Section */}
       <ServicesSection />
 
-
       {/* Impact Stats Counter Section */}
       <StatsSection />
+
+      {/* Our Impact / Campaigns Section */}
+      <Campaigns />
 
       {/* What Our Clients Say - Testimonials Section */}
       <ClientTestimonials />
