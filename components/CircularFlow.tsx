@@ -221,32 +221,21 @@ export default function CircularFlow() {
               })}
             </svg>
 
-            {/* Central Loop Badge Container (Floating Flat Vector Hexagon Ribbon — Seamless Color Binding, No White Lines) */}
+            {/* Central Loop Badge Container (Using circle_logo.png) */}
             <div className="absolute top-[320px] left-[425px] -translate-x-1/2 -translate-y-1/2 z-20">
-              <div className="relative w-[210px] h-[210px] flex items-center justify-center select-none">
-                {/* SVG 6-Segment Hexagon Ribbon Loop */}
-                <svg viewBox="0 0 220 220" className="w-full h-full drop-shadow-md" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  {/* Central White Hexagon Background Cutout */}
-                  <polygon points="137.5,62.37 165,110 137.5,157.63 82.5,157.63 55,110 82.5,62.37" fill="#ffffff" />
+              <div className="relative w-[200px] h-[200px] flex items-center justify-center select-none">
+                {/* Central Circle Logo Image */}
+                <Image
+                  src="/circle_logo.png"
+                  alt="Vikasit Ecosystem Circular Logo"
+                  width={220}
+                  height={220}
+                  priority
+                  className="w-full h-full object-contain drop-shadow-md"
+                />
 
-                  <g strokeLinejoin="round" strokeLinecap="round">
-                    {/* Segment 1: Top (Lime Green) */}
-                    <polygon points="62.5,27.73 157.5,27.73 137.5,62.37 82.5,62.37" fill="#a1cc3a" stroke="#a1cc3a" strokeWidth="0.8" />
-                    {/* Segment 2: Right (Vibrant Green) */}
-                    <polygon points="157.5,27.73 205,110 165,110 137.5,62.37" fill="#4cb848" stroke="#4cb848" strokeWidth="0.8" />
-                    {/* Segment 3: Bottom Right (Medium Green) */}
-                    <polygon points="205,110 157.5,192.27 137.5,157.63 165,110" fill="#2f8634" stroke="#2f8634" strokeWidth="0.8" />
-                    {/* Segment 4: Bottom Left (Dark Forest Green) */}
-                    <polygon points="157.5,192.27 62.5,192.27 82.5,157.63 137.5,157.63" fill="#175122" stroke="#175122" strokeWidth="0.8" />
-                    {/* Segment 5: Left (Charcoal) */}
-                    <polygon points="62.5,192.27 15,110 55,110 82.5,157.63" fill="#292d2a" stroke="#292d2a" strokeWidth="0.8" />
-                    {/* Segment 6: Top Left (Dark Grey) */}
-                    <polygon points="15,110 62.5,27.73 82.5,62.37 55,110" fill="#363936" stroke="#363936" strokeWidth="0.8" />
-                  </g>
-                </svg>
-
-                {/* Center Text inside the white hexagon cutout */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 p-1 pointer-events-none">
+                {/* Center Text inside the circle cutout */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 p-2 pointer-events-none">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={hoveredIndex ?? "default"}
@@ -254,15 +243,15 @@ export default function CircularFlow() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.15 }}
-                      className="flex flex-col items-center justify-center max-w-[92px]"
+                      className="flex flex-col items-center justify-center max-w-[110px]"
                     >
-                      <span className="text-[10px] sm:text-[11px] font-bold text-neutral-800 leading-tight font-farro">
+                      <span className="text-[11px] font-bold text-neutral-800 leading-tight font-farro">
                         {centerText.title}
                       </span>
-                      <span className="text-[10px] sm:text-[11px] font-bold text-[#156c2d] leading-tight font-farro">
+                      <span className="text-[11px] font-bold text-[#156c2d] leading-tight font-farro">
                         {centerText.subtitle}
                       </span>
-                      <span className="text-[8.5px] sm:text-[9.5px] text-neutral-600 leading-[1.2] font-farro mt-0.5 px-0.5 text-center">
+                      <span className="text-[9px] text-neutral-600 leading-[1.2] font-farro mt-0.5 px-0.5 text-center">
                         {centerText.desc}
                       </span>
                     </motion.div>

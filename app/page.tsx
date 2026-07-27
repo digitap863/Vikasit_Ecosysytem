@@ -28,13 +28,22 @@ export default function Home() {
         {/* Lower-Left Ambient Warm Radial Glow (295x432 Figma shape) */}
         <div className="absolute top-[240px] left-[-30px] w-[460px] h-[380px] bg-[#EAE3D2]/40 rounded-full blur-[95px] pointer-events-none z-[2]" />
 
-        {/* 100vh Banner Image */}
+        {/* Desktop Banner Image (Hidden on mobile) */}
         <Image
           src="/banner/banner.png"
-          alt="Banner"
+          alt="Vikasit Ecosystem Banner"
           fill
           priority
-          className="object-cover"
+          className="hidden sm:block object-cover"
+        />
+
+        {/* Mobile Banner Image (Visible on mobile) */}
+        <Image
+          src="/banner/mobile_banner.png"
+          alt="Vikasit Ecosystem Mobile Banner"
+          fill
+          priority
+          className="block sm:hidden object-cover object-top"
         />
 
         {/* Full-width Bottom Dark Depth Shadow Overlay (for soil texture & contrast) */}
@@ -48,7 +57,7 @@ export default function Home() {
           <HeroText />
         </div>
         <div
-          className="absolute bottom-0 -left-[160px] rounded-full bg-[#EAE3D2] blur-2xl z-0"
+          className="hidden sm:block absolute bottom-0 -left-[160px] rounded-full bg-[#EAE3D2] blur-2xl z-0"
           style={{ width: '295px', height: '432px' }}
         />
       </section>

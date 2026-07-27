@@ -7,9 +7,9 @@ import {
   FiMail, 
   FiPhone, 
   FiMapPin, 
-  FiFacebook, 
   FiInstagram, 
-  FiLinkedin 
+  FiLinkedin,
+  FiYoutube
 } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 
@@ -146,7 +146,15 @@ export default function Footer() {
             <div className="flex items-start gap-3">
               <FiPhone className="w-5 h-5 text-[#69BD45] shrink-0 mt-1" />
               <div className="space-y-1">
-                <p>+91 - 96065 96849</p>
+                <a
+                  href="https://api.whatsapp.com/send/?phone=919606596849&text=Hi+Vikasit+Ecosystems+%EF%BF%BD%2C%0D%0A%0D%0AI%E2%80%99m+interested+in+learning+more+about+your+waste+management+services.+Could+you+please+provide+more+details%3F%0D%0A%0D%0AThank+you%21&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#69BD45] transition-colors flex items-center gap-2 group"
+                >
+                  <span>+91 - 96065 96849</span>
+                  <FaWhatsapp className="w-4 h-4 text-[#25D366] group-hover:scale-110 transition-transform" />
+                </a>
                 <p>+91 - 7411499299</p>
                 <p>+91 - 8848801497</p>
               </div>
@@ -256,17 +264,45 @@ export default function Footer() {
 
           {/* Social Icons Row */}
           <div className="flex items-center gap-4 pt-3 text-[#69BD45]">
-            <a href="#" className="hover:scale-110 transition-transform p-1">
-              <FiFacebook className="w-5 h-5" />
-            </a>
-            <a href="#" className="hover:scale-110 transition-transform p-1">
+            <a
+              href="https://www.instagram.com/vikasiteco/"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Follow us on Instagram"
+              aria-label="Instagram"
+              className="hover:scale-110 transition-transform p-1 hover:text-[#E4405F]"
+            >
               <FiInstagram className="w-5 h-5" />
             </a>
-            <a href="#" className="hover:scale-110 transition-transform p-1">
-              <FaWhatsapp className="w-5 h-5" />
-            </a>
-            <a href="#" className="hover:scale-110 transition-transform p-1">
+            <a
+              href="https://www.linkedin.com/company/vikasit-ecosystems/"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Connect with us on LinkedIn"
+              aria-label="LinkedIn"
+              className="hover:scale-110 transition-transform p-1 hover:text-[#0A66C2]"
+            >
               <FiLinkedin className="w-5 h-5" />
+            </a>
+            <a
+              href="https://www.youtube.com/@vikasitecosystems5561"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Watch on YouTube"
+              aria-label="YouTube"
+              className="hover:scale-110 transition-transform p-1 hover:text-[#FF0000]"
+            >
+              <FiYoutube className="w-5 h-5" />
+            </a>
+            <a
+              href="https://api.whatsapp.com/send/?phone=919606596849&text=Hi+Vikasit+Ecosystems+%EF%BF%BD%2C%0D%0A%0D%0AI%E2%80%99m+interested+in+learning+more+about+your+waste+management+services.+Could+you+please+provide+more+details%3F%0D%0A%0D%0AThank+you%21&type=phone_number&app_absent=0"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Chat with us on WhatsApp"
+              aria-label="WhatsApp"
+              className="hover:scale-110 transition-transform p-1 hover:text-[#25D366]"
+            >
+              <FaWhatsapp className="w-5 h-5" />
             </a>
           </div>
         </div>

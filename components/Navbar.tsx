@@ -74,7 +74,7 @@ export default function Navbar() {
               }}
             >
               <Image
-                src="/banner/vikasit-logo-black 2.png"
+                src="/banner/logo.webp"
                 alt="Vikasit Ecosystems Logo"
                 width={160}
                 height={42}
