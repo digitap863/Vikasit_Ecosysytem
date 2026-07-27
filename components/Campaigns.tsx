@@ -24,7 +24,7 @@ const defaultCampaigns: Campaign[] = [
     id: "1",
     title: "Municipal Academy",
     location: "Place, District",
-    image: "/campaigns/Rectangle 4011.png",
+    image: "/campaigns/campaign1.png",
     readUrl: "#",
     hasArrow: true,
     stats: [
@@ -36,7 +36,7 @@ const defaultCampaigns: Campaign[] = [
     id: "2",
     title: "ABC Group",
     location: "Bangalore",
-    image: "/campaigns/cmapaign2.png",
+    image: "/campaigns/campaign2.png",
     readUrl: "#",
     stats: [{ value: "90%", label: "Landfill Waste Reduced" }],
   },
