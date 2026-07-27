@@ -110,7 +110,7 @@ export default function Campaigns({ campaigns = defaultCampaigns }: CampaignsPro
         {/* Cards Grid / Swiper */}
         <div
           ref={scrollRef}
-          onScroll={handleScroll}
+          onScroll={handleScroll} 
           className="flex md:grid md:grid-cols-3 gap-5 lg:gap-6 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory py-2 pb-4 md:py-0 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden -mx-6 px-6 md:mx-0 md:px-0"
         >
           {campaigns.map((item) => (
