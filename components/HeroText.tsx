@@ -57,8 +57,8 @@ export default function HeroText() {
         variants={itemVariants}
         className="font-farro text-3xl sm:text-5xl md:text-[60px] font-bold text-[#262626] leading-[1.08] mb-5 tracking-tight"
       >
-        Turning Today&apos;s<br className="hidden sm:inline" />
-        Waste Into<br className="hidden sm:inline" />
+        Turning Today&apos;s{" "}<br className="hidden sm:inline" />
+        Waste Into{" "}<br className="hidden sm:inline" />
         Tomorrow&apos;s Soil
       </motion.h1>
 
