@@ -144,7 +144,7 @@ export default function StatsSection() {
                 <h3
                   className={`relative top-0 sm:top-3 z-10 text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-normal tracking-tight text-[#1c1917] font-satoshi leading-none mb-1 sm:mb-3 ${
                     isConverted
-                      ? "left-10 sm:left-10 md:left-[125px]"
+                      ? "left-10 sm:left-10 md:left-[115px]"
                       : "left-10 sm:left-12 md:left-20"
                   }`}
                 >
@@ -161,7 +161,7 @@ export default function StatsSection() {
                 <p
                   className={`relative z-10 text-xs sm:text-xs md:text-sm font-medium tracking-wide text-[#383531] font-satoshi ${
                     isConverted
-                      ? "left-10 sm:left-[90px] md:left-[145px]"
+                      ? "left-10 sm:left-[90px] md:left-[65px]"
                       : "left-10 sm:left-12 md:left-20"
                   }`}
                 >
