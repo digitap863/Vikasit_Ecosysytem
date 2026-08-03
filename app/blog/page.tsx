@@ -28,14 +28,14 @@ export default function BlogPage() {
     <main className="relative w-full overflow-x-hidden bg-[#eae4d6] min-h-screen flex flex-col justify-between font-farro">
       <Navbar />
 
-      <div className="pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-12 max-w-[1320px] mx-auto w-full space-y-8 flex-1">
+      <div className="pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-12 max-w-[1320px] mx-auto w-full flex-1">
 
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-widest text-[#056826] uppercase pl-1">
+        {/* <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold tracking-widest text-[#056826] uppercase pl-1">
           <Link href="/" className="hover:underline">HOME</Link>
           <span className="text-neutral-400">|</span>
           <span className="text-[#056826]">BLOG</span>
-        </div>
+        </div> */}
 
         {/* Hero Banner */}
         <BlogHero />

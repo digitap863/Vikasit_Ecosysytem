@@ -9,7 +9,7 @@ export default function BlogHero() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="relative w-full rounded-3xl sm:rounded-[36px] overflow-hidden bg-[#ebe4d5] min-h-[460px] sm:min-h-[520px] flex items-center p-8 sm:p-14 lg:p-16"
+      className="relative w-full rounded-3xl sm:rounded-[36px] overflow-hidden bg-[#ebe4d5] min-h-[460px] sm:min-h-[520px] flex items-center p-8 mb-12 sm:p-14 lg:p-16"
     >
       {/* Right Background Image - seamlessly blended */}
       <div className="absolute inset-y-0 right-0 w-full lg:w-[65%] pointer-events-none overflow-hidden rounded-r-3xl sm:rounded-r-[36px]">
