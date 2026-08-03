@@ -26,7 +26,7 @@ export default function AboutSection() {
   };
 
   return (
-    <section className="w-full bg-[#eae4d6] py-10 md:py-18 relative overflow-hidden z-10">
+    <section id="about" className="w-full bg-[#eae4d6] py-10 md:py-18 relative overflow-hidden z-10">
       {/* Background Map - Faded Left Portion */}
       <div className="absolute top-0 left-0 w-full lg:w-[70%] h-full pointer-events-none z-0 select-none">
         {/* Top-Left Ambient White Radial Glow behind the map (round shaped spotlight with top margin separation) */}

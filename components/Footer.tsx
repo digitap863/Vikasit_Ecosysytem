@@ -136,12 +136,17 @@ export default function Footer() {
 
           {/* Email & Phone numbers */}
           <div className="space-y-4 text-neutral-300 text-sm sm:text-base pl-1 sm:pl-2">
-            <div className="flex items-center gap-3">
-              <FiMail className="w-5 h-5 text-[#69BD45] shrink-0" />
-              <a href="mailto:sales@vikasiteco.com" className="hover:text-[#69BD45] transition-colors">
-                sales@vikasiteco.com
-              </a>
-            </div>
+            <a 
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@vikasiteco.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-3 group cursor-pointer w-fit"
+            >
+              <FiMail className="w-5 h-5 text-[#69BD45] shrink-0 group-hover:scale-110 transition-transform" />
+              <span className="group-hover:text-[#69BD45] transition-colors">
+                contact@vikasiteco.com
+              </span>
+            </a>
 
             <div className="flex items-start gap-3">
               <FiPhone className="w-5 h-5 text-[#69BD45] shrink-0 mt-1" />
@@ -211,10 +216,18 @@ export default function Footer() {
         <div className="lg:col-span-2 space-y-3">
           <h4 className="text-base font-bold text-[#69BD45] mb-4">Quick Links</h4>
           <ul className="space-y-2.5 text-xs sm:text-sm text-neutral-300">
-            {["Home", "About", "Carbon credits", "Services", "Blogs", "Contact Us", "Brochure"].map((item) => (
-              <li key={item}>
-                <Link href="#" className="hover:text-[#69BD45] transition-colors">
-                  {item}
+            {[
+              { label: "Home", href: "/" },
+              { label: "About", href: "/#about" },
+              { label: "Carbon credits", href: "#" },
+              { label: "Services", href: "/#services" },
+              { label: "Blogs", href: "/blog" },
+              { label: "Contact Us", href: "/contact" },
+              { label: "Brochure", href: "#" },
+            ].map((item) => (
+              <li key={item.label}>
+                <Link href={item.href} className="hover:text-[#69BD45] transition-colors">
+                  {item.label}
                 </Link>
               </li>
             ))}
@@ -254,12 +267,17 @@ export default function Footer() {
               <FiPhone className="w-4 h-4 text-[#69BD45] shrink-0" />
               <span>+91 - 96065 96849</span>
             </div>
-            <div className="flex items-center gap-2.5">
-              <FiMail className="w-4 h-4 text-[#69BD45] shrink-0" />
-              <a href="mailto:contact@vikasiteco.com" className="hover:text-[#69BD45] transition-colors">
+            <a 
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=contact@vikasiteco.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-2.5 group cursor-pointer w-fit"
+            >
+              <FiMail className="w-4 h-4 text-[#69BD45] shrink-0 group-hover:scale-110 transition-transform" />
+              <span className="hover:text-[#69BD45] transition-colors">
                 contact@vikasiteco.com
-              </a>
-            </div>
+              </span>
+            </a>
           </div>
 
           {/* Social Icons Row */}

@@ -139,7 +139,7 @@ export default function TrustedBy() {
   };
 
   return (
-    <section className="w-full bg-[#eae4d6] py-8 md:py-12 border-t border-neutral-300/40 relative z-10 overflow-hidden">
+    <section className="w-full bg-[#eae4d6] py-8 md:py-12  relative z-10 overflow-hidden">
       <div className="max-w-[1320px] mx-auto px-6 lg:px-12">
         <motion.div
           initial="hidden"

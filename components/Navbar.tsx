@@ -4,15 +4,28 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("Home");
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  const navItems = ["Home", "About", "Products", "Services"];
+  const navItems = ["Home", "About", "Products", "Services", "Blogs"];
+
+  useEffect(() => {
+    if (pathname === "/contact") {
+      setActiveTab("Contact");
+    } else if (pathname === "/blog" || pathname === "/blogs") {
+      setActiveTab("Blogs");
+    } else if (pathname === "/") {
+      setActiveTab("Home");
+    }
+  }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,6 +54,20 @@ export default function Navbar() {
     setActiveTab(item);
     setIsOpen(false);
 
+    if (item === "Blogs") {
+      router.push("/blog");
+      return;
+    }
+
+    if (pathname !== "/") {
+      if (item === "Home") {
+        router.push("/");
+      } else {
+        router.push(`/#${item.toLowerCase()}`);
+      }
+      return;
+    }
+
     if (item === "Home") {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
@@ -68,8 +95,10 @@ export default function Navbar() {
             <Link
               href="/"
               onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                if (pathname === "/") {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
                 setActiveTab("Home");
               }}
             >
@@ -85,7 +114,7 @@ export default function Navbar() {
           </div>
 
           {/* Center: Inverted Tab Container - Navlink Section */}
-          <div className="hidden lg:flex absolute top-0 left-1/2 -translate-x-1/2 items-center justify-center h-[72px] w-[600px] z-10">
+          <div className="hidden lg:flex absolute top-0 left-1/2 -translate-x-1/2 items-center justify-center h-[72px] w-[640px] z-10">
             {/* SVG Tab Background with Ambient Shadow */}
             <svg
               className="absolute top-0 left-0 w-full h-full filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.14)] drop-shadow-[0_4px_12px_rgba(180,100,50,0.12)]"
@@ -101,7 +130,7 @@ export default function Navbar() {
             </svg>
 
             {/* Nav Links */}
-            <nav className="relative z-20 flex items-center justify-center gap-10 pt-2 pb-1">
+            <nav className="relative z-20 flex items-center justify-center gap-7 pt-2 pb-1">
               {navItems.map((item) => {
                 const isActive = activeTab === item;
                 return (
@@ -123,23 +152,17 @@ export default function Navbar() {
 
           {/* Right: Contact Us Button - Shown only at top of page */}
           <div className={`hidden lg:flex items-center h-full relative z-20 transition-all duration-300 ${!isScrolled ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
-            <button
-              onClick={() => {
-                const elem = document.getElementById("footer");
-                if (elem) {
-                  elem.scrollIntoView({ behavior: "smooth" });
-                } else {
-                  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-                }
-              }}
-              className="group relative px-7 py-2.5 rounded-full border border-gray-800 text-gray-900 font-semibold overflow-hidden transition-all text-base shadow-sm hover:shadow-md cursor-pointer"
+            <Link
+              href="/contact"
+              onClick={() => setActiveTab("Contact")}
+              className="group relative px-7 py-2.5 rounded-full border border-gray-800 text-gray-900 font-semibold overflow-hidden transition-all text-base shadow-sm hover:shadow-md cursor-pointer inline-flex items-center justify-center"
             >
               {/* Animated Fill Background */}
               <span className="absolute inset-0 bg-gray-900 -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-out rounded-full" />
               <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
                 Contact Us
               </span>
-            </button>
+            </Link>
           </div>
 
           {/* Hamburger Icon - Visible on mobile/tablet */}
@@ -191,19 +214,20 @@ export default function Navbar() {
                   );
                 })}
               </nav>
-              <button
+              <Link
+                href="/contact"
                 onClick={() => {
                   setIsOpen(false);
-                  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+                  setActiveTab("Contact");
                 }}
-                className="group relative w-full py-3.5 rounded-full border border-gray-800 text-gray-900 font-bold overflow-hidden transition-all text-base shadow-sm hover:shadow-md cursor-pointer"
+                className="group relative w-full py-3.5 rounded-full border border-gray-800 text-gray-900 font-bold overflow-hidden transition-all text-base shadow-sm hover:shadow-md cursor-pointer inline-flex items-center justify-center text-center"
               >
                 {/* Animated Fill Background */}
                 <span className="absolute inset-0 bg-gray-900 -translate-x-full group-hover:translate-x-0 transition-transform duration-400 ease-out rounded-full" />
                 <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
                   Contact Us
                 </span>
-              </button>
+              </Link>
             </motion.div>
           </>
         )}
