@@ -35,7 +35,7 @@ export default function AboutSection() {
         {/* Map Image (blended to make white background transparent, full opacity for high visibility) */}
         <div className="absolute inset-0 opacity-100 mix-blend-multiply z-10">
           <Image
-            src="/map.png"
+            src="/map.webp"
             alt="World Map Background"
             fill
             priority
@@ -150,21 +150,21 @@ export default function AboutSection() {
             <div className="flex items-center gap-4 justify-start max-w-[480px] w-full pl-2">
               <div className="flex -space-x-3 overflow-hidden shrink-0">
                 <Image
-                  src="/avatar1.png"
+                  src="/avatar1.webp"
                   alt="Team Avatar 1"
                   width={40}
                   height={40}
                   className="inline-block h-10 w-10 rounded-full ring-2 ring-[#eae4d6] object-cover"
                 />
                 <Image
-                  src="/avatar2.png"
+                  src="/avatar2.webp"
                   alt="Team Avatar 2"
                   width={40}
                   height={40}
                   className="inline-block h-10 w-10 rounded-full ring-2 ring-[#eae4d6] object-cover"
                 />
                 <Image
-                  src="/avatar3.png"
+                  src="/avatar3.webp"
                   alt="Team Avatar 3"
                   width={40}
                   height={40}

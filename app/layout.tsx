@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   title: "Vikasit Ecosystem",
   description: "Your trusted partner for comprehensive business solutions",
   icons: {
-    icon: "/icon.png",
+    icon: "/icon.webp",
     shortcut: "/favicon.ico",
-    apple: "/icon.png",
+    apple: "/icon.webp",
   },
 };
 

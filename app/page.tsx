@@ -30,7 +30,7 @@ export default function Home() {
 
         {/* Desktop Banner Image (Hidden on mobile) */}
         <Image
-          src="/banner/banner.png"
+          src="/banner/banner.webp"
           alt="Vikasit Ecosystem Banner"
           fill
           priority
@@ -39,7 +39,7 @@ export default function Home() {
 
         {/* Mobile Banner Image (Visible on mobile) */}
         <Image
-          src="/banner/mobile_banner.png"
+          src="/banner/mobile_banner.webp"
           alt="Vikasit Ecosystem Mobile Banner"
           fill
           priority

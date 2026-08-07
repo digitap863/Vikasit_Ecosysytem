@@ -199,7 +199,7 @@ export default function Footer() {
         <div className="lg:col-span-4 space-y-4">
           <div className="flex items-center gap-3">
             <Image
-              src="/banner/footer_logo.png"
+              src="/banner/footer_logo.webp"
               alt="Vikasit Ecosystems Logo"
               width={210}
               height={55}

@@ -18,7 +18,7 @@ const testimonials: Testimonial[] = [
     role: "FACILITY MANAGER, MANIPAL ACADEMY",
     quote:
       "The Soil maker machine has been a game-changer for our waste management process. It efficiently converts wet waste into nutrient-rich soil, helping us maintain a cleaner and greener campus.",
-    avatar: "/avatar1.png",
+    avatar: "/avatar1.webp",
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ const testimonials: Testimonial[] = [
     role: "SUSTAINABILITY HEAD, BRIGADE GROUP",
     quote:
       "Partnering with Vikasit Ecosystems eliminated our legacy waste issues. Their automated WMaaS subscription keeps our premises 100% eco-compliant effortlessly day in and day out.",
-    avatar: "/avatar2.png",
+    avatar: "/avatar2.webp",
   },
   {
     id: 3,
@@ -34,7 +34,7 @@ const testimonials: Testimonial[] = [
     role: "OPERATIONS DIRECTOR, SOBHA DEVELOPERS",
     quote:
       "Outstanding engineering and fast turnaround. The organic compost produced right on site has transformed our community landscaping while reducing landfill dumping to zero.",
-    avatar: "/avatar3.png",
+    avatar: "/avatar3.webp",
   },
   {
     id: 4,
@@ -42,7 +42,7 @@ const testimonials: Testimonial[] = [
     role: "FACILITY MANAGER, MANIPAL ACADEMY",
     quote:
       "The Soil maker machine has been a game-changer for our waste management process. It efficiently converts wet waste into nutrient-rich soil, helping us maintain a cleaner and greener campus.",
-    avatar: "/avatar1.png",
+    avatar: "/avatar1.webp",
   },
   {
     id: 5,
@@ -50,7 +50,7 @@ const testimonials: Testimonial[] = [
     role: "SUSTAINABILITY HEAD, BRIGADE GROUP",
     quote:
       "Partnering with Vikasit Ecosystems eliminated our legacy waste issues. Their automated WMaaS subscription keeps our premises 100% eco-compliant effortlessly day in and day out.",
-    avatar: "/avatar2.png",
+    avatar: "/avatar2.webp",
   },
   {
     id: 6,
@@ -58,7 +58,7 @@ const testimonials: Testimonial[] = [
     role: "OPERATIONS DIRECTOR, SOBHA DEVELOPERS",
     quote:
       "Outstanding engineering and fast turnaround. The organic compost produced right on site has transformed our community landscaping while reducing landfill dumping to zero.",
-    avatar: "/avatar3.png",
+    avatar: "/avatar3.webp",
   },
 ];
 
@@ -161,7 +161,7 @@ export default function ClientTestimonials({ autoPlayInterval = 3000 }: ClientTe
               >
                 {/* Background Image */}
                 <Image
-                  src="/client_bg.png"
+                  src="/client_bg.webp"
                   alt="Client Background"
                   fill
                   className={`object-cover ${isActive ? "blur-none brightness-100" : "blur-[1px]"}`}

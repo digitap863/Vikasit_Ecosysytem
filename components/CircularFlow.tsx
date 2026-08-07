@@ -151,12 +151,12 @@ export default function CircularFlow() {
 
   return (
     <section className="w-full bg-[#eae4d6] py-16 md:py-24 relative overflow-hidden z-10">
-      {/* Background: map2.png centered world map + white center spotlight for all viewports */}
+      {/* Background: map2.webp centered world map + white center spotlight for all viewports */}
       <div className="absolute inset-0 w-full h-full pointer-events-none z-0 select-none overflow-hidden">
-        {/* map2.png for mobile, tablet, and desktop */}
+        {/* map2.webp for mobile, tablet, and desktop */}
         <div className="absolute inset-0 w-full h-full z-0 opacity-75">
           <Image
-            src="/map2.png"
+            src="/map2.webp"
             alt="World Map Background"
             fill
             priority
@@ -221,12 +221,12 @@ export default function CircularFlow() {
               })}
             </svg>
 
-            {/* Central Loop Badge Container (Using circle_logo.png) */}
+            {/* Central Loop Badge Container (Using circle_logo.webp) */}
             <div className="absolute top-[320px] left-[425px] -translate-x-1/2 -translate-y-1/2 z-20">
               <div className="relative w-[200px] h-[200px] flex items-center justify-center select-none">
                 {/* Central Circle Logo Image */}
                 <Image
-                  src="/circle_logo.png"
+                  src="/circle_logo.webp"
                   alt="Vikasit Ecosystem Circular Logo"
                   width={220}
                   height={220}

@@ -109,7 +109,7 @@ export default function ServicesSection() {
                       }`}
                   >
                     <Image
-                      src="/ar_stickers.png"
+                      src="/ar_stickers.webp"
                       alt="Service Icon"
                       width={22}
                       height={22}
@@ -202,7 +202,7 @@ export default function ServicesSection() {
                       }`}
                     >
                       <Image
-                        src="/leaf_icon.png"
+                        src="/leaf_icon.webp"
                         alt="Service Icon"
                         width={22}
                         height={22}

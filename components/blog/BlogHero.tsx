@@ -14,7 +14,7 @@ export default function BlogHero() {
       {/* Right Background Image - seamlessly blended */}
       <div className="absolute inset-y-0 right-0 w-full lg:w-[65%] pointer-events-none overflow-hidden rounded-r-3xl sm:rounded-r-[36px]">
         <Image
-          src="/blog_banner.png"
+          src="/blog_banner.webp"
           alt="Notes From The Waste-To-Soil Frontier Banner"
           fill
           priority

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { FiSearch, FiCalendar } from "react-icons/fi";
 import { SIDEBAR_CATEGORIES, POPULAR_POSTS, SidebarCategory, PopularPost } from "./blogData";
 
@@ -81,7 +82,11 @@ function PopularPostsWidget({ posts }: { posts: PopularPost[] }) {
       <WidgetHeader title="POPULAR POSTS" width="w-14" />
       <div className="divide-y divide-neutral-200/80 font-sans">
         {posts.map((item) => (
-          <div key={item.id} className="flex items-center gap-3.5 py-3.5 first:pt-1 last:pb-0 group">
+          <Link
+            key={item.id}
+            href={`/blog/building-a-greener-future-through-effective-waste-management`}
+            className="flex items-center gap-3.5 py-3.5 first:pt-1 last:pb-0 group block"
+          >
             <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 relative bg-neutral-100 border border-neutral-200">
               <Image
                 src={item.image}
@@ -95,11 +100,11 @@ function PopularPostsWidget({ posts }: { posts: PopularPost[] }) {
                 <FiCalendar className="w-3 h-3 text-neutral-400" />
                 <span>{item.date}</span>
               </div>
-              <h4 className="text-xs font-bold text-neutral-800 group-hover:text-[#056826] uppercase line-clamp-2 leading-snug cursor-pointer transition-colors">
+              <h4 className="text-xs font-bold text-neutral-800 group-hover:text-[#056826] uppercase line-clamp-2 leading-snug transition-colors">
                 {item.title}
               </h4>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

@@ -131,7 +131,7 @@ export default function StatsSection() {
                 {/* Background Geometric Watermark Icon */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] md:w-[170px] md:h-[170px] pointer-events-none select-none mix-blend-multiply">
                   <Image
-                    src="/stats_vector.png"
+                    src="/stats_vector.webp"
                     alt="Stats Vector Watermark"
                     width={170}
                     height={170}

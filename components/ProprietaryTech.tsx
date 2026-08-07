@@ -147,10 +147,10 @@ export default function ProprietaryTech() {
           ref={cardRef}
           className="relative mx-auto w-full rounded-[24px] sm:rounded-[32px] overflow-hidden shadow-2xl min-h-[500px] sm:min-h-[540px] md:min-h-0 flex flex-col justify-end p-6 sm:p-10 md:p-14 lg:p-16 border border-neutral-800/40"
         >
-          {/* Background Image: tree.png */}
+          {/* Background Image: tree.webp */}
           <div ref={bgImgRef} className="absolute inset-0 w-full h-full pointer-events-none z-0">
             <Image
-              src="/tree.png"
+              src="/tree.webp"
               alt="Smart end-to-end solutions"
               fill
               priority

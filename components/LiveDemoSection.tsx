@@ -6,7 +6,7 @@ import Link from "next/link";
 const LeafIcon = () => (
   <div className="shrink-0 w-5 h-5 relative flex items-center justify-center">
     <Image
-      src="/leaf_icon.png"
+      src="/leaf_icon.webp"
       alt="Leaf Icon"
       width={20}
       height={20}
@@ -25,7 +25,7 @@ export default function LiveDemoSection() {
           {/* Mobile Image Container (visible on < md) */}
           <div className="relative w-full h-[220px] min-[440px]:h-[260px] sm:h-[300px] md:hidden overflow-hidden bg-neutral-200 select-none shrink-0">
             <Image
-              src="/LiveDemo.png"
+              src="/LiveDemo.webp"
               alt="See The Soil Maker In Action"
               fill
               priority
@@ -36,7 +36,7 @@ export default function LiveDemoSection() {
           {/* Desktop Background Image (visible on >= md) */}
           <div className="hidden md:block absolute inset-0 w-full h-full z-0 select-none">
             <Image
-              src="/LiveDemo.png"
+              src="/LiveDemo.webp"
               alt="See The Soil Maker In Action"
               fill
               priority

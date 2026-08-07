@@ -29,7 +29,7 @@ const defaultStories: SuccessStoryItem[] = [
     title: "See The Soil Maker in Action",
     description:
       "Watch how food waste is converted into nutrient-rich compost in just 3 hours during a live installation at a client facility.",
-    image: "/project1.png",
+    image: "/project1.webp",
     buttonText: "Explore Project →",
     linkUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     hasPlayIcon: false,
@@ -40,7 +40,7 @@ const defaultStories: SuccessStoryItem[] = [
     title: "Manipal University Food Waste Management",
     description:
       "Discover how The Soil Maker helped reduce daily food waste while producing high-quality compost for campus landscaping.",
-    image: "/project2.png",
+    image: "/project2.webp",
     buttonText: "View Story →",
     linkUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     hasPlayIcon: true,
@@ -51,7 +51,7 @@ const defaultStories: SuccessStoryItem[] = [
     title: "Residential Society Organic Waste Solution",
     description:
       "Transforming community wet waste into zero-landfill organic fertilizer right on site with zero odor emission.",
-    image: "/project3.png",
+    image: "/project3.webp",
     buttonText: "Read Story →",
     linkUrl: "/projects/residential-waste",
     hasPlayIcon: false,
