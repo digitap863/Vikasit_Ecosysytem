@@ -20,8 +20,14 @@ export default function Navbar() {
   useEffect(() => {
     if (pathname === "/contact") {
       setActiveTab("Contact");
+    } else if (pathname === "/about") {
+      setActiveTab("About");
+    } else if (pathname === "/products" || pathname.startsWith("/products")) {
+      setActiveTab("Products");
     } else if (pathname === "/blog" || pathname === "/blogs") {
       setActiveTab("Blogs");
+    } else if (pathname.startsWith("/services")) {
+      setActiveTab("Services");
     } else if (pathname === "/") {
       setActiveTab("Home");
     }
@@ -54,8 +60,23 @@ export default function Navbar() {
     setActiveTab(item);
     setIsOpen(false);
 
+    if (item === "About") {
+      router.push("/about");
+      return;
+    }
+
+    if (item === "Products") {
+      router.push("/products");
+      return;
+    }
+
     if (item === "Blogs") {
       router.push("/blog");
+      return;
+    }
+
+    if (item === "Services") {
+      router.push("/services");
       return;
     }
 
