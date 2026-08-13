@@ -220,7 +220,7 @@ export default function Footer() {
             {[
               { label: "Home", href: "/" },
               { label: "About", href: "/#about" },
-              { label: "Carbon credits", href: "#" },
+              { label: "Carbon credits", href: "/carbon-credits" },
               { label: "Services", href: "/#services" },
               { label: "Blogs", href: "/blog" },
               { label: "Contact Us", href: "/contact" },

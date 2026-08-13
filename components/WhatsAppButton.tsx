@@ -50,11 +50,11 @@ export default function WhatsAppButton() {
       className="fixed bottom-6 right-6 z-50 flex flex-col items-center font-farro select-none"
       ref={containerRef}
     >
-      {/* Pop-up Stack of Contact Buttons */}
+      {/* Pop-up Stack of Contact Buttons matching Vikasit Ecosystem Theme */}
       <AnimatePresence>
         {isOpen && (
           <div className="flex flex-col items-center gap-3.5 mb-3.5">
-            {/* 1. WhatsApp Button (Green) */}
+            {/* 1. WhatsApp Button (Vikasit Leaf Green #69BD45) */}
             <motion.a
               href={WHATSAPP_API_URL}
               target="_blank"
@@ -64,18 +64,18 @@ export default function WhatsAppButton() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 15, scale: 0.4 }}
               transition={{ duration: 0.22, delay: 0.1 }}
-              className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] text-white shadow-xl hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
+              className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#69BD45] text-white shadow-xl hover:bg-[#5aa839] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer border border-[#5aa839]"
               aria-label="Contact via WhatsApp"
             >
               <FaWhatsapp className="w-6 h-6 sm:w-7 sm:h-7" />
 
               {/* Hover Tooltip Label */}
-              <span className="absolute right-16 px-3 py-1.5 rounded-lg bg-neutral-900/90 text-white text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-lg pointer-events-none">
+              <span className="absolute right-16 px-3 py-1.5 rounded-lg bg-[#343433] text-white text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-lg pointer-events-none border border-neutral-700">
                 WhatsApp Us
               </span>
             </motion.a>
 
-            {/* 2. Direct Call Button (Blue) */}
+            {/* 2. Direct Call Button (Vikasit Forest Green #2E7D32) */}
             <motion.a
               href={PHONE_TEL}
               onClick={() => setIsOpen(false)}
@@ -83,18 +83,18 @@ export default function WhatsAppButton() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 15, scale: 0.4 }}
               transition={{ duration: 0.22, delay: 0.05 }}
-              className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#1D70B8] text-white shadow-xl hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
+              className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#2E7D32] text-white shadow-xl hover:bg-[#246728] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer border border-[#246728]"
               aria-label="Call Us"
             >
               <FiPhoneCall className="w-5 h-5 sm:w-6 sm:h-6" />
 
               {/* Hover Tooltip Label */}
-              <span className="absolute right-16 px-3 py-1.5 rounded-lg bg-neutral-900/90 text-white text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-lg pointer-events-none">
+              <span className="absolute right-16 px-3 py-1.5 rounded-lg bg-[#343433] text-white text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-lg pointer-events-none border border-neutral-700">
                 Call Us (+91 96065 96849)
               </span>
             </motion.a>
 
-            {/* 3. Email Button (Orange) */}
+            {/* 3. Email Button (Vikasit Dark Charcoal #343433) */}
             <motion.a
               href={EMAIL_GMAIL}
               target="_blank"
@@ -104,13 +104,13 @@ export default function WhatsAppButton() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 15, scale: 0.4 }}
               transition={{ duration: 0.22, delay: 0 }}
-              className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#F59E0B] text-white shadow-xl hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
+              className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#343433] text-[#FAF6EE] shadow-xl hover:bg-[#262625] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer border border-neutral-700"
               aria-label="Send Email"
             >
               <FiMail className="w-5 h-5 sm:w-6 sm:h-6" />
 
               {/* Hover Tooltip Label */}
-              <span className="absolute right-16 px-3 py-1.5 rounded-lg bg-neutral-900/90 text-white text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-lg pointer-events-none">
+              <span className="absolute right-16 px-3 py-1.5 rounded-lg bg-[#343433] text-white text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity shadow-lg pointer-events-none border border-neutral-700">
                 Email Us
               </span>
             </motion.a>
@@ -118,22 +118,22 @@ export default function WhatsAppButton() {
         )}
       </AnimatePresence>
 
-      {/* Main Bottom Trigger Button (Dark Slate with White Ring Border) */}
+      {/* Main Bottom Trigger Button (Dark Charcoal with Vikasit Green Border Ring) */}
       <button
         onClick={toggleModal}
         aria-label="Toggle contact options"
-        className="group relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#182232] text-white border-2 border-white shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+        className="group relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#343433] text-white border-2 border-[#69BD45] shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
       >
         {/* Animated Pulse Ring when closed */}
         {!isOpen && (
-          <span className="absolute inset-0 rounded-full bg-[#182232] opacity-40 animate-ping pointer-events-none" />
+          <span className="absolute inset-0 rounded-full bg-[#69BD45] opacity-40 animate-ping pointer-events-none" />
         )}
 
-        {/* Dynamic Icon Toggle (X when open, Message/Contact icon when closed) */}
+        {/* Dynamic Icon Toggle */}
         {isOpen ? (
           <FiX className="w-7 h-7 sm:w-8 sm:h-8 text-white transition-transform duration-300" />
         ) : (
-          <FiMessageSquare className="w-6 h-6 sm:w-7 sm:h-7 text-white group-hover:scale-110 transition-transform duration-300" />
+          <FiMessageSquare className="w-6 h-6 sm:w-7 sm:h-7 text-[#FAF6EE] group-hover:scale-110 transition-transform duration-300" />
         )}
       </button>
     </div>

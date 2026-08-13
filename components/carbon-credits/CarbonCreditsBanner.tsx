@@ -3,18 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FiArrowRight, FiDownload } from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
 
-export default function AboutHero() {
-  const handleDownloadBrochure = () => {
-    const link = document.createElement("a");
-    link.href = "/banner/about_page_banner.png";
-    link.download = "Vikasit_About_Brochure.png";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
+export default function CarbonCreditsBanner() {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -42,7 +33,7 @@ export default function AboutHero() {
           initial="hidden"
           animate="visible"
           variants={containerVariants}
-          className="space-y-6 sm:space-y-8"
+          className="space-y-6 sm:space-y-10"
         >
           {/* Top Breadcrumb Line */}
           <motion.div
@@ -53,10 +44,10 @@ export default function AboutHero() {
               HOME
             </Link>
             <span className="text-neutral-400 font-normal">|</span>
-            <span className="text-[#2E7D32]">ABOUT US</span>
+            <span className="text-[#2E7D32]">CARBON CREDITS</span>
           </motion.div>
 
-          {/* 2-Column Grid matching all other page banners */}
+          {/* 2-Column Grid (Left Text + Right Blended Image Box) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Content Column */}
             <div className="lg:col-span-6 space-y-4 sm:space-y-5">
@@ -65,47 +56,46 @@ export default function AboutHero() {
                 variants={itemVariants}
                 className="text-xs sm:text-sm font-semibold tracking-wider text-[#5A5A5C] uppercase block font-sans"
               >
-                WHO WE ARE
+                CARBON CREDITS
               </motion.span>
 
               {/* Main Heading */}
               <motion.h1
                 variants={itemVariants}
-                className="text-3xl sm:text-5xl lg:text-[54px] xl:text-[58px] font-extrabold text-[#343433] tracking-tight leading-[1.08] font-farro"
+                className="text-2xl sm:text-4xl lg:text-[44px] xl:text-[48px] font-extrabold text-[#343433] tracking-tight leading-[1.08] font-farro"
               >
-                We Turn Waste Into <br />
-                <span className="font-extrabold">Working</span> <br />
-                <span className="font-normal text-neutral-800">Infrastructure.</span>
+                Carbon Credits <br />
+                Through <br />
+                <span className="whitespace-nowrap font-normal">Solid Waste Management</span>
               </motion.h1>
 
-              {/* Descriptive Body Paragraph */}
+              {/* Body Description */}
               <motion.p
                 variants={itemVariants}
                 className="text-neutral-700 text-sm sm:text-lg lg:text-[18px] font-medium leading-relaxed font-satoshi max-w-xl pt-1 sm:pt-2"
               >
-                Vikasit Ecosystems is building a bubble of life through waste management. We&apos;re a circular-economy channel that treats today&apos;s waste as tomorrow&apos;s raw material — closed loop, proprietary tech, end to end.
+                Turn organic waste into valuable resources while earning carbon credits and contributing to a cleaner, greener planet.
               </motion.p>
 
               {/* Action Buttons */}
               <motion.div
                 variants={itemVariants}
-                className="flex flex-wrap items-center gap-3 sm:gap-4 pt-3 sm:pt-4 font-sans"
+                className="flex flex-wrap items-center gap-3 sm:gap-4 pt-3 sm:pt-4"
               >
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 bg-[#343433] text-white hover:bg-black px-7 py-3 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 shadow-md hover:shadow-lg group cursor-pointer"
+                  className="inline-flex items-center gap-2 bg-[#343433] text-white hover:bg-black px-7 py-3 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 shadow-md hover:shadow-lg group cursor-pointer font-sans"
                 >
-                  <span>Meet the Team</span>
+                  <span>Talk to Expert</span>
                   <FiArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
 
-                <button
-                  onClick={handleDownloadBrochure}
-                  className="inline-flex items-center justify-center border border-[#343433] text-[#343433] hover:bg-[#343433] hover:text-white px-7 py-3 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer gap-2"
+                <a
+                  href="/contact?type=brochure"
+                  className="inline-flex items-center justify-center border border-[#343433] text-[#343433] hover:bg-[#343433] hover:text-white px-7 py-3 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer font-sans"
                 >
-                  <FiDownload className="w-4 h-4" />
-                  <span>Download Brochure</span>
-                </button>
+                  Download Brochure
+                </a>
               </motion.div>
             </div>
 
@@ -115,8 +105,8 @@ export default function AboutHero() {
               className="lg:col-span-6 relative w-full h-[280px] sm:h-[380px] lg:h-[460px] rounded-[24px] sm:rounded-[32px] overflow-hidden"
             >
               <Image
-                src="/banner/about_page_banner.png"
-                alt="We Turn Waste Into Working Infrastructure Banner"
+                src="/banner/carbon_credits_banner.webp"
+                alt="Carbon Credits Through Solid Waste Management"
                 fill
                 priority
                 className="object-cover object-center filter brightness-[1.02]"
@@ -128,6 +118,7 @@ export default function AboutHero() {
               <div className="absolute inset-x-0 top-0 h-[15%] bg-gradient-to-b from-[#EBE4D5]/30 to-transparent z-10 pointer-events-none" />
             </motion.div>
           </div>
+
         </motion.div>
       </div>
     </section>

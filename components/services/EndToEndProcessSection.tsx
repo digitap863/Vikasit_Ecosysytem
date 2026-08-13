@@ -76,22 +76,22 @@ export default function EndToEndProcessSection() {
           transition={{ duration: 0.5 }}
           className="text-center space-y-3 max-w-[800px] mx-auto"
         >
-          <span className="text-xs sm:text-sm font-extrabold tracking-widest text-[#69BD45] uppercase block font-sans">
+          <span className="text-xs sm:text-sm font-normal tracking-widest text-[#69BD45] uppercase block font-satoshi">
             OUR PROCESS
           </span>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-[46px] font-extrabold text-[#FAF6EE] tracking-tight leading-tight font-farro">
+          <h2 className="text-3xl sm:text-4xl lg:text-[46px] font-normal text-[#FAF6EE] tracking-tight leading-tight font-satoshi">
             Our End-To-End Process
           </h2>
         </motion.div>
 
-        {/* 7-Step Columns Grid with Dashed Line & Dual Side Border Hover */}
+        {/* 7-Step Columns Grid (2 items per row on mobile, 7 items on desktop) */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={containerVariants}
-          className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-y-8 lg:gap-y-0 max-w-[1380px] mx-auto"
+          className="relative grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4 lg:gap-0 gap-y-2 sm:gap-y-6 lg:gap-y-0 max-w-[1380px] mx-auto"
         >
           {steps.map((step, idx) => {
             const isHovered = hoveredStep === idx;
@@ -105,9 +105,9 @@ export default function EndToEndProcessSection() {
                 onMouseLeave={() => setHoveredStep(null)}
                 whileHover={{ y: -4 }}
                 transition={{ duration: 0.25, ease: "easeOut" as const }}
-                className={`relative p-5 sm:p-6 flex flex-col items-center text-center justify-between min-h-[300px] cursor-pointer transition-all duration-300 z-10 ${
+                className={`relative p-3.5 sm:p-6 flex flex-col items-center text-center justify-between min-h-[195px] sm:min-h-[300px] cursor-pointer transition-all duration-300 z-10 ${
                   isHovered
-                    ? "border-l-2 border-r-2 border-[#69BD45] border-t-0 border-b-0 rounded-[24px] bg-[#2C2C2C]"
+                    ? "border-l-2 border-r-2 border-[#69BD45] border-t-0 border-b-0 rounded-[20px] sm:rounded-[24px] bg-[#2C2C2C]"
                     : `${!isLast ? "lg:border-r lg:border-neutral-600/70 lg:rounded-r-[24px]" : ""} border-t-0 border-b-0 border-l-0`
                 }`}
               >
@@ -128,7 +128,7 @@ export default function EndToEndProcessSection() {
                 <div className="flex-1 flex flex-col items-center justify-start space-y-3 relative z-10">
                   {/* Step Title */}
                   <h3
-                    className={`text-xs sm:text-sm lg:text-[14.5px] font-bold font-sans tracking-tight leading-snug transition-colors duration-300 min-h-[42px] flex items-center justify-center text-center ${
+                    className={`text-xs sm:text-sm lg:text-[14.5px] font-bold font-satoshi tracking-tight leading-snug transition-colors duration-300 min-h-[42px] flex items-center justify-center text-center ${
                       isHovered ? "text-[#69BD45]" : "text-[#FAF6EE]"
                     }`}
                   >
@@ -136,7 +136,7 @@ export default function EndToEndProcessSection() {
                   </h3>
 
                   {/* Step Description */}
-                  <p className="text-[11.5px] sm:text-xs text-neutral-400 font-sans leading-relaxed font-normal text-center max-w-[170px]">
+                  <p className="text-[11.5px] sm:text-xs text-neutral-400 font-satoshi leading-relaxed font-normal text-center max-w-[170px]">
                     {step.description}
                   </p>
                 </div>

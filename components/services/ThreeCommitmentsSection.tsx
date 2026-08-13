@@ -28,7 +28,7 @@ export default function ThreeCommitmentsSection() {
   };
 
   return (
-    <section className="w-full bg-[#EBE4D5] text-[#1A1A1A] py-14 sm:py-20 overflow-hidden border-t border-[#E0D8C8]/60">
+    <section className="w-full bg-[#EBE4D5] text-[#1A1A1A] py-12 sm:py-16 overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 space-y-12 sm:space-y-16">
         {/* Section Header with Figma text shadow and exact typography */}
         <motion.div
@@ -77,29 +77,29 @@ export default function ThreeCommitmentsSection() {
             variants={itemVariants}
             whileHover={{ y: -6 }}
             transition={{ duration: 0.3 }}
-            className="relative bg-[#343433] text-white rounded-[24px] sm:rounded-[28px] p-7 sm:p-9 lg:p-10 min-h-[374px] flex flex-col justify-between overflow-hidden shadow-xl border border-neutral-700/50 group"
+            className="relative bg-[#343433] text-white rounded-[24px] sm:rounded-[28px] p-5 sm:p-9 lg:p-10 min-h-[290px] sm:min-h-[374px] flex flex-col justify-between overflow-hidden shadow-xl border border-neutral-700/50 group"
           >
-            <div className="space-y-4 max-w-[360px] relative z-10">
+            <div className="space-y-3 sm:space-y-4 max-w-[260px] sm:max-w-[360px] relative z-10">
               {/* Top Tag */}
-              <span className="inline-block bg-[#EAE3D2] text-[#1A1A1A] px-4 py-1.5 rounded-md text-xs sm:text-sm font-bold tracking-wide font-sans shadow-sm">
+              <span className="inline-block bg-[#EAE3D2] text-[#1A1A1A] px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-md text-xs sm:text-sm font-bold tracking-wide font-sans shadow-sm">
                 Service / 01
               </span>
 
               {/* Card Title */}
-              <h3 className="text-2xl sm:text-3xl lg:text-[32px] font-normal font-farro text-[#EAE3D2] tracking-tight leading-snug pt-1">
+              <h3 className="text-xl sm:text-3xl lg:text-[32px] font-normal font-farro text-[#EAE3D2] tracking-tight leading-snug pt-0.5">
                 Waste Management as a Service
               </h3>
 
               {/* Card Description mentioning Vikasit Ecosystems */}
-              <p className="text-neutral-300 text-xs sm:text-sm  leading-relaxed font-satoshi font-normal">
+              <p className="text-neutral-300 text-xs sm:text-sm leading-relaxed font-satoshi font-normal">
                 A full subscription by Vikasit Ecosystems. Tell us the requirement, we build the process and run it every day — including the problems you didn&apos;t plan for.
               </p>
 
               {/* Action Link */}
-              <div className="pt-3">
+              <div className="pt-1.5 sm:pt-3">
                 <Link
                   href="/services/wmaas"
-                  className="inline-flex items-center gap-2 text-[#EAE3D2] hover:text-[#76C893] font-normal text-xs sm:text-sm transition-colors group/link cursor-pointer font-sans"
+                  className="inline-flex underline items-center gap-2 text-[#EAE3D2] hover:text-[#76C893] font-normal text-xs sm:text-sm transition-colors group/link cursor-pointer font-sans"
                 >
                   <span>Explore WMAAS</span>
                   <FiArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1" />
@@ -108,7 +108,7 @@ export default function ThreeCommitmentsSection() {
             </div>
 
             {/* Bottom Right Card Illustration: Vikasit Branded Waste Truck & Bins */}
-            <div className="absolute right-0 bottom-0 w-[240px] sm:w-[295px] h-[195px] sm:h-[235px] pointer-events-none z-0 transition-transform duration-300 group-hover:scale-[1.03]">
+            <div className="absolute right-0 bottom-0 w-[170px] sm:w-[295px] h-[135px] sm:h-[235px] pointer-events-none z-0 transition-transform duration-300 group-hover:scale-[1.03]">
               <Image
                 src="/Services/service1_truck.webp"
                 alt="Vikasit Ecosystems Waste Management Truck"
@@ -124,16 +124,16 @@ export default function ThreeCommitmentsSection() {
             variants={itemVariants}
             whileHover={{ y: -6 }}
             transition={{ duration: 0.3 }}
-            className="relative bg-[#343433] text-white rounded-[24px] sm:rounded-[28px] p-7 sm:p-9 lg:p-10 min-h-[374px] flex flex-col justify-between overflow-hidden shadow-xl border border-neutral-700/50 group"
+            className="relative bg-[#343433] text-white rounded-[24px] sm:rounded-[28px] p-5 sm:p-9 lg:p-10 min-h-[290px] sm:min-h-[374px] flex flex-col justify-between overflow-hidden shadow-xl border border-neutral-700/50 group"
           >
-            <div className="space-y-4 max-w-[360px] relative z-10">
+            <div className="space-y-3 sm:space-y-4 max-w-[260px] sm:max-w-[360px] relative z-10">
               {/* Top Tag */}
-              <span className="inline-block bg-[#EAE3D2] text-[#1A1A1A] px-4 py-1.5 rounded-md text-xs sm:text-sm font-bold tracking-wide font-sans shadow-sm">
+              <span className="inline-block bg-[#EAE3D2] text-[#1A1A1A] px-3.5 py-1 sm:px-4 sm:py-1.5 rounded-md text-xs sm:text-sm font-bold tracking-wide font-sans shadow-sm">
                 Service / 02
               </span>
 
               {/* Card Title */}
-              <h3 className="text-2xl sm:text-3xl lg:text-[32px] font-normal font-farro text-[#EAE3D2] tracking-tight leading-snug pt-1">
+              <h3 className="text-xl sm:text-3xl lg:text-[32px] font-normal font-farro text-[#EAE3D2] tracking-tight leading-snug pt-0.5">
                 Compost Value Chain
               </h3>
 
@@ -143,10 +143,10 @@ export default function ThreeCommitmentsSection() {
               </p>
 
               {/* Action Link */}
-              <div className="pt-3">
+              <div className="pt-1.5 sm:pt-3">
                 <Link
                   href="/services/compost"
-                  className="inline-flex items-center gap-2 text-[#EAE3D2] hover:text-[#76C893] font-normal text-xs sm:text-sm transition-colors group/link cursor-pointer font-sans"
+                  className="inline-flex underline items-center gap-2 text-[#EAE3D2] hover:text-[#76C893] font-normal text-xs sm:text-sm transition-colors group/link cursor-pointer font-sans"
                 >
                   <span>Explore Compost</span>
                   <FiArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1" />
@@ -155,7 +155,7 @@ export default function ThreeCommitmentsSection() {
             </div>
 
             {/* Bottom Right Card Illustration: Vikasit Compost Jute Bags */}
-            <div className="absolute right-0 bottom-0 w-[240px] sm:w-[290px] h-[195px] sm:h-[235px] pointer-events-none z-0 transition-transform duration-300 group-hover:scale-[1.03]">
+            <div className="absolute right-0 bottom-0 w-[170px] sm:w-[290px] h-[135px] sm:h-[235px] pointer-events-none z-0 transition-transform duration-300 group-hover:scale-[1.03]">
               <Image
                 src="/Services/service2_bag.webp"
                 alt="Vikasit Ecosystems Compost Value Chain Bags"

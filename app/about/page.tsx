@@ -13,15 +13,17 @@ import FAQ from "@/components/FAQ";
 
 export default function AboutPage() {
   return (
-    <main className="relative w-full overflow-x-hidden bg-[#eae4d6] min-h-screen flex flex-col justify-between font-farro">
+    <main className="relative w-full overflow-x-hidden bg-[#EBE4D5] min-h-screen flex flex-col justify-between font-farro">
       <Navbar />
 
-      <div className="pt-28 sm:pt-36 px-4 sm:px-6 lg:px-12 max-w-[1320px] mx-auto w-full space-y-12">
+      <div className="w-full flex-1">
         {/* About Page Hero Banner */}
         <AboutHero />
 
         {/* Trusted By Section */}
-        <TrustedBy />
+        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-12 py-8">
+          <TrustedBy />
+        </div>
       </div>
 
       {/* Centered Our Story Section (Full Width Map Background) */}
