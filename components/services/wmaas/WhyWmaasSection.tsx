@@ -27,14 +27,14 @@ export default function WhyWmaasSection() {
   };
 
   return (
-    <section className="w-full bg-[#EBE4D5] text-[#1A1A1A] py-8 sm:py-10 lg:py-12">
+    <section className="w-full bg-[#EBE4D5] text-[#1A1A1A] py-4 sm:py-8 lg:py-10">
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
           variants={containerVariants}
-          className="space-y-10 sm:space-y-12"
+          className="space-y-6 sm:space-y-12"
         >
           {/* Top Row: 2-Column Header & Traditional Waste Management */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-start">
@@ -45,14 +45,14 @@ export default function WhyWmaasSection() {
               </span>
 
               <h2 className="text-3xl sm:text-4xl lg:text-[46px] font-extrabold text-[#343433] tracking-tight leading-[1.12] font-farro">
-                A Smarter Way
-                <br />
+                A Smarter Way{" "}
+                <br className="hidden sm:inline" />
                 <span className="font-normal text-[#343433]">
                   To Manage Waste.
                 </span>
               </h2>
 
-              <p className="text-neutral-700 text-sm sm:text-base lg:text-[16px] font-satoshi font-normal leading-relaxed pt-2 max-w-[540px]">
+              <p className="text-neutral-700 text-sm sm:text-base lg:text-[16px] font-satoshi font-normal leading-relaxed pt-2 max-w-xl">
                 Traditional waste management is expensive, labour-intensive, and
                 dependent on transporting waste to distant disposal sites. WMAAS™
                 changes the model — we process waste where it&apos;s generated,

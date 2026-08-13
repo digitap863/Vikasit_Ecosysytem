@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function OperationalBurdenBanner() {
   return (
-    <section className="w-full bg-[#EBE4D5] py-6 sm:py-8 px-6 sm:px-10 lg:px-16">
+    <section className="w-full bg-[#EBE4D5] py-3 sm:py-8 px-4 sm:px-10 lg:px-16">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}

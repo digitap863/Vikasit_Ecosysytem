@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductBanner from "@/components/products/ProductBanner";
 import SoilMakerSuitedFor from "@/components/products/SoilMakerSuitedFor";
+import BrandedCompostSection from "@/components/services/compost/BrandedCompostSection";
 import RestOfTheLoop from "@/components/products/RestOfTheLoop";
 import KeyFeaturesTechnicalSpecs from "@/components/products/KeyFeaturesTechnicalSpecs";
 import WasteActBanner from "@/components/products/WasteActBanner";
@@ -21,6 +22,9 @@ export default function ProductsPage() {
 
         {/* Soil Maker Suited For Section */}
         <SoilMakerSuitedFor />
+
+        {/* Branded Compost Products Section */}
+        <BrandedCompostSection />
 
 
         {/* Key Features & Technical Specs Section */}

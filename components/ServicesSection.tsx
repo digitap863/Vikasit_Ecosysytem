@@ -18,21 +18,21 @@ const services: ServiceItem[] = [
     tag: "01/ WMaaS",
     title: "Waste Management as a Service",
     desc: "Outsource your waste management on a subscription model. Tell us the requirement, we build the process and run it — every day, including the problems you didn't plan for.",
-    link: "#",
+    link: "/services/wmaas",
   },
   {
     id: "02",
-    tag: "02/ Products",
-    title: "The Soil Maker & Equipment",
+    tag: "02/ Products & Compost",
+    title: "The Soil Maker & Compost",
     desc: "Our flagship composting machine converts organic waste into usable compost in 3—4 hours, built for real estate, facility managers and RWAs at any scale.",
-    link: "#",
+    link: "/services/compost",
   },
   {
     id: "03",
     tag: "03/ Consulting",
     title: "Waste Management Consulting",
     desc: "Waste audits for government and corporates, CSR project implementation, and bio-mining & legacy waste remediation.",
-    link: "#",
+    link: "/contact",
   },
 ];
 

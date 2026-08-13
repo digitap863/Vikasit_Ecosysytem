@@ -196,14 +196,14 @@ export default function IndustriesWeServeSection() {
   };
 
   return (
-    <section className="w-full bg-[#EBE4D5] text-[#1A1A1A] py-8 sm:py-10 lg:py-12">
+    <section className="w-full bg-[#EBE4D5] text-[#1A1A1A] py-4 sm:py-8 lg:py-10">
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={containerVariants}
-          className="space-y-8 sm:space-y-10"
+          className="space-y-5 sm:space-y-10"
         >
           {/* Section Header */}
           <div className="space-y-2.5 max-w-[900px]">

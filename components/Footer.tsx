@@ -204,7 +204,8 @@ export default function Footer() {
               width={210}
               height={55}
               priority
-              className="object-contain h-[55px] w-auto"
+              style={{ width: "auto", height: "auto" }}
+              className="object-contain h-[55px]"
             />
           </div>
           <p className="text-xs sm:text-sm text-[#69BD45]/90 leading-relaxed max-w-[320px]">

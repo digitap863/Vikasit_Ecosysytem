@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
+import { FiChevronDown } from "react-icons/fi";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -14,6 +15,23 @@ export default function Navbar() {
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+
+  const servicesDropdown = [
+    {
+      title: "All Services",
+      href: "/services",
+    },
+    {
+      title: "WMAAS™",
+      href: "/services/wmaas",
+    },
+    {
+      title: "Compost",
+      href: "/services/compost",
+    },
+  ];
 
   const navItems = ["Home", "About", "Products", "Services", "Blogs"];
 
@@ -57,6 +75,13 @@ export default function Navbar() {
   }, [lastScrollY]);
 
   const handleNavClick = (item: string) => {
+    if (item === "Services") {
+      router.push("/services");
+      setActiveTab("Services");
+      setIsOpen(false);
+      return;
+    }
+
     setActiveTab(item);
     setIsOpen(false);
 
@@ -72,11 +97,6 @@ export default function Navbar() {
 
     if (item === "Blogs") {
       router.push("/blog");
-      return;
-    }
-
-    if (item === "Services") {
-      router.push("/services");
       return;
     }
 
@@ -112,7 +132,13 @@ export default function Navbar() {
       >
         <div className="max-w-[1400px] mx-auto h-[80px] px-6 sm:px-8 flex items-center justify-between relative">
           {/* Left: Logo - Shown only at top of page */}
-          <div className={`flex items-center h-full relative z-40 transition-all duration-300 ${!isScrolled ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
+          <div
+            className={`flex items-center h-full relative z-40 transition-all duration-300 ${
+              !isScrolled
+                ? "opacity-100 pointer-events-auto"
+                : "opacity-0 pointer-events-none"
+            }`}
+          >
             <Link
               href="/"
               onClick={(e) => {
@@ -154,6 +180,73 @@ export default function Navbar() {
             <nav className="relative z-20 flex items-center justify-center gap-7 pt-2 pb-1">
               {navItems.map((item) => {
                 const isActive = activeTab === item;
+
+                if (item === "Services") {
+                  return (
+                    <div
+                      key={item}
+                      className="relative group"
+                      onMouseEnter={() => setIsServicesOpen(true)}
+                      onMouseLeave={() => setIsServicesOpen(false)}
+                    >
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setIsServicesOpen(!isServicesOpen);
+                        }}
+                        className={`text-[15px] font-semibold transition-all relative py-1.5 px-1 cursor-pointer flex items-center gap-1 ${
+                          isActive
+                            ? "text-neutral-950 font-bold"
+                            : "text-neutral-700 hover:text-neutral-950"
+                        }`}
+                      >
+                        <span>{item}</span>
+                        <FiChevronDown
+                          className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                            isServicesOpen
+                              ? "rotate-180 text-neutral-950"
+                              : "text-neutral-600"
+                          }`}
+                        />
+                      </button>
+
+                      {/* Dropdown Menu Container */}
+                      <AnimatePresence>
+                        {isServicesOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 6, scale: 0.96 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 6, scale: 0.96 }}
+                            transition={{ duration: 0.18, ease: "easeOut" }}
+                            className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-[260px] z-50 pointer-events-auto"
+                          >
+                            <div className="bg-[#F0EFEF] text-neutral-900 rounded-[18px] p-1.5 shadow-2xl border border-neutral-300/80 overflow-hidden font-satoshi text-left drop-shadow-[0_12px_24px_rgba(0,0,0,0.12)]">
+                              {servicesDropdown.map((service) => (
+                                <Link
+                                  key={service.href}
+                                  href={service.href}
+                                  onClick={() => {
+                                    setActiveTab("Services");
+                                    setIsServicesOpen(false);
+                                  }}
+                                  className="group/item flex items-center justify-between px-3.5 py-2.5 rounded-xl hover:bg-white/90 hover:shadow-sm transition-all cursor-pointer"
+                                >
+                                  <span className="text-sm font-bold text-neutral-900 group-hover/item:text-[#2E7D32] transition-colors font-farro">
+                                    {service.title}
+                                  </span>
+                                  <span className="text-xs text-neutral-500 group-hover/item:text-[#2E7D32] group-hover/item:translate-x-0.5 transition-all">
+                                    →
+                                  </span>
+                                </Link>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                }
+
                 return (
                   <button
                     key={item}
@@ -172,7 +265,13 @@ export default function Navbar() {
           </div>
 
           {/* Right: Contact Us Button - Shown only at top of page */}
-          <div className={`hidden lg:flex items-center h-full relative z-20 transition-all duration-300 ${!isScrolled ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
+          <div
+            className={`hidden lg:flex items-center h-full relative z-20 transition-all duration-300 ${
+              !isScrolled
+                ? "opacity-100 pointer-events-auto"
+                : "opacity-0 pointer-events-none"
+            }`}
+          >
             <Link
               href="/contact"
               onClick={() => setActiveTab("Contact")}
@@ -192,9 +291,21 @@ export default function Navbar() {
             aria-label="Toggle Menu"
             className="lg:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10 rounded-full border border-neutral-300/60 bg-[#F0EFEF]/80 hover:bg-[#F0EFEF] active:scale-95 transition-all shadow-sm z-50 relative cursor-pointer"
           >
-            <span className={`h-[2px] w-5 rounded bg-neutral-900 transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
-            <span className={`h-[2px] w-5 rounded bg-neutral-900 transition-all duration-300 ${isOpen ? 'opacity-0' : ''}`} />
-            <span className={`h-[2px] w-5 rounded bg-neutral-900 transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+            <span
+              className={`h-[2px] w-5 rounded bg-neutral-900 transition-all duration-300 ${
+                isOpen ? "rotate-45 translate-y-[7px]" : ""
+              }`}
+            />
+            <span
+              className={`h-[2px] w-5 rounded bg-neutral-900 transition-all duration-300 ${
+                isOpen ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`h-[2px] w-5 rounded bg-neutral-900 transition-all duration-300 ${
+                isOpen ? "-rotate-45 -translate-y-[7px]" : ""
+              }`}
+            />
           </button>
         </div>
       </header>
@@ -222,12 +333,67 @@ export default function Navbar() {
               <nav className="flex flex-col space-y-4">
                 {navItems.map((item) => {
                   const isActive = activeTab === item;
+
+                  if (item === "Services") {
+                    return (
+                      <div key={item} className="flex flex-col space-y-2">
+                        <button
+                          onClick={() =>
+                            setIsMobileServicesOpen(!isMobileServicesOpen)
+                          }
+                          className={`text-left text-lg font-bold py-2 transition-colors cursor-pointer flex items-center justify-between ${
+                            isActive
+                              ? "text-neutral-950"
+                              : "text-neutral-600 hover:text-neutral-800"
+                          }`}
+                        >
+                          <span>Services</span>
+                          <FiChevronDown
+                            className={`w-5 h-5 transition-transform duration-200 ${
+                              isMobileServicesOpen
+                                ? "rotate-180 text-neutral-950"
+                                : "text-neutral-600"
+                            }`}
+                          />
+                        </button>
+
+                        <AnimatePresence>
+                          {isMobileServicesOpen && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: "auto" }}
+                              exit={{ opacity: 0, height: 0 }}
+                              className="pl-4 flex flex-col space-y-2.5 border-l-2 border-neutral-400/50 my-1 overflow-hidden"
+                            >
+                              {servicesDropdown.map((service) => (
+                                <Link
+                                  key={service.href}
+                                  href={service.href}
+                                  onClick={() => {
+                                    setActiveTab("Services");
+                                    setIsOpen(false);
+                                    setIsMobileServicesOpen(false);
+                                  }}
+                                  className="text-base font-bold text-neutral-800 hover:text-[#2E7D32] transition-colors py-1 cursor-pointer"
+                                >
+                                  {service.title}
+                                </Link>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  }
+
                   return (
                     <button
                       key={item}
                       onClick={() => handleNavClick(item)}
                       className={`text-left text-lg font-bold py-2 transition-colors cursor-pointer ${
-                        isActive ? "text-neutral-950" : "text-neutral-600 hover:text-neutral-800"
+                        isActive
+                          ? "text-neutral-950"
+                          : "text-neutral-600 hover:text-neutral-800"
                       }`}
                     >
                       {item}

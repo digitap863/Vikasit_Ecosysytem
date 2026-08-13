@@ -26,8 +26,8 @@ export default function ProvenResultsSection() {
   };
 
   return (
-    <section className="w-full bg-[#EBE4D5] text-[#1A1A1A] py-8 sm:py-10 lg:py-12">
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 space-y-12 sm:space-y-16">
+    <section className="w-full bg-[#EBE4D5] text-[#1A1A1A] py-4 sm:py-8 lg:py-10">
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 space-y-6 sm:space-y-12">
         {/* Section Header */}
         <motion.div
           initial="hidden"

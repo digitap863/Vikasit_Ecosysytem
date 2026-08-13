@@ -2,14 +2,14 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import WmaasBanner from "@/components/services/WmaasBanner";
-import WhyWmaasSection from "@/components/services/WhyWmaasSection";
-import TenBenefitsSection from "@/components/services/TenBenefitsSection";
-import IndustriesWeServeSection from "@/components/services/IndustriesWeServeSection";
+import WmaasBanner from "@/components/services/wmaas/WmaasBanner";
+import WhyWmaasSection from "@/components/services/wmaas/WhyWmaasSection";
+import TenBenefitsSection from "@/components/services/wmaas/TenBenefitsSection";
+import IndustriesWeServeSection from "@/components/services/wmaas/IndustriesWeServeSection";
 import FAQ from "@/components/FAQ";
-import ZeroFutureWasteBanner from "@/components/services/ZeroFutureWasteBanner";
-import ProvenResultsSection from "@/components/services/ProvenResultsSection";
-import OperationalBurdenBanner from "@/components/services/OperationalBurdenBanner";
+import ZeroFutureWasteBanner from "@/components/services/wmaas/ZeroFutureWasteBanner";
+import ProvenResultsSection from "@/components/services/wmaas/ProvenResultsSection";
+import OperationalBurdenBanner from "@/components/services/wmaas/OperationalBurdenBanner";
 
 export default function WmaasServicePage() {
   return (
