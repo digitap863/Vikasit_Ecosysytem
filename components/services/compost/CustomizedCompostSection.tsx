@@ -38,7 +38,7 @@ export default function CustomizedCompostSection() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: true, margin: "-20px" }}
           variants={containerVariants}
           className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start"
         >
@@ -46,13 +46,13 @@ export default function CustomizedCompostSection() {
           <motion.div variants={itemVariants} className="lg:col-span-7 space-y-6">
             {/* Header Block */}
             <div className="space-y-3">
-              <span className="text-xs sm:text-sm font-semibold tracking-wider text-[#5A5A5C] uppercase block font-sans">
+              <span className="text-xs sm:text-sm font-normal tracking-wider text-[#5A5A5C] uppercase block font-sans">
                 CUSTOMIZED SOLUTIONS
               </span>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-[46px] font-extrabold text-[#343433] tracking-tight leading-[1.12] font-farro drop-shadow-md">
+              <h2 className="text-xl sm:text-4xl lg:text-[46px] font-extrabold text-[#343433] tracking-tight leading-[1.12] font-farro drop-shadow-md">
                 Customized Compost Solutions{" "}
-                <br className="hidden sm:inline" />
+                <br  />
                 <span className="font-normal text-[#343433]">
                   For Organic Farms
                 </span>

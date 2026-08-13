@@ -1,8 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { FiChevronDown } from "react-icons/fi";
 
 export default function TenBenefitsSection() {
+  const [showAllMobile, setShowAllMobile] = useState(false);
+
   const benefits = [
     {
       num: "01",
@@ -115,30 +119,51 @@ export default function TenBenefitsSection() {
           variants={containerVariants}
           className="max-w-[1240px] mx-auto bg-white rounded-[24px] sm:rounded-[32px] p-6 sm:p-10 lg:p-12 shadow-2xl border border-neutral-200/60"
         >
-          {/* 10 Benefits Grid (Exact Figma Gap: 100px Horizontal, 20px Vertical) */}
+          {/* 10 Benefits Grid */}
           <div className="max-w-[1170px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-x-10 lg:gap-x-16 xl:gap-x-[100px] gap-y-5 lg:gap-y-[20px]">
-            {benefits.map((benefit) => (
-              <motion.div
-                key={benefit.num}
-                variants={itemVariants}
-                className="flex items-start gap-3.5 sm:gap-4"
-              >
-                {/* Dark Square Number Badge */}
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#2B2B2C] text-white flex items-center justify-center font-extrabold text-xs sm:text-sm shrink-0 shadow-sm font-sans mt-0.5">
-                  {benefit.num}
-                </div>
+            {benefits.map((benefit, idx) => {
+              const isHiddenOnMobile = !showAllMobile && idx >= 3;
 
-                {/* Content */}
-                <div className="space-y-1 font-sans">
-                  <h3 className="text-sm sm:text-base font-bold text-[#1A1A1A] font-farro leading-snug">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-neutral-600 text-xs sm:text-[13px] leading-relaxed font-normal">
-                    {benefit.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+              return (
+                <motion.div
+                  key={benefit.num}
+                  variants={itemVariants}
+                  className={`items-start gap-3.5 sm:gap-4 ${
+                    isHiddenOnMobile ? "hidden sm:flex" : "flex"
+                  }`}
+                >
+                  {/* Dark Square Number Badge */}
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#2B2B2C] text-white flex items-center justify-center font-extrabold text-xs sm:text-sm shrink-0 shadow-sm font-sans mt-0.5">
+                    {benefit.num}
+                  </div>
+
+                  {/* Content */}
+                  <div className="space-y-1 font-sans">
+                    <h3 className="text-sm sm:text-base font-bold text-[#1A1A1A] font-farro leading-snug">
+                      {benefit.title}
+                    </h3>
+                    <p className="text-neutral-600 text-xs sm:text-[13px] leading-relaxed font-normal">
+                      {benefit.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Mobile View More / View Less Toggle Button */}
+          <div className="sm:hidden pt-6 flex justify-center border-t border-neutral-100 mt-5">
+            <button
+              onClick={() => setShowAllMobile((prev) => !prev)}
+              className="inline-flex items-center gap-2 bg-[#343433] text-white hover:bg-black px-6 py-2.5 rounded-full text-xs font-bold font-sans transition-all duration-300 shadow-md active:scale-95 cursor-pointer"
+            >
+              <span>{showAllMobile ? "View Less" : "View More"}</span>
+              <FiChevronDown
+                className={`w-4 h-4 transition-transform duration-300 ${
+                  showAllMobile ? "rotate-180" : ""
+                }`}
+              />
+            </button>
           </div>
         </motion.div>
       </div>

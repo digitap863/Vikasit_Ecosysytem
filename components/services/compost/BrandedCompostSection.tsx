@@ -3,6 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 export default function BrandedCompostSection() {
   const [activePill, setActivePill] = useState("Landscapers");
@@ -65,22 +69,22 @@ export default function BrandedCompostSection() {
   return (
     <section className="w-full bg-[#EBE4D5] text-[#1A1A1A] py-12 sm:py-16 lg:py-20 overflow-hidden border-t border-[#E0D8C8]/60">
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 space-y-12 sm:space-y-16">
-        {/* Top Split Layout: Text (Max W 608px from Figma) + Product Image (473x399 from Figma) */}
+        {/* Top Split Layout */}
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: true, margin: "-20px" }}
           variants={containerVariants}
           className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center"
         >
-          {/* Left Text Block: Figma reference width 608 Hug */}
+          {/* Left Text Block */}
           <motion.div variants={itemVariants} className="lg:col-span-7 max-w-[608px] space-y-5">
             {/* Tagline */}
             <span className="text-xs sm:text-sm font-semibold tracking-wider text-[#5A5A5C] uppercase block font-sans">
               BRANDED COMPOST PRODUCTS
             </span>
 
-            {/* Main Title with Figma Drop Shadow Effect */}
+            {/* Main Title */}
             <h2
               className="text-3xl sm:text-4xl lg:text-[46px] font-extrabold text-[#343433] tracking-tight leading-[1.12] font-farro"
               style={{
@@ -116,12 +120,12 @@ export default function BrandedCompostSection() {
             </div>
           </motion.div>
 
-          {/* Right Product Image Column: Figma reference 473 x 399 */}
+          {/* Right Product Image Column */}
           <motion.div
             variants={itemVariants}
             className="lg:col-span-5 flex items-center justify-center lg:justify-end"
           >
-            <div className="relative w-full max-w-[473px] h-[320px] sm:h-[380px] lg:h-[399px] flex items-center justify-center">
+            <div className="hidden sm:block relative w-full max-w-[473px] h-[320px] sm:h-[380px] lg:h-[399px] flex items-center justify-center">
               <Image
                 src="/product/vikasit_chakra.png"
                 alt="Vikasit Chakra Branded Compost Products"
@@ -134,49 +138,75 @@ export default function BrandedCompostSection() {
           </motion.div>
         </motion.div>
 
-        {/* Bottom Cards Section: Figma reference width 934 Hug x height 283 Hug */}
+        {/* Bottom Cards Section */}
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: true, margin: "-20px" }}
           variants={containerVariants}
           className="w-full max-w-[934px] mx-auto pt-2"
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+          {/* Desktop View: 3-Column Grid */}
+          <div className="hidden md:grid grid-cols-3 gap-5 sm:gap-6">
             {cards.map((card) => (
               <motion.div
                 key={card.id}
                 variants={itemVariants}
                 whileHover={{ y: -5 }}
                 transition={{ duration: 0.25 }}
-                className="bg-white rounded-[22px] overflow-hidden shadow-md border border-neutral-200/80 flex flex-col justify-between group hover:shadow-xl transition-shadow min-h-[283px]"
               >
-                {/* Top Dark Header Box with Product Image */}
-                <div className="bg-[#2B2B2C] h-[145px] sm:h-[155px] relative flex items-center justify-center p-4">
-                  <div className="relative w-[110px] h-[115px] transition-transform duration-300 group-hover:scale-105">
-                    <Image
-                      src={card.image}
-                      alt={card.title}
-                      fill
-                      className="object-contain filter drop-shadow-md"
-                    />
-                  </div>
-                </div>
-
-                {/* Bottom White Card Body */}
-                <div className="p-5 sm:p-6 flex-1 flex flex-col justify-start space-y-2">
-                  <h3 className="text-base sm:text-[17px] font-extrabold text-[#1A1A1A] font-farro tracking-tight leading-snug">
-                    {card.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-neutral-600 font-sans leading-relaxed">
-                    {card.description}
-                  </p>
-                </div>
+                <ProductCard card={card} />
               </motion.div>
             ))}
+          </div>
+
+          {/* Mobile View: Swiper Carousel */}
+          <div className="block md:hidden pb-2">
+            <Swiper
+              modules={[Autoplay, Pagination]}
+              spaceBetween={16}
+              slidesPerView={1.15}
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 5000, disableOnInteraction: false }}
+              className="pb-12 !px-1"
+            >
+              {cards.map((card) => (
+                <SwiperSlide key={card.id} className="h-auto">
+                  <ProductCard card={card} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </motion.div>
       </div>
     </section>
+  );
+}
+
+function ProductCard({ card }: { card: any }) {
+  return (
+    <div className="bg-white rounded-[22px] overflow-hidden shadow-md border border-neutral-200/80 flex flex-col justify-between group hover:shadow-xl transition-shadow min-h-[283px] h-full cursor-pointer">
+      {/* Top Dark Header Box with Product Image */}
+      <div className="bg-[#2B2B2C] h-[145px] sm:h-[155px] relative flex items-center justify-center p-4">
+        <div className="relative w-[110px] h-[115px] transition-transform duration-300 group-hover:scale-105">
+          <Image
+            src={card.image}
+            alt={card.title}
+            fill
+            className="object-contain filter drop-shadow-md"
+          />
+        </div>
+      </div>
+
+      {/* Bottom White Card Body */}
+      <div className="p-5 sm:p-6 flex-1 flex flex-col justify-start space-y-2 font-sans">
+        <h3 className="text-base sm:text-[17px] font-extrabold text-[#1A1A1A] font-farro tracking-tight leading-snug">
+          {card.title}
+        </h3>
+        <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-normal">
+          {card.description}
+        </p>
+      </div>
+    </div>
   );
 }

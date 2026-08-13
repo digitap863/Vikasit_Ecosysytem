@@ -2,6 +2,10 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 export default function ProvenResultsSection() {
   const containerVariants = {
@@ -24,6 +28,73 @@ export default function ProvenResultsSection() {
       transition: { duration: 0.45, ease: "easeOut" as const },
     },
   };
+
+  const caseStudies = [
+    {
+      id: "res-township",
+      category: "RESIDENTIAL COMMUNITY",
+      title: "1,250–Unit Township",
+      subtitle: "1,100+ kg mixed waste generated daily",
+      image: "/Services/wmas1.png",
+      alt: "1,250-Unit Township Residential Community",
+      badgeIcon: (
+        <svg
+          className="w-5 h-5 sm:w-6 sm:h-6 stroke-current"
+          viewBox="0 0 24 24"
+          fill="none"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <rect x="4" y="2" width="16" height="20" rx="2" />
+          <path d="M9 6h2M13 6h2M9 10h2M13 10h2M9 14h2M13 14h2" />
+          <path d="M10 22v-4h4v4" />
+        </svg>
+      ),
+      challenge:
+        "High transportation costs, pest issues, and inconsistent municipal collection across the township.",
+      solution:
+        "A complete decentralized system — THE SOIL MAKER™, source segregation, resident awareness, trained operators, and daily monitoring.",
+      results: [
+        "100% of wet waste processed on-site",
+        "50+ tonnes of organic waste diverted from landfill every year",
+        "₹25 Lakhs saved annually in transportation & disposal costs",
+      ],
+    },
+    {
+      id: "corporate-campus",
+      category: "IT TECHNOLOGY PARK",
+      title: "Corporate Campus",
+      subtitle: "4.5 tonnes waste generated daily",
+      image: "/Services/wmas2.png",
+      alt: "Corporate Campus IT Technology Park",
+      badgeIcon: (
+        <svg
+          className="w-5 h-5 sm:w-6 sm:h-6 stroke-current"
+          viewBox="0 0 24 24"
+          fill="none"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M3 21h18" />
+          <path d="M5 21V7l8-4v18" />
+          <path d="M19 21V11l-6-3" />
+          <path d="M9 9h1M9 13h1M9 17h1" />
+        </svg>
+      ),
+      challenge:
+        "~3,000 kg kitchen waste and 300 kg garden waste daily, driving high transportation expenses and environmental concerns.",
+      solution:
+        "Deployment of a 3 TPD THE SOIL MAKER™ decentralized processing system, fully managed by Vikasit Ecosystems.",
+      results: [
+        "~₹25 Lakhs saved annually",
+        "~25 tonnes of organic compost produced every month",
+        "Compost reused for landscaping & community green spaces",
+        "Significant cut in landfill waste and carbon emissions",
+      ],
+    },
+  ];
 
   return (
     <section className="w-full bg-[#EBE4D5] text-[#1A1A1A] py-4 sm:py-8 lg:py-10">
@@ -55,194 +126,123 @@ export default function ProvenResultsSection() {
           </motion.h2>
         </motion.div>
 
-        {/* 2 Case Study Cards Grid */}
+        {/* Desktop View: 2 Case Study Cards Grid */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={containerVariants}
-          className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12"
+          className="hidden lg:grid max-w-[1440px] mx-auto grid-cols-2 gap-8 sm:gap-10 lg:gap-12"
         >
-          {/* Card 1: Residential Community Township */}
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-col space-y-5 group"
+          {caseStudies.map((item) => (
+            <motion.div key={item.id} variants={itemVariants}>
+              <CaseStudyCard item={item} />
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Mobile View: Swiper Carousel */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="block lg:hidden max-w-[1440px] mx-auto pb-2"
+        >
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            spaceBetween={18}
+            slidesPerView={1.05}
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+            }}
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            className="pb-12 !px-1"
           >
-            {/* Image Box with Floating Badge (Exact Figma 604x204 aspect ratio) */}
-            <div className="relative w-full h-[175px] sm:h-[195px] lg:h-[204px] rounded-t-[20px] overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300">
-              <Image
-                src="/Services/wmas1.png"
-                alt="1,250-Unit Township Residential Community"
-                fill
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-              />
-              {/* Green Building Icon Badge overlapping bottom left */}
-              <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#044D29] border-2 border-white/90 flex items-center justify-center text-white shadow-lg">
-                <svg
-                  className="w-5 h-5 sm:w-6 sm:h-6 stroke-current"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <rect x="4" y="2" width="16" height="20" rx="2" />
-                  <path d="M9 6h2M13 6h2M9 10h2M13 10h2M9 14h2M13 14h2" />
-                  <path d="M10 22v-4h4v4" />
-                </svg>
-              </div>
-            </div>
-
-            {/* Content Details */}
-            <div className="space-y-4 px-1">
-              <div>
-                <span className="text-[11px] sm:text-xs font-normal tracking-wider text-[#343433] uppercase block font-sans">
-                  RESIDENTIAL COMMUNITY
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-[#343433] font-farro tracking-tight mt-0.5">
-                  1,250–Unit Township
-                </h3>
-                <p className="text-xs sm:text-sm font-normal text-[#343433] font-sans mt-0.5">
-                  1,100+ kg mixed waste generated daily
-                </p>
-              </div>
-
-              {/* Challenge */}
-              <div className="space-y-1">
-                <h4 className="text-sm sm:text-base font-bold text-[#343433] font-satoshi">
-                  Challenge
-                </h4>
-                <p className="text-xs sm:text-sm text-[#343433] font-satoshi leading-relaxed">
-                  High transportation costs, pest issues, and inconsistent municipal collection across the township.
-                </p>
-              </div>
-
-              {/* Solution */}
-              <div className="space-y-1">
-                <h4 className="text-sm sm:text-base font-bold text-[#343433] font-satoshi">
-                  WMAAS™ Solution
-                </h4>
-                <p className="text-xs sm:text-sm text-[#343433] font-satoshi leading-relaxed">
-                  A complete decentralized system — THE SOIL MAKER™, source segregation, resident awareness, trained operators, and daily monitoring.
-                </p>
-              </div>
-
-              {/* Results */}
-              <div className="space-y-1.5 pt-1">
-                <h4 className="text-sm sm:text-base font-bold text-[#343433] font-satoshi">
-                  Results
-                </h4>
-                <ul className="space-y-1 text-xs sm:text-sm text-[#343433] font-satoshi leading-relaxed">
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#343433] font-bold">•</span>
-                    <span>100% of wet waste processed on-site</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#343433] font-bold">•</span>
-                    <span>50+ tonnes of organic waste diverted from landfill every year</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#343433] font-bold">•</span>
-                    <span>₹25 Lakhs saved annually in transportation & disposal costs</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Card 2: IT Technology Park Corporate Campus */}
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-col space-y-5 group"
-          >
-            {/* Image Box with Floating Badge (Exact Figma 604x204 aspect ratio) */}
-            <div className="relative w-full h-[175px] sm:h-[195px] lg:h-[204px] rounded-t-[20px] overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300">
-              <Image
-                src="/Services/wmas2.png"
-                alt="Corporate Campus IT Technology Park"
-                fill
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-              />
-              {/* Green Building Icon Badge overlapping bottom left */}
-              <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#044D29] border-2 border-white/90 flex items-center justify-center text-white shadow-lg">
-                <svg
-                  className="w-5 h-5 sm:w-6 sm:h-6 stroke-current"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M3 21h18" />
-                  <path d="M5 21V7l8-4v18" />
-                  <path d="M19 21V11l-6-3" />
-                  <path d="M9 9h1M9 13h1M9 17h1" />
-                </svg>
-              </div>
-            </div>
-
-            {/* Content Details */}
-            <div className="space-y-4 px-1">
-              <div>
-                <span className="text-[11px] sm:text-xs font-normal tracking-wider text-[#343433] uppercase block font-satoshi">
-                  IT TECHNOLOGY PARK
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-[#343433] font-farro tracking-tight mt-0.5">
-                  Corporate Campus
-                </h3>
-                <p className="text-xs sm:text-sm font-medium text-[#343433] font-satoshi mt-0.5">
-                  4.5 tonnes waste generated daily
-                </p>
-              </div>
-
-              {/* Challenge */}
-              <div className="space-y-1">
-                <h4 className="text-sm sm:text-base font-bold text-[#343433] font-satoshi">
-                  Challenge
-                </h4>
-                <p className="text-xs sm:text-sm text-[#343433] font-satoshi leading-relaxed">
-                  ~3,000 kg kitchen waste and 300 kg garden waste daily, driving high transportation expenses and environmental concerns.
-                </p>
-              </div>
-
-              {/* Solution */}
-              <div className="space-y-1">
-                <h4 className="text-sm sm:text-base font-bold text-[#343433] font-satoshi">
-                  WMAAS™ Solution
-                </h4>
-                <p className="text-xs sm:text-sm text-[#343433] font-satoshi leading-relaxed">
-                  Deployment of a 3 TPD THE SOIL MAKER™ decentralized processing system, fully managed by Vikasit Ecosystems.
-                </p>
-              </div>
-
-              {/* Results */}
-              <div className="space-y-1.5 pt-1">
-                <h4 className="text-sm sm:text-base font-bold text-[#343433] font-farro">
-                  Results
-                </h4>
-                <ul className="space-y-1 text-xs sm:text-sm text-[#343433] font-sans leading-relaxed">
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#343433] font-bold">•</span>
-                    <span>~₹25 Lakhs saved annually</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#343433] font-bold">•</span>
-                    <span>~25 tonnes of organic compost produced every month</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#343433] font-bold">•</span>
-                    <span>Compost reused for landscaping & community green spaces</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[#343433] font-bold">•</span>
-                    <span>Significant cut in landfill waste and carbon emissions</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </motion.div>
+            {caseStudies.map((item) => (
+              <SwiperSlide key={item.id} className="h-auto">
+                <CaseStudyCard item={item} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </motion.div>
       </div>
     </section>
+  );
+}
+
+function CaseStudyCard({ item }: { item: any }) {
+  return (
+    <div className="flex flex-col space-y-5 group h-full">
+      {/* Image Box with Floating Badge */}
+      <div className="relative w-full h-[175px] sm:h-[195px] lg:h-[204px] rounded-t-[20px] overflow-hidden shadow-md group-hover:shadow-xl transition-shadow duration-300">
+        <Image
+          src={item.image}
+          alt={item.alt}
+          fill
+          className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+        />
+        {/* Green Building Icon Badge overlapping bottom left */}
+        <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#044D29] border-2 border-white/90 flex items-center justify-center text-white shadow-lg">
+          {item.badgeIcon}
+        </div>
+      </div>
+
+      {/* Content Details */}
+      <div className="space-y-4 px-1 flex-1 flex flex-col justify-between">
+        <div className="space-y-4">
+          <div>
+            <span className="text-[11px] sm:text-xs font-normal tracking-wider text-[#343433] uppercase block font-sans">
+              {item.category}
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-[#343433] font-farro tracking-tight mt-0.5">
+              {item.title}
+            </h3>
+            <p className="text-xs sm:text-sm font-medium text-[#343433] font-satoshi mt-0.5">
+              {item.subtitle}
+            </p>
+          </div>
+
+          {/* Challenge */}
+          <div className="space-y-1">
+            <h4 className="text-sm sm:text-base font-bold text-[#343433] font-satoshi">
+              Challenge
+            </h4>
+            <p className="text-xs sm:text-sm text-[#343433] font-satoshi leading-relaxed">
+              {item.challenge}
+            </p>
+          </div>
+
+          {/* Solution */}
+          <div className="space-y-1">
+            <h4 className="text-sm sm:text-base font-bold text-[#343433] font-satoshi">
+              WMAAS™ Solution
+            </h4>
+            <p className="text-xs sm:text-sm text-[#343433] font-satoshi leading-relaxed">
+              {item.solution}
+            </p>
+          </div>
+
+          {/* Results */}
+          <div className="space-y-1.5 pt-1">
+            <h4 className="text-sm sm:text-base font-bold text-[#343433] font-farro">
+              Results
+            </h4>
+            <ul className="space-y-1 text-xs sm:text-sm text-[#343433] font-sans leading-relaxed">
+              {item.results.map((res: string, i: number) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="text-[#343433] font-bold">•</span>
+                  <span>{res}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

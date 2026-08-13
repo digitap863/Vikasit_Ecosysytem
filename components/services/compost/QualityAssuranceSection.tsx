@@ -157,7 +157,7 @@ export default function QualityAssuranceSection() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: true, margin: "-20px" }}
           variants={containerVariants}
           className="text-center space-y-2.5 max-w-[800px] mx-auto"
         >
@@ -170,11 +170,11 @@ export default function QualityAssuranceSection() {
 
           <motion.h2
             variants={itemVariants}
-            className="text-3xl sm:text-4xl lg:text-[46px] font-extrabold text-[#343433] tracking-tight leading-[1.12] font-farro drop-shadow-md"
+            className="text-2xl sm:text-4xl lg:text-[46px] font-bold text-[#343433] tracking-tight leading-[1.12] font-farro drop-shadow-md"
           >
             Quality Assurance &{" "}
-            <br className="hidden sm:inline" />
-            <span className="font-normal text-[#343433]">
+            <br  />
+            <span className="font-normal text-[#343433] ">
               Soil-Specific Fortification
             </span>
           </motion.h2>
@@ -191,7 +191,7 @@ export default function QualityAssuranceSection() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, margin: "-20px" }}
           variants={containerVariants}
           className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center"
         >

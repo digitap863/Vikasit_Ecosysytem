@@ -53,7 +53,7 @@ export default function ClimateValueSection() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: true, margin: "-20px" }}
           variants={containerVariants}
           className="text-center space-y-3 max-w-3xl mx-auto"
         >
@@ -66,49 +66,49 @@ export default function ClimateValueSection() {
 
           <motion.h2
             variants={itemVariants}
-            className="text-3xl sm:text-4xl lg:text-[46px] font-extrabold text-white tracking-tight leading-[1.12] font-farro drop-shadow-md"
+            className="text-xl sm:text-4xl lg:text-[46px] font-extrabold text-white tracking-tight leading-[1.15] font-farro drop-shadow-md"
           >
             Creating Measurable Climate Value.
           </motion.h2>
 
           <motion.p
             variants={itemVariants}
-            className="text-neutral-300/90 text-sm sm:text-base lg:text-[16px] font-satoshi font-normal leading-relaxed pt-1 max-w-2xl mx-auto"
+            className="text-neutral-300/90 text-xs sm:text-base lg:text-[16px] font-satoshi font-normal leading-relaxed pt-1 max-w-2xl mx-auto"
           >
             By diverting organic waste from landfills and converting it into stable compost through THE SOIL MAKER™, the system contributes to greenhouse gas reduction in four ways.
           </motion.p>
         </motion.div>
 
-        {/* 4 Cards Grid - Professional Clean Hover & Border Transition */}
+        {/* 4 Cards Grid - 2 items per row on mobile, 4 items on desktop */}
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, margin: "-20px" }}
           variants={containerVariants}
-          className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch"
+          className="w-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6 items-stretch"
         >
           {cards.map((card) => (
             <motion.div
               key={card.num}
               variants={itemVariants}
               whileHover={{ y: -4, transition: { duration: 0.25, ease: "easeOut" } }}
-              className="group relative bg-[#343433]/70 hover:bg-[#383837] border border-[#EAE3D2]/40 hover:border-[#00C853] rounded-[16px] p-6 flex flex-col justify-between min-h-[313px] transition-all duration-300 cursor-pointer shadow-md hover:shadow-xl"
+              className="group relative bg-[#343433]/70 hover:bg-[#383837] border border-[#EAE3D2]/40 hover:border-[#00C853] rounded-[14px] sm:rounded-[16px] p-3 sm:p-6 flex flex-col justify-between min-h-[210px] sm:min-h-[313px] transition-all duration-300 cursor-pointer shadow-md hover:shadow-xl"
             >
-              <div className="space-y-4">
+              <div className="space-y-2 sm:space-y-4">
                 {/* Number Badge (Smooth Green fill transition on hover) */}
                 <div className="inline-block">
-                  <span className="w-10 h-8 rounded-md bg-white text-[#2B2B2C] group-hover:bg-[#00C853] group-hover:text-white font-extrabold text-sm flex items-center justify-center transition-colors duration-300 font-sans shadow-sm">
+                  <span className="w-7 h-6 sm:w-10 sm:h-8 rounded-md bg-white text-[#2B2B2C] group-hover:bg-[#00C853] group-hover:text-white font-extrabold text-[11px] sm:text-sm flex items-center justify-center transition-colors duration-300 font-sans shadow-sm">
                     {card.num}
                   </span>
                 </div>
 
                 {/* Card Title */}
-                <h3 className="text-lg sm:text-[19px] font-bold text-white leading-snug font-farro transition-colors duration-300">
+                <h3 className="text-[12.5px] sm:text-[19px] font-bold text-white leading-snug font-farro transition-colors duration-300">
                   {card.title}
                 </h3>
 
                 {/* Card Description */}
-                <p className="text-xs sm:text-[13px] text-neutral-300/80 font-satoshi font-normal leading-relaxed">
+                <p className="text-[10px] sm:text-[13px] text-neutral-300/80 font-satoshi font-normal leading-relaxed">
                   {card.desc}
                 </p>
               </div>
