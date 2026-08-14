@@ -70,6 +70,9 @@ export default function KeyFeaturesTechnicalSpecs() {
             <motion.h2
               variants={itemVariants}
               className="text-3xl sm:text-4xl lg:text-[46px] font-md text-[#EAE3D2] tracking-tight leading-[1.12] font-farro"
+              style={{
+                textShadow: "0px 3px 10px rgba(0, 0, 0, 0.4), 0px 1px 3px rgba(0, 0, 0, 0.25)",
+              }}
             >
               Key Features & Technical Specs.
             </motion.h2>

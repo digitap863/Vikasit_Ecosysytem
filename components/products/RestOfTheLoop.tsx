@@ -94,7 +94,12 @@ export default function RestOfTheLoop() {
               OTHER PRODUCTS
             </span>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-[46px] xl:text-[50px] font-extrabold text-[#1A1A1A] tracking-tight leading-[1.1] font-farro">
+            <h2
+              className="text-3xl sm:text-4xl lg:text-[46px] xl:text-[50px] font-extrabold text-[#1A1A1A] tracking-tight leading-[1.1] font-farro"
+              style={{
+                textShadow: "0px 3px 8px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.1)",
+              }}
+            >
               The Rest Of The Loop.
             </h2>
 
@@ -145,7 +150,12 @@ export default function RestOfTheLoop() {
                   </span>
 
                   {/* Title */}
-                  <h3 className="text-2xl sm:text-3xl lg:text-[36px] font-extrabold text-[#1A1A1A] tracking-tight leading-tight font-farro">
+                  <h3
+                    className="text-2xl sm:text-3xl lg:text-[36px] font-extrabold text-[#1A1A1A] tracking-tight leading-tight font-farro"
+                    style={{
+                      textShadow: "0px 2px 6px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.08)",
+                    }}
+                  >
                     {prod.title}
                   </h3>
 

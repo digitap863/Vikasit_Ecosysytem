@@ -217,6 +217,9 @@ export default function SoilMakerSuitedFor() {
             <motion.h2
               variants={itemVariants}
               className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[48px] font-extrabold text-[#343433] tracking-tight leading-[1.15] font-farro"
+              style={{
+                textShadow: "0px 3px 8px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.1)",
+              }}
             >
               Soil Maker Is Ideally Suited For
               <br />

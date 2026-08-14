@@ -129,8 +129,8 @@ export default function ProductBanner() {
         <div className="absolute inset-y-0 left-0 w-[35%] lg:w-[40%] bg-gradient-to-r from-[#EBE4D5] via-[#EBE4D5]/70 to-transparent z-20" />
       </div>
 
-      {/* 2. Top Layer: Foreground Text Content (placed on top, left-aligned) */}
-      <div className="relative z-30 max-w-[1440px] w-full mx-auto px-6 sm:px-10 lg:px-16 flex flex-col lg:flex-row items-center justify-between">
+      {/* 2. Top Layer: Foreground Content Container */}
+      <div className="relative z-30 max-w-[1440px] w-full mx-auto px-6 sm:px-10 lg:px-16">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -140,7 +140,7 @@ export default function ProductBanner() {
           {/* Featured Product Tagline */}
           <motion.span
             variants={itemVariants}
-            className="text-xs sm:text-sm font-extrabold tracking-widest text-[#2E7D32] uppercase block font-sans"
+            className="text-xs sm:text-sm font-normal tracking-widest text-[#2E7D32] uppercase block font-sans"
           >
             FEATURED PRODUCT
           </motion.span>
@@ -148,11 +148,14 @@ export default function ProductBanner() {
           {/* Main Heading */}
           <motion.h1
             variants={itemVariants}
-            className="text-4xl sm:text-5xl lg:text-[52px] xl:text-[58px] font-extrabold text-[#1A1A1A] tracking-tight leading-[1.08] font-farro"
+            className="text-4xl sm:text-5xl lg:text-[52px] xl:text-[58px] font-extrabold text-[#1A1A1A] tracking-tight leading-[1.08] font-farro drop-shadow-md"
+            style={{
+              textShadow: "0px 3px 8px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.1)",
+            }}
           >
             The Soil Maker
             <br />
-            <span className="font-extrabold text-[#1A1A1A]">
+            <span className="font-normal text-[#1A1A1A]">
               Organic Waste Converter
             </span>
           </motion.h1>
@@ -202,91 +205,87 @@ export default function ProductBanner() {
               </div>
             ))}
           </motion.div>
-
-          {/* Bottom Specs Dark Card & CTA Button */}
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 max-w-[580px] !mt-6"
-          >
-            <div className="bg-[#2B2B2C] text-white p-4 sm:p-5 rounded-2xl shadow-lg flex-1 flex items-center justify-between gap-3">
-              {/* Stat 1 */}
-              <div className="flex items-center gap-2.5">
-                <TbBolt className="w-5 h-5 text-[#22C55E] shrink-0" />
-                <div className="font-sans">
-                  <p className="text-xs sm:text-sm font-bold text-white leading-tight">
-                    25–2500 Kg
-                  </p>
-                  <p className="text-[10px] sm:text-[11px] text-neutral-400 font-medium leading-tight">
-                    High Capacity
-                  </p>
-                </div>
-              </div>
-
-              <div className="w-[1px] h-8 bg-neutral-600/70" />
-
-              {/* Stat 2 */}
-              <div className="flex items-center gap-2.5">
-                <TbBolt className="w-5 h-5 text-[#22C55E] shrink-0" />
-                <div className="font-sans">
-                  <p className="text-xs sm:text-sm font-bold text-white leading-tight">
-                    3–4 Hours
-                  </p>
-                  <p className="text-[10px] sm:text-[11px] text-neutral-400 font-medium leading-tight">
-                    Quick Cycle
-                  </p>
-                </div>
-              </div>
-
-              <div className="w-[1px] h-8 bg-neutral-600/70" />
-
-              {/* Stat 3 */}
-              <div className="flex items-center gap-2.5">
-                <TbBolt className="w-5 h-5 text-[#22C55E] shrink-0" />
-                <div className="font-sans">
-                  <p className="text-xs sm:text-sm font-bold text-white leading-tight">
-                    100% Organic
-                  </p>
-                  <p className="text-[10px] sm:text-[11px] text-neutral-400 font-medium leading-tight">
-                    Zero Odour
-                  </p>
-                </div>
-              </div>
-            </div>
-
-           
-          </motion.div>
         </motion.div>
 
-        {/* Thumbnail Selector (Positioned on the bottom right overlay) */}
+        {/* 3. Combined Flex Row for Stats Dark Card & Thumbnail Selector */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex items-center justify-end gap-3.5 w-full lg:w-auto mt-8 lg:mt-0 lg:absolute lg:bottom-10 lg:right-16 z-40"
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex flex-col lg:flex-row items-center justify-between gap-6 w-full mt-6 lg:mt-8 z-40"
         >
-          {images.map((img, idx) => {
-            const isSelected = selectedIndex === idx;
-            return (
-              <button
-                key={img.id}
-                onClick={() => setSelectedIndex(idx)}
-                className={`relative w-16 h-14 sm:w-20 sm:h-16 lg:w-22 lg:h-18 rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer shadow-sm ${
-                  isSelected
-                    ? "border-[#27272A] ring-2 ring-[#27272A]/20 scale-105 bg-white"
-                    : "border-neutral-400/80 hover:border-neutral-700 opacity-80 hover:opacity-100 bg-[#E0D8C8]"
-                }`}
-                title={img.alt}
-                aria-label={img.alt}
-              >
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  className={`${img.thumbStyle} transition-transform duration-300`}
-                />
-              </button>
-            );
-          })}
+          {/* Specs Dark Card */}
+          <div className="bg-[#2B2B2C] text-white p-4 sm:p-5 rounded-2xl shadow-lg w-full sm:w-auto max-w-[580px] flex-1 flex items-center justify-between gap-3 shrink-0">
+            {/* Stat 1 */}
+            <div className="flex items-center gap-2.5">
+              <TbBolt className="w-5 h-5 text-[#22C55E] shrink-0" />
+              <div className="font-sans">
+                <p className="text-xs sm:text-sm font-normal text-white leading-tight">
+                  25–2500 Kg/Cycle
+                </p>
+                <p className="text-[10px] sm:text-[11px] text-white font-normal leading-tight">
+                  High Capacity
+                </p>
+              </div>
+            </div>
+
+            <div className="w-[1px] h-8 bg-white shrink-0" />
+
+            {/* Stat 2 */}
+            <div className="flex items-center gap-2.5">
+              <TbBolt className="w-5 h-5 text-[#22C55E] shrink-0" />
+              <div className="font-sans">
+                <p className="text-xs sm:text-sm font-normal text-white leading-tight">
+                  24–48 Hours
+                </p>
+                <p className="text-[10px] sm:text-[11px] text-white font-normal leading-tight">
+                  Quick Composting
+                </p>
+              </div>
+            </div>
+
+            <div className="w-[1px] h-8 bg-white shrink-0" />
+
+            {/* Stat 3 */}
+            <div className="flex items-center gap-2.5">
+              <TbBolt className="w-5 h-5 text-[#22C55E] shrink-0" />
+              <div className="font-sans">
+                <p className="text-xs sm:text-sm font-normal text-white leading-tight">
+                  Better Soil
+                </p>
+                <p className="text-[10px] sm:text-[11px] text-white font-normal leading-tight">
+                  Better Tomorrow
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Thumbnail Selector */}
+          <div className="flex items-center justify-center lg:justify-end gap-3.5 w-full lg:w-auto shrink-0">
+            {images.map((img, idx) => {
+              const isSelected = selectedIndex === idx;
+              return (
+                <button
+                  key={img.id}
+                  onClick={() => setSelectedIndex(idx)}
+                  className={`relative w-16 h-14 sm:w-20 sm:h-16 lg:w-22 lg:h-18 rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer shadow-sm ${
+                    isSelected
+                      ? "border-[#27272A] ring-2 ring-[#27272A]/20 scale-105 bg-white"
+                      : "border-neutral-400/80 hover:border-neutral-700 opacity-80 hover:opacity-100 bg-[#E0D8C8]"
+                  }`}
+                  title={img.alt}
+                  aria-label={img.alt}
+                >
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    className={`${img.thumbStyle} transition-transform duration-300`}
+                  />
+                </button>
+              );
+            })}
+          </div>
         </motion.div>
       </div>
     </section>

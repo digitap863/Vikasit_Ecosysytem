@@ -95,7 +95,12 @@ export default function FAQ() {
     <section className="w-full bg-[#eae4d6] py-10 md:py-14 relative z-10">
       <div className="max-w-[1320px] mx-auto px-6 lg:px-12">
         {/* Title */}
-        <h2 className="text-4xl sm:text-[46px] font-normal text-center text-[#2d2f2f] font-farro mb-12 md:mb-16">
+        <h2
+          className="text-4xl sm:text-[46px] font-normal text-center text-[#2d2f2f] font-farro mb-12 md:mb-16"
+          style={{
+            textShadow: "0px 3px 8px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.1)",
+          }}
+        >
           FAQ
         </h2>
 

@@ -39,7 +39,12 @@ export default function WasteActBanner() {
         {/* Content Container */}
         <div className="relative z-20 w-full flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           {/* Left Text */}
-          <h3 className="text-white font-medium text-base sm:text-lg lg:text-[21px] xl:text-[23px] tracking-wide leading-snug font-satoshi max-w-[620px]">
+          <h3
+            className="text-white font-medium text-base sm:text-lg lg:text-[21px] xl:text-[23px] tracking-wide leading-snug font-satoshi max-w-[620px]"
+            style={{
+              textShadow: "0px 3px 10px rgba(0, 0, 0, 0.6), 0px 1px 3px rgba(0, 0, 0, 0.4)",
+            }}
+          >
             WASTE MANAGEMENT IS A PROBLEM IGNORED AND ORPHANED – WE NEED TO ACT NOW.
           </h3>
 
