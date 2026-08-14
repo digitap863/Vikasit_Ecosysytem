@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { FiZap } from "react-icons/fi";
 
@@ -104,13 +103,14 @@ export default function WhyWmaasSection() {
             {/* Bottom Left: Core Engineering Diagram Card */}
             <motion.div
               variants={itemVariants}
-              className="bg-[#FAF6EE] rounded-[24px] sm:rounded-[28px] p-6 sm:p-8 shadow-md border border-neutral-300/50 overflow-hidden flex flex-col items-center justify-center min-h-[440px] sm:min-h-[480px] h-full"
+              className="bg-[#ede3d3] rounded-[24px] sm:rounded-[28px] p-6 sm:p-8 shadow-md border border-neutral-300/50 overflow-hidden flex flex-col items-center justify-center min-h-[440px] sm:min-h-[480px] h-full"
             >
-              <Image
-                src="/Services/wmas_coreEngineering.png"
-                alt="Core Engineering & Operational Highlights"
-                width={600}
-                height={450}
+              <video
+                src="/video/wmas.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
                 className="w-full h-full object-contain rounded-[18px]"
               />
             </motion.div>

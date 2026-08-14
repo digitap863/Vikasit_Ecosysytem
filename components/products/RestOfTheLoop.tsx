@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FiArrowRight } from "react-icons/fi";
+import Button from "@/components/ui/Button";
 
 export default function RestOfTheLoop() {
   const products = [
@@ -166,15 +166,13 @@ export default function RestOfTheLoop() {
 
                   {/* Enquire Now Action Button -> Routes to /contact with pre-filled product query */}
                   <div className="pt-2">
-                    <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
-                      <Link
-                        href={`/contact?product=${encodeURIComponent(prod.title)}`}
-                        className="inline-flex items-center gap-2 border border-[#2B2B2C] text-[#1A1A1A] hover:bg-[#2B2B2C] hover:text-white px-7 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer group"
-                      >
-                        <span>Enquire Now</span>
-                        <FiArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                      </Link>
-                    </motion.div>
+                    <Button
+                      href={`/contact?product=${encodeURIComponent(prod.title)}`}
+                      variant="outline"
+                      showArrow
+                    >
+                      Enquire Now
+                    </Button>
                   </div>
                 </div>
               </motion.div>

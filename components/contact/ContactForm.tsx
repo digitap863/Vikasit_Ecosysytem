@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { FiCheckCircle } from "react-icons/fi";
 import { motion } from "framer-motion";
+import Button from "@/components/ui/Button";
 
 export default function ContactForm() {
   const searchParams = useSearchParams();
@@ -40,7 +41,7 @@ export default function ContactForm() {
       {/* Title with Green Underline under "Get in" */}
       <div className="mb-8">
         <h2 className="text-4xl sm:text-[46px] font-extrabold text-[#161616] tracking-tight font-sans">
-          Get in <span className="font-bold">touch</span>
+          Get in <span className="font-normal">touch</span>
         </h2>
         {/* Green Underline Bar under "Get in" */}
         <div className="h-[4px] bg-[#056826] w-[115px] mt-1.5 rounded-full" />
@@ -128,12 +129,9 @@ export default function ContactForm() {
 
           {/* Submit Button */}
           <div className="pt-2">
-            <button
-              type="submit"
-              className="w-full bg-[#161616] hover:bg-black text-[#EAE3D2] font-semibold text-sm tracking-wide py-4 px-6 rounded-[3px] transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer"
-            >
+            <Button type="submit" variant="dark" fullWidth size="lg">
               SUBMIT INQUIRY
-            </button>
+            </Button>
           </div>
         </form>
       )}

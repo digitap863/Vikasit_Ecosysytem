@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FiArrowRight } from "react-icons/fi";
+import Button from "@/components/ui/Button";
 
 export default function WasteActBanner() {
   const handleDownloadBrochure = () => {
@@ -51,22 +51,14 @@ export default function WasteActBanner() {
           {/* Right Action Buttons */}
           <div className="flex flex-wrap items-center gap-3.5 sm:gap-4 shrink-0">
             {/* Primary Talk to Our Expert Button */}
-            <Link
-              href="/contact"
-              className="group inline-flex items-center gap-2.5 bg-[#00c853] hover:bg-[#00b248] text-white px-6 sm:px-7 py-3 sm:py-3.5 rounded-2xl font-medium text-xs sm:text-sm shadow-lg transition-all duration-300 hover:scale-[1.03] cursor-pointer font-satoshi"
-            >
-              <span>Talk to Our expert</span>
-              <FiArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
+            <Button href="/contact" variant="primary" showArrow>
+              Talk to Our expert
+            </Button>
 
             {/* Secondary Download Brochure Button */}
-            <button
-              onClick={handleDownloadBrochure}
-              className="group inline-flex items-center gap-2.5 border border-emerald-500/70 bg-black/40 hover:bg-black/60 text-white font-satoshi px-6 sm:px-7 py-3 sm:py-3.5 rounded-2xl font-medium text-xs sm:text-sm transition-all duration-300 hover:scale-[1.03] cursor-pointer"
-            >
-              <span>Download Brochure</span>
-              <FiArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
+            <Button onClick={handleDownloadBrochure} variant="outline-emerald" showArrow>
+              Download Brochure
+            </Button>
           </div>
         </div>
       </motion.div>

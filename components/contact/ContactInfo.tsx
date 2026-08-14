@@ -10,17 +10,17 @@ export default function ContactInfo() {
         <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#EAE3D2] uppercase leading-[1.15] font-sans">
           CONTACT
           <br />
-          INFORMATION
+          <span className="font-normal">INFORMATION</span>
         </h1>
 
-        <p className="text-[#EAE3D2] text-xs sm:text-sm leading-relaxed font-sans max-w-[360px]">
+        <p className="text-[#EAE3D2] text-xs sm:text-sm leading-relaxed font-satoshi max-w-[360px]">
           Whether you need a quote, have questions about our services, or
           want to discuss an upcoming project, our team is ready to help.
         </p>
       </div>
 
       {/* Contact Details List */}
-      <div className="space-y-6 font-sans">
+      <div className="space-y-6 font-satoshi">
         {/* Phone */}
         <a
           href="tel:+919606596849"

@@ -67,7 +67,7 @@ export default function BrandedCompostSection() {
   };
 
   return (
-    <section className="w-full bg-[#EBE4D5] text-[#1A1A1A] py-12 sm:py-16 lg:py-20 overflow-hidden border-t border-[#E0D8C8]/60">
+    <section className="w-full bg-[#EBE4D5] text-[#1A1A1A] pb-12 sm:pb-16 lg:pb-20 overflow-hidden ">
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 space-y-12 sm:space-y-16">
         {/* Top Split Layout */}
         <motion.div

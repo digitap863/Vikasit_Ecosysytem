@@ -107,18 +107,16 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 w-full transition-transform duration-300 ease-in-out bg-transparent ${
-          isVisible ? "translate-y-0" : "-translate-y-full"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 w-full transition-transform duration-300 ease-in-out bg-transparent ${isVisible ? "translate-y-0" : "-translate-y-full"
+          }`}
       >
         <div className="max-w-[1400px] mx-auto h-[80px] px-6 sm:px-8 flex items-center justify-between relative">
           {/* Left: Logo - Shown only at top of page */}
           <div
-            className={`flex items-center h-full relative z-40 transition-all duration-300 ${
-              !isScrolled
-                ? "opacity-100 pointer-events-auto"
-                : "opacity-0 pointer-events-none"
-            }`}
+            className={`flex items-center h-full relative z-40 transition-all duration-300 ${!isScrolled
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none"
+              }`}
           >
             <Link
               href="/"
@@ -166,11 +164,10 @@ export default function Navbar() {
                   <button
                     key={item}
                     onClick={() => handleNavClick(item)}
-                    className={`text-[15px] font-semibold transition-all relative py-1.5 px-1 cursor-pointer ${
-                      isActive
-                        ? "text-neutral-950 font-bold"
-                        : "text-neutral-700 hover:text-neutral-950"
-                    }`}
+                    className={`text-[15px] font-semibold transition-all relative py-1.5 px-1 cursor-pointer ${isActive
+                      ? "text-neutral-950 font-bold"
+                      : "text-neutral-700 hover:text-neutral-950"
+                      }`}
                   >
                     {item}
                   </button>
@@ -181,11 +178,10 @@ export default function Navbar() {
 
           {/* Right: Contact Us Button - Shown only at top of page */}
           <div
-            className={`hidden lg:flex items-center h-full relative z-20 transition-all duration-300 ${
-              !isScrolled
-                ? "opacity-100 pointer-events-auto"
-                : "opacity-0 pointer-events-none"
-            }`}
+            className={`hidden lg:flex items-center h-full relative z-20 transition-all duration-300 ${!isScrolled
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none"
+              }`}
           >
             <Link
               href="/contact"
@@ -207,19 +203,16 @@ export default function Navbar() {
             className="lg:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10 rounded-full border border-neutral-300/60 bg-[#F0EFEF]/80 hover:bg-[#F0EFEF] active:scale-95 transition-all shadow-sm z-50 relative cursor-pointer"
           >
             <span
-              className={`h-[2px] w-5 rounded bg-neutral-900 transition-all duration-300 ${
-                isOpen ? "rotate-45 translate-y-[7px]" : ""
-              }`}
+              className={`h-[2px] w-5 rounded bg-neutral-900 transition-all duration-300 ${isOpen ? "rotate-45 translate-y-[7px]" : ""
+                }`}
             />
             <span
-              className={`h-[2px] w-5 rounded bg-neutral-900 transition-all duration-300 ${
-                isOpen ? "opacity-0" : ""
-              }`}
+              className={`h-[2px] w-5 rounded bg-neutral-900 transition-all duration-300 ${isOpen ? "opacity-0" : ""
+                }`}
             />
             <span
-              className={`h-[2px] w-5 rounded bg-neutral-900 transition-all duration-300 ${
-                isOpen ? "-rotate-45 -translate-y-[7px]" : ""
-              }`}
+              className={`h-[2px] w-5 rounded bg-neutral-900 transition-all duration-300 ${isOpen ? "-rotate-45 -translate-y-[7px]" : ""
+                }`}
             />
           </button>
         </div>
@@ -253,11 +246,10 @@ export default function Navbar() {
                     <button
                       key={item}
                       onClick={() => handleNavClick(item)}
-                      className={`text-left text-lg font-bold py-2 transition-colors cursor-pointer ${
-                        isActive
-                          ? "text-neutral-950"
-                          : "text-neutral-600 hover:text-neutral-800"
-                      }`}
+                      className={`text-left text-lg font-bold py-2 transition-colors cursor-pointer ${isActive
+                        ? "text-neutral-950"
+                        : "text-neutral-600 hover:text-neutral-800"
+                        }`}
                     >
                       {item}
                     </button>

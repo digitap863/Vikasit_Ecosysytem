@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import Button from "@/components/ui/Button";
 
 export default function HeroText() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -75,25 +76,12 @@ export default function HeroText() {
         variants={itemVariants}
         className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 font-farro w-full sm:w-auto"
       >
-        <button className="bg-[#2d2f2f] text-white px-7 py-3.5 rounded-full font-medium text-sm md:text-base flex items-center justify-center gap-3 hover:bg-black transition-all shadow-md group w-full sm:w-auto">
+        <Button href="/products" variant="dark" showArrow size="lg">
           Explore Products
-          <svg
-            className="w-4 h-4 transition-transform group-hover:translate-x-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M14 5l7 7m0 0l-7 7m7-7H3"
-            />
-          </svg>
-        </button>
-        <button className="bg-[#f0eee8] text-[#2d2f2f] px-7 py-3.5 rounded-full font-medium text-sm md:text-base border border-neutral-300/80 hover:bg-[#e6e4dc] transition-all shadow-sm text-center w-full sm:w-auto">
+        </Button>
+        <Button href="/contact" variant="outline" size="lg">
           Download Brochure
-        </button>
+        </Button>
       </motion.div>
     </motion.div>
   );
