@@ -1,7 +1,5 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import WmaasBanner from "@/components/services/wmaas/WmaasBanner";
 import WhyWmaasSection from "@/components/services/wmaas/WhyWmaasSection";
 import TenBenefitsSection from "@/components/services/wmaas/TenBenefitsSection";
@@ -14,8 +12,6 @@ import OperationalBurdenBanner from "@/components/services/wmaas/OperationalBurd
 export default function WmaasServicePage() {
   return (
     <main className="relative w-full overflow-x-hidden bg-[#EBE4D5] min-h-screen flex flex-col justify-between font-farro">
-      <Navbar />
-
       <div className="w-full flex-1">
         {/* Waste Management As A Service Banner */}
         <WmaasBanner />
@@ -36,8 +32,6 @@ export default function WmaasServicePage() {
         <ZeroFutureWasteBanner />
         <FAQ />
       </div>
-
-      <Footer />
     </main>
   );
 }

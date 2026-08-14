@@ -1,7 +1,5 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import CompostBanner from "@/components/services/compost/CompostBanner";
 import BrandedCompostSection from "@/components/services/compost/BrandedCompostSection";
 import QualityAssuranceSection from "@/components/services/compost/QualityAssuranceSection";
@@ -15,12 +13,9 @@ import FAQ from "@/components/FAQ";
 export default function CompostServicePage() {
   return (
     <main className="relative w-full overflow-x-hidden bg-[#EBE4D5] min-h-screen flex flex-col justify-between font-farro">
-      <Navbar />
-
       <div className="w-full flex-1">
         {/* Compost Value Chain Banner */}
         <CompostBanner />
-
 
         {/* Quality Assurance & Soil-Specific Fortification Section */}
         <QualityAssuranceSection />
@@ -46,8 +41,6 @@ export default function CompostServicePage() {
         {/* FAQ Section */}
         <FAQ />
       </div>
-
-      <Footer />
     </main>
   );
 }

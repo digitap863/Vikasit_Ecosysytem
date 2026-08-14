@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
 import HeroText from "@/components/HeroText";
 import TrustedBy from "@/components/TrustedBy";
 import AboutSection from "@/components/AboutSection";
@@ -11,7 +10,6 @@ import ProprietaryTech from "@/components/ProprietaryTech";
 import LiveDemoSection from "@/components/LiveDemoSection";
 import Campaigns from "@/components/Campaigns";
 import FAQ from "@/components/FAQ";
-import Footer from "@/components/Footer";
 import SuccessStories from "@/components/SuccessStories";
 
 export default function Home() {
@@ -19,9 +17,6 @@ export default function Home() {
     <main className="relative w-full overflow-x-hidden bg-[#eae4d6]">
       {/* 100vh Hero Banner Container */}
       <section className="relative w-full h-screen min-h-[650px] sm:min-h-[750px] md:min-h-0 overflow-hidden">
-        {/* Navbar overlay */}
-        <Navbar />
-
         {/* Top-Left Ambient Warm Radial Glow (295x500 shape) */}
         <div className="absolute top-[-40px] left-[1%] w-[320px] h-[520px] bg-[#e89b74]/30 rounded-full blur-[95px] pointer-events-none z-[2]" />
 
@@ -94,9 +89,6 @@ export default function Home() {
       
       {/* FAQ Accordion Section */}
       <FAQ />
-
-      {/* Footer Component */}
-      <Footer />
     </main>
   );
 }

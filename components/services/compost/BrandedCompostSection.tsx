@@ -127,7 +127,7 @@ export default function BrandedCompostSection() {
           >
             <div className="hidden sm:block relative w-full max-w-[473px] h-[320px] sm:h-[380px] lg:h-[399px] flex items-center justify-center">
               <Image
-                src="/product/vikasit_chakra.png"
+                src="/Services/vikasit_chakra_group.png"
                 alt="Vikasit Chakra Branded Compost Products"
                 width={473}
                 height={399}

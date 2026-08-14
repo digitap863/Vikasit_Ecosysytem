@@ -1,10 +1,7 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import ProductBanner from "@/components/products/ProductBanner";
 import SoilMakerSuitedFor from "@/components/products/SoilMakerSuitedFor";
-import BrandedCompostSection from "@/components/services/compost/BrandedCompostSection";
 import RestOfTheLoop from "@/components/products/RestOfTheLoop";
 import KeyFeaturesTechnicalSpecs from "@/components/products/KeyFeaturesTechnicalSpecs";
 import WasteActBanner from "@/components/products/WasteActBanner";
@@ -13,8 +10,6 @@ import FAQ from "@/components/FAQ";
 export default function ProductsPage() {
   return (
     <main className="relative w-full overflow-x-hidden bg-[#EBE4D5] min-h-screen flex flex-col justify-between font-farro">
-      <Navbar />
-
       {/* Main Content Area */}
       <div className="w-full flex-1">
         {/* Product Page Banner */}
@@ -22,10 +17,6 @@ export default function ProductsPage() {
 
         {/* Soil Maker Suited For Section */}
         <SoilMakerSuitedFor />
-
-        {/* Branded Compost Products Section */}
-        <BrandedCompostSection />
-
 
         {/* Key Features & Technical Specs Section */}
         <KeyFeaturesTechnicalSpecs />
@@ -38,8 +29,6 @@ export default function ProductsPage() {
 
         <FAQ/>
       </div>
-
-      <Footer />
     </main>
   );
 }

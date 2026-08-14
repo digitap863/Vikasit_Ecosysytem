@@ -1,7 +1,5 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import AboutHero from "@/components/about/AboutHero";
 import AboutVideoSection from "@/components/about/AboutVideoSection";
 import AboutStorySection from "@/components/about/AboutStorySection";
@@ -14,8 +12,6 @@ import FAQ from "@/components/FAQ";
 export default function AboutPage() {
   return (
     <main className="relative w-full overflow-x-hidden bg-[#EBE4D5] min-h-screen flex flex-col justify-between font-farro">
-      <Navbar />
-
       <div className="w-full flex-1">
         {/* About Page Hero Banner */}
         <AboutHero />
@@ -45,8 +41,6 @@ export default function AboutPage() {
 
       {/* FAQ Accordion Section */}
       <FAQ />
-
-      <Footer />
     </main>
   );
 }

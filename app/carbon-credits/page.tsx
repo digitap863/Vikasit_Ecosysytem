@@ -1,7 +1,5 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import CarbonCreditsBanner from "@/components/carbon-credits/CarbonCreditsBanner";
 import WasteToClimateValueSection from "@/components/carbon-credits/WasteToClimateValueSection";
 import HowCarbonCreditsGeneratedSection from "@/components/carbon-credits/HowCarbonCreditsGeneratedSection";
@@ -12,8 +10,6 @@ import FAQ from "@/components/FAQ";
 export default function CarbonCreditsPage() {
   return (
     <main className="relative w-full overflow-x-hidden bg-[#EBE4D5] min-h-screen flex flex-col justify-between font-farro">
-      <Navbar />
-
       <div className="w-full flex-1">
         {/* Carbon Credits Banner with Blended Figma Image */}
         <CarbonCreditsBanner />
@@ -33,8 +29,6 @@ export default function CarbonCreditsPage() {
         {/* Frequently Asked Questions */}
         <FAQ />
       </div>
-
-      <Footer />
     </main>
   );
 }

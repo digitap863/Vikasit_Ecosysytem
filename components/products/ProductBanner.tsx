@@ -25,14 +25,14 @@ export default function ProductBanner() {
     },
     {
       id: "view2",
-      src: "/banner/product-page_banner.png",
+      src: "/product/product_back.png",
       alt: "The Soil Maker Perspective View",
       cropClass: "object-contain scale-[1.05]",
       thumbStyle: "object-contain p-1",
     },
     {
       id: "view3",
-      src: "/banner/product-page_banner.png",
+      src: "/product/product_side.png",
       alt: "The Soil Maker Angle View",
       cropClass: "object-contain scale-[1.10]",
       thumbStyle: "object-contain p-1",
@@ -104,8 +104,8 @@ export default function ProductBanner() {
 
   return (
     <section className="relative w-full bg-[#EBE4D5] text-[#1A1A1A] overflow-hidden pt-[110px] sm:pt-[120px] pb-12 sm:pb-16 lg:pb-20 min-h-[640px] lg:min-h-[720px] flex items-center">
-      {/* 1. Underlying Layer: Right Side Image (positioned lower down from top) */}
-      <div className="absolute inset-y-0 right-0 w-full lg:w-[62%] xl:w-[65%] flex items-end justify-end z-10 pointer-events-none overflow-hidden pt-36 sm:pt-44 lg:pt-56 xl:pt-64 pb-6 lg:pb-10 pr-4 lg:pr-12 xl:pr-16 translate-y-6 lg:translate-y-12">
+      {/* 1. Underlying Layer: Right Side Image (Proportionate Sizing) */}
+      <div className="absolute inset-y-0 right-0 w-full lg:w-[48%] xl:w-[50%] flex items-center justify-end z-10 pointer-events-none overflow-hidden pt-28 sm:pt-36 lg:pt-40 pb-12 lg:pb-20 pr-4 lg:pr-8 xl:pr-12">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeImage.id}
@@ -113,20 +113,18 @@ export default function ProductBanner() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.96 }}
             transition={{ duration: 0.3 }}
-            className="relative w-full h-[380px] sm:h-[500px] lg:h-[620px] xl:h-[680px]"
+            className="relative w-full h-[300px] sm:h-[400px] lg:h-[460px] xl:h-[500px]"
           >
             <Image
               src={activeImage.src}
               alt={activeImage.alt}
               fill
               priority
-              className={`w-full h-full object-contain object-right ${activeImage.cropClass} transition-all duration-300 drop-shadow-2xl lg:scale-110 xl:scale-115`}
+              className={`w-full h-full object-contain object-right ${activeImage.cropClass} transition-all duration-300 drop-shadow-2xl`}
             />
           </motion.div>
         </AnimatePresence>
 
-        {/* Soft Gradient Fade on Left Edge for Text Readability */}
-        <div className="absolute inset-y-0 left-0 w-[35%] lg:w-[40%] bg-gradient-to-r from-[#EBE4D5] via-[#EBE4D5]/70 to-transparent z-20" />
       </div>
 
       {/* 2. Top Layer: Foreground Content Container */}
