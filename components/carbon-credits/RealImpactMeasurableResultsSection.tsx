@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -88,9 +89,33 @@ export default function RealImpactMeasurableResultsSection({
 }: {
   projects?: ProjectCaseStudy[];
 }) {
+  // Mobile Swiper State
+  const [mobileActive, setMobileActive] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleMobileScroll = () => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, clientWidth } = scrollRef.current;
+    if (clientWidth > 0) {
+      const idx = Math.round(scrollLeft / (clientWidth * 0.86));
+      setMobileActive(Math.min(Math.max(0, idx), projects.length - 1));
+    }
+  };
+
+  const scrollToMobileSlide = (idx: number) => {
+    setMobileActive(idx);
+    if (scrollRef.current) {
+      const cardWidth = scrollRef.current.clientWidth * 0.86;
+      scrollRef.current.scrollTo({
+        left: cardWidth * idx,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
-    <section className="w-full bg-[#EBE4D5] text-[#1A1A1A] py-14 sm:py-20 overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 space-y-12 sm:space-y-16">
+    <section className="w-full bg-[#EBE4D5] text-[#1A1A1A] py-14 sm:py-20 overflow-hidden select-none">
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 space-y-10 sm:space-y-16">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -109,8 +134,8 @@ export default function RealImpactMeasurableResultsSection({
           </h2>
         </motion.div>
 
-        {/* Unified DB-Compatible Project Showcasing Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 max-w-[1380px] mx-auto items-stretch">
+        {/* ==================== DESKTOP VIEW (>= 768px) ==================== */}
+        <div className="hidden md:grid md:grid-cols-3 gap-8 lg:gap-10 max-w-[1380px] mx-auto items-stretch">
           {projects.map((project, idx) => (
             <motion.div
               key={project.id}
@@ -121,7 +146,7 @@ export default function RealImpactMeasurableResultsSection({
               whileHover={{ y: -5 }}
               className="bg-transparent rounded-[24px] flex flex-col justify-between cursor-default group"
             >
-              {/* Top Banner Image with Rounded Corners (Badge Icon Removed) */}
+              {/* Top Banner Image with Rounded Corners */}
               <div className="relative w-full h-[200px] sm:h-[220px] rounded-[22px] overflow-hidden bg-neutral-800 shadow-md">
                 <Image
                   src={project.bannerImage}
@@ -135,12 +160,10 @@ export default function RealImpactMeasurableResultsSection({
               {/* Card Body Content */}
               <div className="py-5 px-1 sm:px-2 flex-1 flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
-                  {/* Category Tag */}
                   <span className="text-xs font-normal text-neutral-500 tracking-wider block font-sans">
                     {project.categoryTag}
                   </span>
 
-                  {/* Title */}
                   <h3 className="text-xl sm:text-[22px] font-extrabold text-[#343433] leading-snug font-farro">
                     {project.title}
                   </h3>
@@ -186,6 +209,98 @@ export default function RealImpactMeasurableResultsSection({
             </motion.div>
           ))}
         </div>
+
+        {/* ==================== MOBILE VIEW (< 768px - Touch/Swipe Swiper) ==================== */}
+        <div className="md:hidden flex flex-col">
+          <div
+            ref={scrollRef}
+            onScroll={handleMobileScroll}
+            className="flex gap-5 overflow-x-auto snap-x snap-mandatory py-2 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden -mx-6 px-6"
+          >
+            {projects.map((project, idx) => (
+              <div
+                key={project.id}
+                onClick={() => scrollToMobileSlide(idx)}
+                className="shrink-0 w-[86vw] max-w-[340px] snap-center bg-transparent rounded-[24px] flex flex-col justify-between cursor-pointer"
+              >
+                {/* Image */}
+                <div className="relative w-full h-[190px] rounded-[20px] overflow-hidden bg-neutral-800 shadow-md">
+                  <Image
+                    src={project.bannerImage}
+                    alt={project.title}
+                    fill
+                    className="object-cover object-center brightness-[0.95]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                </div>
+
+                {/* Content */}
+                <div className="py-4 px-1 flex-1 flex flex-col justify-between space-y-5">
+                  <div className="space-y-3">
+                    <span className="text-xs font-normal text-neutral-500 tracking-wider block font-sans">
+                      {project.categoryTag}
+                    </span>
+
+                    <h3 className="text-lg font-extrabold text-[#343433] leading-snug font-farro">
+                      {project.title}
+                    </h3>
+
+                    {/* Section 1 */}
+                    <div className="space-y-1.5 pt-1 font-satoshi">
+                      <p className="text-xs font-bold text-[#343433] font-farro">
+                        {project.section1Title}
+                      </p>
+                      <ul className="space-y-1 text-xs text-neutral-700">
+                        {project.section1Items.map((item, i) => (
+                          <li key={i} className="flex items-start gap-1.5">
+                            <span className="text-neutral-500 font-bold">•</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Section 2 */}
+                    <div className="space-y-1.5 pt-1 font-satoshi">
+                      <p className="text-xs font-bold text-[#343433] font-farro">
+                        {project.section2Title}
+                      </p>
+                      <ul className="space-y-1 text-xs text-neutral-700">
+                        {project.section2Items.map((item, i) => (
+                          <li key={i} className="flex items-start gap-1.5">
+                            <span className="text-neutral-500 font-bold">•</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {project.noticeBoxText && (
+                    <div className="mt-3 bg-[#8C867A]/35 border border-[#8C867A]/30 rounded-[14px] p-3 text.11px text-[#343433] font-satoshi leading-relaxed font-medium">
+                      {project.noticeBoxText}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Pagination Indicators */}
+          <div className="flex justify-center items-center gap-2 mt-5">
+            {projects.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => scrollToMobileSlide(idx)}
+                aria-label={`Go to slide ${idx + 1}`}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  mobileActive === idx ? "w-6 bg-[#333333]" : "w-2 bg-neutral-400/50"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
       </div>
     </section>
   );

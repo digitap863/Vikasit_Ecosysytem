@@ -12,7 +12,7 @@ export default function CategoryFilter({
   onSelect,
 }: CategoryFilterProps) {
   return (
-    <section className="w-full flex items-center justify-start pt-2">
+    <section className="hidden sm:flex w-full items-center justify-start pt-2">
       <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5 w-full">
         {categories.map((cat) => (
           <button

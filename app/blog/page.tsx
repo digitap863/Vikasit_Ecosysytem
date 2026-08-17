@@ -34,14 +34,18 @@ export default function BlogPage() {
           onSelect={setSelectedCategory}
         />
 
-        {/* Posts Grid + Sidebar */}
+        {/* Posts Grid + Sidebar (Sidebar on top in mobile view, right column on desktop) */}
         <section className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-4">
-          <BlogGrid posts={filteredPosts} />
-          <BlogSidebar
-            searchValue={sidebarSearch}
-            onSearchChange={setSidebarSearch}
-            onCategorySelect={setSelectedCategory}
-          />
+          <div className="lg:col-span-8 order-2 lg:order-1 w-full">
+            <BlogGrid posts={filteredPosts} />
+          </div>
+          <div className="lg:col-span-4 order-1 lg:order-2 w-full">
+            <BlogSidebar
+              searchValue={sidebarSearch}
+              onSearchChange={setSidebarSearch}
+              onCategorySelect={setSelectedCategory}
+            />
+          </div>
         </section>
       </div>
     </main>
