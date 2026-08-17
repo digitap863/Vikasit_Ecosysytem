@@ -68,21 +68,18 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Phone / Select */}
+            {/* Phone Field */}
             <div>
               <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">
                 PHONE
               </label>
-              <select
+              <input
+                type="tel"
+                placeholder="+91 98765 43210"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full bg-[#131414] border border-neutral-800 focus:border-[#69BD45] rounded-lg px-4 py-2.5 text-sm text-neutral-300 outline-none transition-colors appearance-none cursor-pointer"
-              >
-                <option value="">All disciplines</option>
-                <option value="organic-waste">Organic Waste Composting</option>
-                <option value="machinery">Composting Machinery</option>
-                <option value="consulting">Waste Management Consulting</option>
-              </select>
+                className="w-full bg-[#131414] border border-neutral-800 focus:border-[#69BD45] rounded-lg px-4 py-2.5 text-sm text-white placeholder-neutral-600 outline-none transition-colors"
+              />
             </div>
 
             {/* Message */}
