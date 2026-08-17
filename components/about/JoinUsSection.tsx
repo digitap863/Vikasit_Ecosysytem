@@ -66,7 +66,7 @@ export default function JoinUsSection() {
   };
 
   return (
-    <section className="w-full bg-[#eae4d6] py-10 sm:py-14 px-4 sm:px-6 lg:px-12 relative overflow-hidden z-10 select-none">
+    <section className="w-full bg-[#eae4d6] pt-10 sm:pt-14 px-4 sm:px-6 lg:px-12 relative overflow-hidden z-10 select-none">
       <div className="max-w-[1320px] mx-auto space-y-10">
         
         {/* Header Content */}
@@ -75,7 +75,10 @@ export default function JoinUsSection() {
             JOIN US
           </span>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-[46px] font-farro font-extrabold text-[#1a1a1a] tracking-tight leading-[1.15]">
+          <h2
+            style={{ textShadow: "0px 3px 8px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.1)" }}
+            className="text-3xl sm:text-4xl lg:text-[46px] font-farro font-extrabold text-[#1a1a1a] tracking-tight leading-[1.15]"
+          >
             Our Leadership Shows Up For One Goal<br />
             <span className="font-normal text-[#2d2d2d]">— Resource Value Up, Environmental</span><br />
             <span className="font-normal text-[#2d2d2d]">Impact Down.</span>

@@ -70,7 +70,10 @@ export default function CommitmentsSection() {
               HOW WE WORK
             </span>
 
-            <h2 className="text-2xl sm:text-3xl lg:text-[38px] font-farro font-extrabold text-[#1a1a1a] tracking-tight leading-[1.1]">
+            <h2
+              style={{ textShadow: "0px 3px 8px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.1)" }}
+              className="text-2xl sm:text-3xl lg:text-[38px] font-farro font-extrabold text-[#1a1a1a] tracking-tight leading-[1.1]"
+            >
               Three Commitments<br />
               <span className="font-normal text-[#2d2d2d]">Behind Every Install.</span>
             </h2>

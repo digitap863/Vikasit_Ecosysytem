@@ -60,10 +60,11 @@ export default function AboutStorySection() {
           {/* Main Title */}
           <motion.h2
             variants={itemVariants}
+            style={{ textShadow: "0px 3px 8px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.1)" }}
             className="text-3xl sm:text-4xl md:text-[46px] text-[#2d2f2f] tracking-tight leading-[1.15] font-farro max-w-[760px]"
           >
-            <span className="font-extrabold block drop-shadow-[0_2px_10px_rgba(0,0,0,0.18)]">Building A Cleaner, Greener</span>
-            <span className="font-normal text-[#3d3f3d] block mt-1 drop-shadow-[0_2px_10px_rgba(0,0,0,0.18)]">Future Through Innovation.</span>
+            <span className="font-extrabold block">Building A Cleaner, Greener</span>
+            <span className="font-normal text-[#3d3f3d] block mt-1">Future Through Innovation.</span>
           </motion.h2>
 
           {/* Body Paragraph 1 */}

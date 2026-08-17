@@ -120,7 +120,10 @@ export default function AboutMissionSection() {
             </span>
 
             {/* Mission Statement */}
-            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-[24px] font-normal leading-[1.45] text-[#EAE3D2] font-satoshi tracking-tight">
+            <h2
+              style={{ textShadow: "0px 3px 8px rgba(0, 0, 0, 0.25), 0px 1px 3px rgba(0, 0, 0, 0.15)" }}
+              className="text-lg sm:text-xl md:text-2xl lg:text-[24px] font-normal leading-[1.45] text-[#EAE3D2] font-satoshi tracking-tight"
+            >
               Bring Technology, People, And Process Together To Build Waste Management That Lasts. Waste Isn&apos;t The Problem — The Way We Handle It Is. As Long As There Is Life, There Will Be Waste. The Least We Owe Future Generations Is To Make That Handling Robust And Sustainable.
             </h2>
 

@@ -71,6 +71,7 @@ export default function AboutHero() {
               {/* Main Heading */}
               <motion.h1
                 variants={itemVariants}
+                style={{ textShadow: "0px 3px 8px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.1)" }}
                 className="text-3xl sm:text-5xl lg:text-[54px] xl:text-[58px] font-extrabold text-[#343433] tracking-tight leading-[1.08] font-farro"
               >
                 We Turn Waste Into <br />
@@ -119,7 +120,7 @@ export default function AboutHero() {
                 alt="We Turn Waste Into Working Infrastructure Banner"
                 fill
                 priority
-                className="object-contain object-right filter brightness-[1.02] rounded-3xl p-1 sm:p-2"
+                className="object-cover object-right filter brightness-[1.02]"
               />
 
               {/* Multi-Directional Soft Gradient Overlay - Blends left & bottom into #EBE4D5 background */}
