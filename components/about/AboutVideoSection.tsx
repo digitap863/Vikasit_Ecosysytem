@@ -1,30 +1,27 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function AboutVideoSection() {
   return (
-    <section className="w-full max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-12 my-12 select-none">
+    <section className="w-full max-w-[960px] mx-auto px-4 sm:px-6 my-6 sm:my-10 select-none flex justify-center">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 25 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="relative w-full rounded-3xl sm:rounded-[36px] overflow-hidden bg-[#1a1a1a] border border-[#2d2d2d]/20 shadow-2xl aspect-video md:aspect-[21/9]"
+        className="w-full flex items-center justify-center"
       >
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover rounded-3xl sm:rounded-[36px]"
-        >
-          <source src="/you_are_missing_the_side_porti.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-
-        {/* Subtle Ambient Overlay Shadow for Depth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10 pointer-events-none" />
+        <Image
+          src="/about_page_workflow_ebe4d5.png"
+          alt="Vikasit Ecosystems Workflow Diagram"
+          width={1200}
+          height={1200}
+          style={{ width: "auto", height: "auto" }}
+          priority
+          className="w-full h-auto object-contain max-w-[880px]"
+        />
       </motion.div>
     </section>
   );

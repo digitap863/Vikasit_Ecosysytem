@@ -1,5 +1,6 @@
 import Image from "next/image";
 import HeroText from "@/components/HeroText";
+import MobileHero from "@/components/MobileHero";
 import TrustedBy from "@/components/TrustedBy";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
@@ -15,30 +16,24 @@ import SuccessStories from "@/components/SuccessStories";
 export default function Home() {
   return (
     <main className="relative w-full overflow-x-hidden bg-[#eae4d6]">
-      {/* 100vh Hero Banner Container */}
-      <section className="relative w-full h-screen min-h-[650px] sm:min-h-[750px] md:min-h-0 overflow-hidden">
+      {/* Mobile View Hero (Visible on mobile screens < 640px) */}
+      <MobileHero />
+
+      {/* Desktop View Hero (Visible on sm and larger screens) */}
+      <section className="hidden sm:block relative w-full h-screen min-h-[650px] sm:min-h-[750px] md:min-h-0 overflow-hidden">
         {/* Top-Left Ambient Warm Radial Glow (295x500 shape) */}
         <div className="absolute top-[-40px] left-[1%] w-[320px] h-[520px] bg-[#e89b74]/30 rounded-full blur-[95px] pointer-events-none z-[2]" />
 
         {/* Lower-Left Ambient Warm Radial Glow (295x432 Figma shape) */}
         <div className="absolute top-[240px] left-[-30px] w-[460px] h-[380px] bg-[#EAE3D2]/40 rounded-full blur-[95px] pointer-events-none z-[2]" />
 
-        {/* Desktop Banner Image (Hidden on mobile) */}
+        {/* Desktop Banner Image */}
         <Image
           src="/banner/banner.webp"
           alt="Vikasit Ecosystem Banner"
           fill
           priority
-          className="hidden sm:block object-cover"
-        />
-
-        {/* Mobile Banner Image (Visible on mobile) */}
-        <Image
-          src="/banner/mobile_banner.webp"
-          alt="Vikasit Ecosystem Mobile Banner"
-          fill
-          priority
-          className="block sm:hidden object-cover object-top"
+          className="object-cover"
         />
 
         {/* Full-width Bottom Dark Depth Shadow Overlay (for soil texture & contrast) */}
@@ -52,7 +47,7 @@ export default function Home() {
           <HeroText />
         </div>
         <div
-          className="hidden sm:block absolute bottom-0 -left-[160px] rounded-full bg-[#EAE3D2] blur-2xl z-0"
+          className="absolute bottom-0 -left-[160px] rounded-full bg-[#EAE3D2] blur-2xl z-0"
           style={{ width: '295px', height: '432px' }}
         />
       </section>

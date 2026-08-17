@@ -109,7 +109,7 @@ export default function AboutHero() {
               </motion.div>
             </div>
 
-            {/* Right Blended Image Container - Seamless blending into #EBE4D5 background */}
+            {/* Right Blended Image Container - Fully visible right side without overflow clipping */}
             <motion.div
               variants={itemVariants}
               className="lg:col-span-6 relative w-full h-[280px] sm:h-[380px] lg:h-[460px] rounded-[24px] sm:rounded-[32px] overflow-hidden"
@@ -119,13 +119,12 @@ export default function AboutHero() {
                 alt="We Turn Waste Into Working Infrastructure Banner"
                 fill
                 priority
-                className="object-cover object-center filter brightness-[1.02]"
+                className="object-contain object-right filter brightness-[1.02] rounded-3xl p-1 sm:p-2"
               />
 
-              {/* Multi-Directional Soft Gradient Overlay - Blends seamlessly into #EBE4D5 background */}
-              <div className="absolute inset-y-0 left-0 w-[55%] sm:w-[50%] bg-gradient-to-r from-[#EBE4D5] via-[#EBE4D5]/80 to-transparent z-10 pointer-events-none" />
-              <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#EBE4D5] via-[#EBE4D5]/50 to-transparent z-10 pointer-events-none" />
-              <div className="absolute inset-x-0 top-0 h-[15%] bg-gradient-to-b from-[#EBE4D5]/30 to-transparent z-10 pointer-events-none" />
+              {/* Multi-Directional Soft Gradient Overlay - Blends left & bottom into #EBE4D5 background */}
+              <div className="absolute inset-y-0 left-0 w-[40%] sm:w-[35%] bg-gradient-to-r from-[#EBE4D5] via-[#EBE4D5]/70 to-transparent z-10 pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-0 h-[25%] bg-gradient-to-t from-[#EBE4D5] via-[#EBE4D5]/40 to-transparent z-10 pointer-events-none" />
             </motion.div>
           </div>
         </motion.div>

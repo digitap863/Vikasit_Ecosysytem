@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import { FiUser, FiBox, FiHome } from "react-icons/fi";
 
@@ -44,25 +44,6 @@ export default function JoinUsSection() {
   const [desktopActive, setDesktopActive] = useState(1);
   const [mobileActive, setMobileActive] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    if (isHovered) return;
-    const timer = setInterval(() => {
-      setMobileActive((prev) => {
-        const nextIdx = (prev + 1) % joinUsData.length;
-        if (scrollRef.current && window.innerWidth < 768) {
-          const cardWidth = scrollRef.current.clientWidth * 0.86;
-          scrollRef.current.scrollTo({
-            left: cardWidth * nextIdx,
-            behavior: "smooth",
-          });
-        }
-        return nextIdx;
-      });
-    }, 3500);
-    return () => clearInterval(timer);
-  }, [isHovered]);
 
   const handleMobileScroll = () => {
     if (!scrollRef.current) return;
@@ -134,7 +115,7 @@ export default function JoinUsSection() {
                   {/* Title & Description */}
                   <div className="space-y-2">
                     <h3
-                      className={`text-2xl sm:text-[26px] font-satoshi  leading-tight ${
+                      className={`text-2xl sm:text-[26px] font-satoshi leading-tight ${
                         isFeatured ? "text-white" : "text-[#1a1a1a]"
                       }`}
                     >
@@ -155,7 +136,7 @@ export default function JoinUsSection() {
                 <div className="pt-6">
                   <Link
                     href={item.link}
-                    className={`inline-flex items-center gap-2 text-xs sm:text-sm  font-sans transition-all duration-300 hover:gap-3 cursor-pointer ${
+                    className={`inline-flex items-center gap-2 text-xs sm:text-sm font-sans transition-all duration-300 hover:gap-3 cursor-pointer ${
                       isFeatured ? "text-white hover:text-neutral-200" : "text-[#1a1a1a] hover:text-[#056826]"
                     }`}
                   >
@@ -168,12 +149,8 @@ export default function JoinUsSection() {
           })}
         </div>
 
-        {/* Mobile View (< 768px) */}
-        <div
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          className="md:hidden flex flex-col"
-        >
+        {/* Mobile View (< 768px - Manual User Touch/Swipe Only) */}
+        <div className="md:hidden flex flex-col">
           <div
             ref={scrollRef}
             onScroll={handleMobileScroll}
@@ -189,8 +166,8 @@ export default function JoinUsSection() {
                   onClick={() => scrollToMobileSlide(index)}
                   className={`group flex flex-col justify-between text-left rounded-[20px] transition-all duration-300 cursor-pointer shrink-0 w-[86vw] max-w-[350px] snap-center ${
                     isMobileFeatured
-                      ? "bg-[#333333] text-white shadow-xl min-h-[360px] p-8 border border-neutral-700/50"
-                      : "bg-transparent text-[#1a1a1a] min-h-[310px] p-8 border border-[#2d2d2d]/30"
+                      ? "bg-[#333333] text-white shadow-xl min-h-[280px] p-8 border border-neutral-700/50"
+                      : "bg-transparent text-[#1a1a1a] min-h-[230px] p-8 border border-[#2d2d2d]/30"
                   }`}
                 >
                   <div className="space-y-5">

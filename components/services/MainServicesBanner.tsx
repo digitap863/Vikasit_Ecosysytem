@@ -119,24 +119,24 @@ export default function MainServicesBanner() {
             </motion.div>
           </div>
 
-          {/* Bottom Feature Pill Badges Bar */}
+          {/* Bottom Feature Pill Badges Bar (2 Columns on Mobile, Flex on Desktop) */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-wrap items-center gap-3 sm:gap-4 pt-2 sm:pt-4"
+            className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2.5 sm:gap-4 pt-2 sm:pt-4"
           >
-            <div className="border border-[#2B2B2C]/70 text-[#1A1A1A] bg-transparent px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold shadow-sm font-sans shrink-0 hover:bg-[#2B2B2C] hover:text-white transition-colors cursor-default">
+            <div className="border border-[#2B2B2C]/70 text-[#1A1A1A] bg-transparent px-3.5 sm:px-6 py-2.5 sm:py-3 rounded-full text-[11px] xs:text-xs sm:text-sm font-bold shadow-sm font-sans hover:bg-[#2B2B2C] hover:text-white transition-colors cursor-default text-center flex items-center justify-center">
               Decentralized Waste Management
             </div>
 
-            <div className="border border-[#2B2B2C]/70 text-[#1A1A1A] bg-transparent px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold shadow-sm font-sans shrink-0 hover:bg-[#2B2B2C] hover:text-white transition-colors cursor-default">
+            <div className="border border-[#2B2B2C]/70 text-[#1A1A1A] bg-transparent px-3.5 sm:px-6 py-2.5 sm:py-3 rounded-full text-[11px] xs:text-xs sm:text-sm font-bold shadow-sm font-sans hover:bg-[#2B2B2C] hover:text-white transition-colors cursor-default text-center flex items-center justify-center">
               The Soil Maker™ Technology
             </div>
 
-            <div className="border border-[#2B2B2C]/70 text-[#1A1A1A] bg-transparent px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold shadow-sm font-sans shrink-0 hover:bg-[#2B2B2C] hover:text-white transition-colors cursor-default">
+            <div className="border border-[#2B2B2C]/70 text-[#1A1A1A] bg-transparent px-3.5 sm:px-6 py-2.5 sm:py-3 rounded-full text-[11px] xs:text-xs sm:text-sm font-bold shadow-sm font-sans hover:bg-[#2B2B2C] hover:text-white transition-colors cursor-default text-center flex items-center justify-center">
               Branded Organic Compost
             </div>
 
-            <div className="border border-[#2B2B2C]/70 text-[#1A1A1A] bg-transparent px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold shadow-sm font-sans shrink-0 hover:bg-[#2B2B2C] hover:text-white transition-colors cursor-default">
+            <div className="border border-[#2B2B2C]/70 text-[#1A1A1A] bg-transparent px-3.5 sm:px-6 py-2.5 sm:py-3 rounded-full text-[11px] xs:text-xs sm:text-sm font-bold shadow-sm font-sans hover:bg-[#2B2B2C] hover:text-white transition-colors cursor-default text-center flex items-center justify-center">
               ESG & Carbon Credit Aligned
             </div>
           </motion.div>

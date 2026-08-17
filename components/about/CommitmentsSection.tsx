@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 
 interface CommitmentItem {
@@ -35,29 +35,9 @@ export default function CommitmentsSection() {
   // Desktop state: Card 02 (index 1) is active featured card by default
   const [desktopActive, setDesktopActive] = useState(1);
 
-  // Mobile state: Auto-scrolling swiper
+  // Mobile state: Manual swiper active slide tracking (Only updates on user touch/swipe)
   const [mobileActive, setMobileActive] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-
-  // Mobile auto-advance slider every 3.5 seconds
-  useEffect(() => {
-    if (isHovered) return;
-    const timer = setInterval(() => {
-      setMobileActive((prev) => {
-        const nextIdx = (prev + 1) % commitments.length;
-        if (scrollRef.current && window.innerWidth < 768) {
-          const cardWidth = scrollRef.current.clientWidth * 0.86;
-          scrollRef.current.scrollTo({
-            left: cardWidth * nextIdx,
-            behavior: "smooth",
-          });
-        }
-        return nextIdx;
-      });
-    }, 3500);
-    return () => clearInterval(timer);
-  }, [isHovered]);
 
   const handleMobileScroll = () => {
     if (!scrollRef.current) return;
@@ -112,7 +92,7 @@ export default function CommitmentsSection() {
         </div>
 
         {/* ==================== DESKTOP VIEW (>= 768px) ==================== */}
-        <div className="hidden md:grid md:grid-cols-3 gap-6 lg:gap-8 items-center py-2 min-h-[380px]">
+        <div className="hidden md:grid md:grid-cols-3 gap-6 lg:gap-8 items-center py-4 min-h-[380px]">
           {commitments.map((item, index) => {
             const isFeatured = index === desktopActive;
 
@@ -120,13 +100,13 @@ export default function CommitmentsSection() {
               <div
                 key={item.id}
                 onClick={() => setDesktopActive(index)}
-                className={`group flex flex-col items-center text-center rounded-[20px] transition-all duration-300 cursor-pointer justify-center ${
+                className={`group flex flex-col justify-between text-left rounded-[20px] transition-all duration-300 cursor-pointer ${
                   isFeatured
-                    ? "bg-[#313030] text-white shadow-xl min-h-[380px] py-9 px-6 sm:px-8 z-20 border border-neutral-700/50"
-                    : "bg-transparent text-[#1a1a1a] min-h-[310px] py-7 px-6 border border-[#2d2d2d]/35 hover:border-[#2d2d2d]/70 hover:shadow-md z-10"
+                    ? "bg-[#333333] text-white shadow-2xl min-h-[280px] p-8 sm:p-10 z-20 border border-neutral-700/50"
+                    : "bg-transparent text-[#1a1a1a] min-h-[230px] p-8 border border-[#2d2d2d]/30 hover:border-[#2d2d2d]/60 hover:shadow-lg z-10"
                 }`}
               >
-                <div className="space-y-3 max-w-[320px]">
+                <div className="space-y-4">
                   {/* Sub-header Tag */}
                   <span
                     className={`text-xs sm:text-sm font-medium tracking-wide font-farro block ${
@@ -139,7 +119,7 @@ export default function CommitmentsSection() {
                   {/* Title */}
                   <h3
                     className={`text-xl sm:text-[22px] lg:text-[24px] font-satoshi leading-[1.25] ${
-                      isFeatured ? "text-white " : "text-[#1a1a1a] "
+                      isFeatured ? "text-white font-bold" : "text-[#1a1a1a]"
                     }`}
                   >
                     {item.title}
@@ -147,8 +127,8 @@ export default function CommitmentsSection() {
 
                   {/* Description */}
                   <p
-                    className={`text-xs sm:text-sm leading-relaxed font-satoshi ${
-                      isFeatured ? "text-neutral-300" : "text-neutral-700"
+                    className={`text-xs sm:text-sm leading-relaxed font-sans ${
+                      isFeatured ? "text-neutral-300" : "text-neutral-600"
                     }`}
                   >
                     {item.desc}
@@ -159,12 +139,8 @@ export default function CommitmentsSection() {
           })}
         </div>
 
-        {/* ==================== MOBILE VIEW (< 768px) ==================== */}
-        <div
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          className="md:hidden flex flex-col"
-        >
+        {/* ==================== MOBILE VIEW (< 768px - Manual User Touch/Swipe Only) ==================== */}
+        <div className="md:hidden flex flex-col">
           {/* Swiper Slider */}
           <div
             ref={scrollRef}
@@ -178,13 +154,13 @@ export default function CommitmentsSection() {
                 <div
                   key={item.id}
                   onClick={() => scrollToMobileSlide(index)}
-                  className={`group flex flex-col items-center text-center rounded-[20px] transition-all duration-300 cursor-pointer justify-center shrink-0 w-[86vw] max-w-[350px] snap-center ${
+                  className={`group flex flex-col justify-between text-left rounded-[20px] transition-all duration-300 cursor-pointer shrink-0 w-[86vw] max-w-[350px] snap-center ${
                     isMobileFeatured
-                      ? "bg-[#313030] text-white shadow-xl min-h-[420px] py-12 px-8 border border-neutral-700/50"
-                      : "bg-transparent text-[#1a1a1a] min-h-[350px] py-10 px-8 border border-[#2d2d2d]/35"
+                      ? "bg-[#333333] text-white shadow-xl min-h-[280px] p-8 border border-neutral-700/50"
+                      : "bg-transparent text-[#1a1a1a] min-h-[230px] p-8 border border-[#2d2d2d]/30"
                   }`}
                 >
-                  <div className="space-y-4 max-w-[320px]">
+                  <div className="space-y-4">
                     {/* Sub-header Tag */}
                     <span
                       className={`text-xs sm:text-sm font-medium tracking-wide font-farro block ${
@@ -206,7 +182,7 @@ export default function CommitmentsSection() {
                     {/* Description */}
                     <p
                       className={`text-xs sm:text-sm leading-relaxed font-sans ${
-                        isMobileFeatured ? "text-neutral-300" : "text-neutral-700"
+                        isMobileFeatured ? "text-neutral-300" : "text-neutral-600"
                       }`}
                     >
                       {item.desc}
@@ -225,7 +201,7 @@ export default function CommitmentsSection() {
                 onClick={() => scrollToMobileSlide(idx)}
                 aria-label={`Go to slide ${idx + 1}`}
                 className={`h-2 rounded-full transition-all duration-300 ${
-                  mobileActive === idx ? "w-6 bg-[#313030]" : "w-2 bg-neutral-400/50"
+                  mobileActive === idx ? "w-6 bg-[#333333]" : "w-2 bg-neutral-400/50"
                 }`}
               />
             ))}

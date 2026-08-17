@@ -16,8 +16,8 @@ const companies = [
   { name: "century", src: "/companies/century-removebg-preview.png", width: 140, height: 52 },
   { name: "dish", src: "/companies/dish-removebg-preview.png", width: 130, height: 46 },
   // { name: "eco-collab", src: "/companies/eco-collab.webp", width: 170, height: 58 },
-  { name: "enviro", src: "/companies/enviro-removebg-preview.webp", width: 140, height: 52 },
-  { name: "evo-homes", src: "/companies/evo-homes-removebg-preview.webp", width: 140, height: 52 },
+  // { name: "enviro", src: "/companies/enviro-removebg-preview.webp", width: 140, height: 52 },
+  // { name: "evo-homes", src: "/companies/evo-homes-removebg-preview.webp", width: 140, height: 52 },
   { name: "fiest-homes", src: "/companies/fiest-homes.webp", width: 140, height: 52 },
   { name: "hilite", src: "/companies/hilite.png", width: 140, height: 52 },
   { name: "isha", src: "/companies/isha.webp", width: 140, height: 52 },
@@ -192,6 +192,7 @@ export default function TrustedBy() {
                 alt={`${company.name} Logo`}
                 width={company.width}
                 height={company.height}
+                style={{ width: "auto", height: "auto" }}
                 className="object-contain max-h-full max-w-full select-none"
               />
             </div>
