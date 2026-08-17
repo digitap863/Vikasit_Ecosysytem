@@ -101,7 +101,7 @@ export default function TenBenefitsSection() {
 
           <motion.h2
             variants={itemVariants}
-            className="text-3xl sm:text-4xl lg:text-[46px] font-extrabold text-[#343433] tracking-tight leading-[1.12] font-farro drop-shadow-md"
+            className="text-3xl sm:text-4xl lg:text-[46px] font-extrabold text-[#343433] tracking-tight leading-[1.12] font-farro"
           >
             Ten Benefits,
             <br />
@@ -111,13 +111,13 @@ export default function TenBenefitsSection() {
           </motion.h2>
         </motion.div>
 
-        {/* Main White Elevated Card Container - Exact Figma 1170px Grid Sizing */}
+        {/* Main White Card Container - Exact Figma 1170px Grid Sizing */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={containerVariants}
-          className="max-w-[1240px] mx-auto bg-white rounded-[24px] sm:rounded-[32px] p-6 sm:p-10 lg:p-12 shadow-2xl border border-neutral-200/60"
+          className="max-w-[1240px] mx-auto bg-white rounded-[24px] sm:rounded-[32px] p-6 sm:p-10 lg:p-12 border border-neutral-200/60"
         >
           {/* 10 Benefits Grid */}
           <div className="max-w-[1170px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-x-10 lg:gap-x-16 xl:gap-x-[100px] gap-y-5 lg:gap-y-[20px]">
