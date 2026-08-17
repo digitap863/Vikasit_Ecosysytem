@@ -103,7 +103,7 @@ export default function WhyWmaasSection() {
             {/* Bottom Left: Core Engineering Diagram Card */}
             <motion.div
               variants={itemVariants}
-              className="bg-[#ede3d3] rounded-[24px] sm:rounded-[28px] p-6 sm:p-8 shadow-md border border-neutral-300/50 overflow-hidden flex flex-col items-center justify-center min-h-[440px] sm:min-h-[480px] h-full"
+              className="bg-[#ede3d3] rounded-[24px] sm:rounded-[28px] p-6 sm:p-8 shadow-md border border-neutral-300/50 overflow-hidden flex flex-col items-center justify-center sm:min-h-[440px] sm:min-h-[480px] h-full"
             >
               <video
                 src="/video/wmas.mp4"
