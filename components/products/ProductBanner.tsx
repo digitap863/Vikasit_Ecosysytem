@@ -119,6 +119,7 @@ export default function ProductBanner() {
               alt={activeImage.alt}
               fill
               priority
+              loading="eager"
               className={`w-full h-full object-contain object-right ${activeImage.cropClass} transition-all duration-300 drop-shadow-2xl`}
             />
           </motion.div>
@@ -192,6 +193,7 @@ export default function ProductBanner() {
                     alt={activeImage.alt}
                     fill
                     priority
+                    loading="eager"
                     className="object-contain object-center drop-shadow-xl"
                   />
                 </motion.div>
@@ -218,6 +220,7 @@ export default function ProductBanner() {
                       src={img.src}
                       alt={img.alt}
                       fill
+                      loading="eager"
                       className={`${img.thumbStyle} transition-transform duration-300`}
                     />
                   </button>
