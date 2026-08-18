@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import ScrollAnimation from "@/components/ui/ScrollAnimation";
 
 const LeafIcon = () => (
   <div className="shrink-0 w-5 h-5 relative flex items-center justify-center">
@@ -18,7 +19,7 @@ const LeafIcon = () => (
 export default function LiveDemoSection() {
   return (
     <section className="w-full bg-[#eae4d6] py-6 md:py-10 px-4 sm:px-6 lg:px-12 relative overflow-hidden z-10">
-      <div className="max-w-[1320px] mx-auto">
+      <ScrollAnimation variant="fade-up" className="max-w-[1320px] mx-auto">
         {/* Main Banner Card (Stacked on mobile, background overlay on desktop) */}
         <div className="relative w-full rounded-[24px] sm:rounded-[32px] overflow-hidden shadow-none border border-[#c4beaf]/30 bg-[#fdfbf7] flex flex-col md:flex-row md:items-center justify-end p-0 md:p-14 lg:p-16 min-h-0 md:min-h-[560px]">
           
@@ -113,7 +114,7 @@ export default function LiveDemoSection() {
             </div>
           </div>
         </div>
-      </div>
+      </ScrollAnimation>
     </section>
   );
 }

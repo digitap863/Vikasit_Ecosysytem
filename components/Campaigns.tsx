@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef } from "react";
+import ScrollAnimation from "@/components/ui/ScrollAnimation";
 
 export interface CampaignStat {
   value: string;
@@ -79,7 +80,7 @@ export default function Campaigns({ campaigns = defaultCampaigns }: CampaignsPro
 
   return (
     <section className="w-full bg-[#ffff] py-8 sm:py-12 md:py-16 relative overflow-hidden select-none">
-      <div className="max-w-[1320px] mx-auto px-6 sm:px-10 lg:px-12">
+      <ScrollAnimation variant="fade-up" className="max-w-[1320px] mx-auto px-6 sm:px-10 lg:px-12">
         {/* Section Header */}
         <div className="flex items-end justify-between gap-4 mb-8 sm:mb-10">
           <div>
@@ -209,7 +210,7 @@ export default function Campaigns({ campaigns = defaultCampaigns }: CampaignsPro
             />
           ))}
         </div>
-      </div>
+      </ScrollAnimation>
     </section>
   );
 }

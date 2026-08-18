@@ -6,6 +6,8 @@ import { FiCheckCircle } from "react-icons/fi";
 import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
 
+import ScrollAnimation from "@/components/ui/ScrollAnimation";
+
 export default function ContactForm() {
   const searchParams = useSearchParams();
   const productParam = searchParams.get("product");
@@ -37,7 +39,8 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="bg-[#E6E1D5] p-8 sm:p-12 lg:p-14 flex flex-col justify-center font-sans">
+    <ScrollAnimation variant="fade-up" className="h-full">
+      <div className="bg-[#E6E1D5] p-8 sm:p-12 lg:p-14 flex flex-col justify-center font-sans h-full">
       {/* Title with Green Underline under "Get in" */}
       <div className="mb-8">
         <h2 className="text-4xl sm:text-[46px] font-extrabold text-[#161616] tracking-tight font-sans">
@@ -135,6 +138,7 @@ export default function ContactForm() {
           </div>
         </form>
       )}
-    </div>
+      </div>
+    </ScrollAnimation>
   );
 }

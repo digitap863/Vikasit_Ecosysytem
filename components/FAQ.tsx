@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ScrollAnimation from "@/components/ui/ScrollAnimation";
 
 interface FAQItemProps {
   number: string;
@@ -93,7 +94,7 @@ export default function FAQ() {
 
   return (
     <section className="w-full bg-[#eae4d6] py-10 md:py-14 relative z-10">
-      <div className="max-w-[1320px] mx-auto px-6 lg:px-12">
+      <ScrollAnimation variant="fade-up" className="max-w-[1320px] mx-auto px-6 lg:px-12">
         {/* Title */}
         <h2
           className="text-4xl sm:text-[46px] font-normal text-center text-[#2d2f2f] font-farro mb-12 md:mb-16"
@@ -117,7 +118,7 @@ export default function FAQ() {
             />
           ))}
         </div>
-      </div>
+      </ScrollAnimation>
     </section>
   );
 }

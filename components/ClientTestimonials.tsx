@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import ScrollAnimation from "@/components/ui/ScrollAnimation";
 
 interface Testimonial {
   id: number;
@@ -120,7 +121,7 @@ export default function ClientTestimonials({ autoPlayInterval = 3000 }: ClientTe
       onTouchEnd={onTouchEnd}
       className="w-full bg-[#eae4d6] px-3 sm:px-6 lg:px-12 relative overflow-hidden select-none py-6 sm:py-10"
     >
-      <div className="max-w-[1320px] mx-auto">
+      <ScrollAnimation variant="fade-up" className="max-w-[1320px] mx-auto">
         {/* Section Header */}
         <h2 className="text-2xl sm:text-4xl md:text-[44px] font-bold text-center text-[#2d2f2f] font-ferro mb-6 sm:mb-14 tracking-tight">
           What Our Clients Say.
@@ -232,7 +233,7 @@ export default function ClientTestimonials({ autoPlayInterval = 3000 }: ClientTe
             </svg>
           </button>
         </div>
-      </div>
+      </ScrollAnimation>
     </section>
   );
 }

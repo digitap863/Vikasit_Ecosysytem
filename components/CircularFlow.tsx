@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ScrollAnimation from "@/components/ui/ScrollAnimation";
 
 interface Stage {
   id: string;
@@ -167,7 +168,7 @@ export default function CircularFlow() {
         <div className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/45 rounded-full blur-[50px] z-10" />
       </div>
 
-      <div className="max-w-[1320px] mx-auto px-6 lg:px-12 relative z-10">
+      <ScrollAnimation variant="fade-up" className="max-w-[1320px] mx-auto px-6 lg:px-12 relative z-10">
         {/* Header Section — centered */}
         <div className="flex flex-col items-center text-center space-y-3 max-w-[680px] mx-auto mb-4 sm:mb-6">
           {/* Label */}
@@ -306,7 +307,7 @@ export default function CircularFlow() {
             })}
           </div>
         </div>
-      </div>
+      </ScrollAnimation>
     </section>
   );
 }

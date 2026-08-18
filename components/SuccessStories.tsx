@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ScrollAnimation from "@/components/ui/ScrollAnimation";
 
 export interface SuccessStoryItem {
   id: string;
@@ -135,7 +136,7 @@ export default function SuccessStories({
       className="w-full bg-[#eae4d6] py-4 sm:py-6 md:py-8 relative overflow-hidden select-none"
     >
       {/* Container matching site standard max-width (1320px) */}
-      <div className="max-w-[1320px] mx-auto px-6 sm:px-10 lg:px-12">
+      <ScrollAnimation variant="fade-up" className="max-w-[1320px] mx-auto px-6 sm:px-10 lg:px-12">
         {/* Section Header */}
         <div className="mb-2 sm:mb-3 max-w-[650px]">
           {/* Tagline */}
@@ -300,7 +301,7 @@ export default function SuccessStories({
             </AnimatePresence>
           </div>
         </div>
-      </div>
+      </ScrollAnimation>
     </section>
   );
 }

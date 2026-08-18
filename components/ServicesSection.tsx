@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import ScrollAnimation, { ScrollAnimationItem } from "@/components/ui/ScrollAnimation";
 
 interface ServiceItem {
   id: string;
@@ -86,7 +87,7 @@ export default function ServicesSection() {
 
   return (
     <section id="services" className="w-full bg-[#eae4d6] py-10 md:py-14 px-4 sm:px-6 lg:px-12 relative overflow-hidden z-10 select-none">
-      <div className="max-w-[1320px] mx-auto">
+      <ScrollAnimation variant="fade-up" staggerChildren={0.15} className="max-w-[1320px] mx-auto">
 
         {/* ==================== DESKTOP VIEW (>= 768px) ==================== */}
         <div className="hidden md:grid md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
@@ -278,7 +279,7 @@ export default function ServicesSection() {
           </div>
         </div>
 
-      </div>
+      </ScrollAnimation>
     </section>
   );
 }
