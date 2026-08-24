@@ -14,7 +14,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  const navItems = ["Home", "About", "Products", "Services", "Blogs"];
+  const navItems = ["Home", "About", "Products", "Services", "Projects", "Blogs"];
 
   useEffect(() => {
     if (pathname === "/contact") {
@@ -23,6 +23,8 @@ export default function Navbar() {
       setActiveTab("About");
     } else if (pathname === "/products" || pathname.startsWith("/products")) {
       setActiveTab("Products");
+    } else if (pathname === "/projects" || pathname.startsWith("/projects")) {
+      setActiveTab("Projects");
     } else if (pathname === "/blog" || pathname === "/blogs") {
       setActiveTab("Blogs");
     } else if (pathname.startsWith("/services")) {
@@ -59,6 +61,13 @@ export default function Navbar() {
     if (item === "Services") {
       router.push("/services");
       setActiveTab("Services");
+      setIsOpen(false);
+      return;
+    }
+
+    if (item === "Projects") {
+      router.push("/projects");
+      setActiveTab("Projects");
       setIsOpen(false);
       return;
     }
@@ -166,7 +175,7 @@ export default function Navbar() {
                     onClick={() => handleNavClick(item)}
                     className={`text-[15px] font-semibold transition-all relative py-1.5 px-1 cursor-pointer ${isActive
                       ? "text-neutral-950 font-bold"
-                      : "text-neutral-700 hover:text-neutral-950"
+                      : "text-neutral-600 hover:text-neutral-950"
                       }`}
                   >
                     {item}

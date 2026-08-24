@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
 import VideoModal from "@/components/VideoModal";
 
@@ -141,8 +142,27 @@ export default function Campaigns({
             </h2>
           </div>
 
-          {/* Navigation Controls (Left/Right Arrows) */}
+          {/* Navigation Controls (Left/Right Arrows) & View More Link */}
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+            <Link
+              href="/projects"
+              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#2a2d2a]/30 text-xs sm:text-sm font-semibold font-farro text-[#2a2d2a] hover:bg-[#2a2d2a] hover:text-white transition-all duration-300 shadow-sm"
+            >
+              View More
+              <svg
+                className="w-3.5 h-3.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </Link>
             <button
               onClick={handlePrev}
               aria-label="Previous video"
@@ -210,15 +230,6 @@ export default function Campaigns({
               {/* Dark Overlay Gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20 group-hover:from-black/95 transition-opacity duration-300 pointer-events-none" />
 
-              {/* Top Tag Badge */}
-              {/* <div className="relative z-10 p-5 sm:p-6 flex items-center justify-between">
-                {item.tag && (
-                  <span className="px-3 py-1 rounded-full text-[11px] font-semibold tracking-wider uppercase font-farro text-white bg-black/40 backdrop-blur-md border border-white/20">
-                    {item.tag}
-                  </span>
-                )}
-              </div> */}
-
               {/* Center Play Icon Overlay */}
               <div className="relative z-10 flex items-center justify-center pointer-events-none my-auto">
                 <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/40 text-white flex items-center justify-center group-hover:scale-110 group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300 shadow-lg">
@@ -255,6 +266,29 @@ export default function Campaigns({
               }`}
             />
           ))}
+        </div>
+
+        {/* View All Projects Button (Bottom CTA) */}
+        <div className="flex justify-center mt-8">
+          <Link
+            href="/projects"
+            className="group px-7 py-3.5 rounded-full bg-[#2a2d2a] hover:bg-black text-white font-semibold font-farro text-sm sm:text-base shadow-md transition-all duration-300 hover:scale-105 inline-flex items-center gap-2"
+          >
+            View More Projects
+            <svg
+              className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              />
+            </svg>
+          </Link>
         </div>
       </ScrollAnimation>
 

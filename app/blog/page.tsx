@@ -22,31 +22,33 @@ export default function BlogPage() {
   });
 
   return (
-    <main className="relative w-full overflow-x-hidden bg-[#eae4d6] min-h-screen flex flex-col justify-between font-farro">
-      <div className="pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-12 max-w-[1320px] mx-auto w-full flex-1">
-        {/* Hero Banner */}
+    <main className="relative w-full overflow-x-hidden bg-[#EBE4D5] min-h-screen flex flex-col justify-between font-farro">
+      <div className="w-full flex-1">
+        {/* Blog Hero Banner matching Services Page header & alignment */}
         <BlogHero />
 
-        {/* Category Filter Pills */}
-        <CategoryFilter
-          categories={BLOG_CATEGORIES}
-          selectedCategory={selectedCategory}
-          onSelect={setSelectedCategory}
-        />
+        <div className="pb-20 px-4 sm:px-6 lg:px-12 max-w-[1320px] mx-auto w-full">
+          {/* Category Filter Pills */}
+          <CategoryFilter
+            categories={BLOG_CATEGORIES}
+            selectedCategory={selectedCategory}
+            onSelect={setSelectedCategory}
+          />
 
-        {/* Posts Grid + Sidebar (Sidebar on top in mobile view, right column on desktop) */}
-        <section className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-4">
-          <div className="lg:col-span-8 order-2 lg:order-1 w-full">
-            <BlogGrid posts={filteredPosts} />
-          </div>
-          <div className="lg:col-span-4 order-1 lg:order-2 w-full">
-            <BlogSidebar
-              searchValue={sidebarSearch}
-              onSearchChange={setSidebarSearch}
-              onCategorySelect={setSelectedCategory}
-            />
-          </div>
-        </section>
+          {/* Posts Grid + Sidebar */}
+          <section className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-4">
+            <div className="lg:col-span-8 order-2 lg:order-1 w-full">
+              <BlogGrid posts={filteredPosts} />
+            </div>
+            <div className="lg:col-span-4 order-1 lg:order-2 w-full">
+              <BlogSidebar
+                searchValue={sidebarSearch}
+                onSearchChange={setSidebarSearch}
+                onCategorySelect={setSelectedCategory}
+              />
+            </div>
+          </section>
+        </div>
       </div>
     </main>
   );
