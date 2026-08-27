@@ -13,7 +13,7 @@ export default function ProjectsPage() {
         <ProjectHero />
 
         {/* Trusted By Logos Banner */}
-        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-12 py-8">
+        <div className="py-8">
           <TrustedBy />
         </div>
 

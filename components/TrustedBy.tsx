@@ -5,38 +5,38 @@ import { motion } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
 const companies = [
-  { name: "MCF", src: "/companies/MCF.webp", width: 150, height: 52 },
-  { name: "Manipal", src: "/companies/Manipal.webp", width: 180, height: 54 },
-  { name: "SJR", src: "/companies/SJR_Logo_white_Horizontal-removebg-preview.png", width: 150, height: 52 },
-  { name: "SAS", src: "/companies/Sas-logo-blue-removebg-preview.png", width: 140, height: 52 },
-  { name: "aroha", src: "/companies/aroha-removebg-preview.png", width: 140, height: 52 },
+  { name: "MCF", src: "/companies/MCF.webp", width: 135, height: 48 },
+  { name: "Manipal", src: "/companies/Manipal.webp", width: 250, height: 90 },
+  { name: "SJR", src: "/companies/SJR_Logo_white_Horizontal-removebg-preview.png", width: 135, height: 48 },
+  { name: "SAS", src: "/companies/Sas-logo-blue-removebg-preview.png", width: 125, height: 48 },
+  { name: "aroha", src: "/companies/aroha-removebg-preview.png", width: 125, height: 48 },
   // { name: "bbmp", src: "/companies/bbmp-removebg-preview.webp", width: 130, height: 52 },
-  { name: "biess", src: "/companies/biess-removebg-preview.png", width: 140, height: 46 },
-  { name: "brigade", src: "/companies/brigade.webp", width: 140, height: 56 },
-  { name: "century", src: "/companies/century-removebg-preview.png", width: 140, height: 52 },
-  { name: "dish", src: "/companies/dish-removebg-preview.png", width: 130, height: 46 },
+  { name: "biess", src: "/companies/biess-removebg-preview.png", width: 125, height: 42 },
+  { name: "brigade", src: "/companies/brigade.webp", width: 125, height: 50 },
+  { name: "century", src: "/companies/century-removebg-preview.png", width: 125, height: 48 },
+  { name: "dish", src: "/companies/dish-removebg-preview.png", width: 115, height: 42 },
   // { name: "eco-collab", src: "/companies/eco-collab.webp", width: 170, height: 58 },
   // { name: "enviro", src: "/companies/enviro-removebg-preview.webp", width: 140, height: 52 },
   // { name: "evo-homes", src: "/companies/evo-homes-removebg-preview.webp", width: 140, height: 52 },
-  { name: "fiest-homes", src: "/companies/fiest-homes.webp", width: 140, height: 52 },
-  { name: "hilite", src: "/companies/hilite.png", width: 140, height: 52 },
-  { name: "isha", src: "/companies/isha.webp", width: 140, height: 52 },
-  { name: "kerala", src: "/companies/kerala-removebg-preview.png", width: 150, height: 52 },
-  { name: "manipal-hospitals", src: "/companies/manipal-hospitals.webp", width: 180, height: 54 },
-  { name: "mjr", src: "/companies/mjr-removebg-preview.webp", width: 130, height: 46 },
-  { name: "nitte", src: "/companies/nitte-removebg-preview.webp", width: 130, height: 46 },
-  { name: "northern-sky-new", src: "/companies/northern-sky-new.webp", width: 160, height: 52 },
-  { name: "nothing-Waste", src: "/companies/nothing-Waste.webp", width: 150, height: 52 },
-  { name: "oceanus", src: "/companies/oceanus-removebg-preview.webp", width: 140, height: 52 },
-  { name: "provident", src: "/companies/provident-removebg-preview.webp", width: 140, height: 52 },
-  { name: "purva", src: "/companies/purva-removebg-preview.webp", width: 140, height: 52 },
-  { name: "resource", src: "/companies/resource-removebg-preview.png", width: 150, height: 52 },
-  { name: "rohan-corporation", src: "/companies/rohan-corporation-removebg-preview.webp", width: 160, height: 52 },
-  { name: "sobha-1", src: "/companies/sobha-1.webp", width: 120, height: 64 },
-  { name: "sumadhura", src: "/companies/sumadhura-removebg-preview.webp", width: 150, height: 52 },
-  { name: "technopark", src: "/companies/technopark-removebg-preview.webp", width: 140, height: 52 },
-  { name: "the-emep", src: "/companies/the_emep-removebg-preview.png", width: 150, height: 52 },
-  { name: "puravankara", src: "/companies/purvankara-logo.svg", width: 160, height: 52 },
+  { name: "fiest-homes", src: "/companies/fiest-homes.webp", width: 125, height: 48 },
+  { name: "hilite", src: "/companies/hilite.png", width: 125, height: 48 },
+  { name: "isha", src: "/companies/isha.webp", width: 125, height: 48 },
+  { name: "kerala", src: "/companies/kerala-removebg-preview.png", width: 135, height: 48 },
+  { name: "manipal-hospitals", src: "/companies/manipal-hospitals.webp", width: 160, height: 50 },
+  { name: "mjr", src: "/companies/mjr-removebg-preview.webp", width: 115, height: 42 },
+  { name: "nitte", src: "/companies/nitte-removebg-preview.webp", width: 115, height: 42 },
+  { name: "northern-sky-new", src: "/companies/northern-sky-new.webp", width: 145, height: 48 },
+  { name: "nothing-Waste", src: "/companies/nothing-Waste.webp", width: 135, height: 48 },
+  { name: "oceanus", src: "/companies/oceanus-removebg-preview.webp", width: 125, height: 48 },
+  { name: "provident", src: "/companies/provident-removebg-preview.webp", width: 125, height: 48 },
+  { name: "purva", src: "/companies/purva-removebg-preview.webp", width: 125, height: 48 },
+  { name: "resource", src: "/companies/resource-removebg-preview.png", width: 135, height: 48 },
+  { name: "rohan-corporation", src: "/companies/rohan-corporation-removebg-preview.webp", width: 145, height: 48 },
+  { name: "sobha-1", src: "/companies/sobha-1.webp", width: 140, height: 78 },
+  { name: "sumadhura", src: "/companies/sumadhura-removebg-preview.webp", width: 135, height: 48 },
+  { name: "technopark", src: "/companies/technopark-removebg-preview.webp", width: 125, height: 48 },
+  { name: "the-emep", src: "/companies/the_emep-removebg-preview.png", width: 135, height: 48 },
+  { name: "puravankara", src: "/companies/purvankara-logo.svg", width: 145, height: 48 },
 ];
 
 // Double the companies list to guarantee a seamless looping track
@@ -177,7 +177,7 @@ export default function TrustedBy() {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
-        className="relative w-full mt-6 md:mt-8 flex gap-6 sm:gap-10 items-center overflow-x-auto whitespace-nowrap scrollbar-none select-none outline-none cursor-grab active:cursor-grabbing py-2 z-10"
+        className="relative w-full mt-6 md:mt-8 flex gap-6 sm:gap-9 items-center overflow-x-auto whitespace-nowrap scrollbar-none select-none outline-none cursor-grab active:cursor-grabbing py-2 z-10"
       >
         {/* Soft edge blur vignettes */}
         <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-32 bg-gradient-to-r from-[#eae4d6] via-[#eae4d6]/60 to-transparent z-20 pointer-events-none" />
@@ -187,7 +187,7 @@ export default function TrustedBy() {
         {duplicatedCompanies.map((company, index) => (
           <div
             key={`${company.name}-${index}`}
-            className="relative flex items-center justify-center shrink-0 w-[180px] sm:w-[240px] h-[70px] sm:h-[90px] group transition-transform duration-300 hover:scale-105 pointer-events-none"
+            className="relative flex items-center justify-center shrink-0 w-[165px] sm:w-[210px] h-[65px] sm:h-[75px] group transition-transform duration-300 hover:scale-105 pointer-events-none"
           >
             <div className="relative w-full h-full flex items-center justify-center opacity-85 hover:opacity-100 transition-opacity duration-300">
               <Image
@@ -196,7 +196,7 @@ export default function TrustedBy() {
                 width={company.width}
                 height={company.height}
                 style={{ width: "auto", height: "auto" }}
-                className="object-contain max-h-full max-w-full select-none"
+                className="object-contain max-h-[42px] sm:max-h-[50px] max-w-full select-none"
               />
             </div>
           </div>
