@@ -189,10 +189,62 @@ export const BLOG_CATEGORIES = [
   "News & Updates",
 ];
 
-// Helper functions for post lookup
+// Helper functions for dynamic post lookup & storage
+export function getAllBlogPosts(): BlogPost[] {
+  if (typeof window === "undefined") {
+    return BLOG_POSTS;
+  }
+  try {
+    const customPostsRaw = localStorage.getItem("vikasit_custom_blog_posts");
+    if (!customPostsRaw) return BLOG_POSTS;
+    const customPosts: BlogPost[] = JSON.parse(customPostsRaw);
+    return [...customPosts, ...BLOG_POSTS];
+  } catch (e) {
+    return BLOG_POSTS;
+  }
+}
+
+export function addBlogPost(postData: Omit<BlogPost, "id"> & { id?: number }): BlogPost {
+  const nextId = postData.id || Date.now();
+  const createdPost: BlogPost = {
+    ...postData,
+    id: nextId,
+  };
+
+  if (typeof window !== "undefined") {
+    try {
+      const customPostsRaw = localStorage.getItem("vikasit_custom_blog_posts");
+      const customPosts: BlogPost[] = customPostsRaw ? JSON.parse(customPostsRaw) : [];
+      const updatedCustom = [createdPost, ...customPosts];
+      localStorage.setItem("vikasit_custom_blog_posts", JSON.stringify(updatedCustom));
+      window.dispatchEvent(new Event("vikasit_blogs_updated"));
+    } catch (e) {
+      console.error("Failed to save blog post to localStorage", e);
+    }
+  }
+  return createdPost;
+}
+
+export function deleteBlogPost(id: number): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const customPostsRaw = localStorage.getItem("vikasit_custom_blog_posts");
+    if (!customPostsRaw) return false;
+    const customPosts: BlogPost[] = JSON.parse(customPostsRaw);
+    const updatedCustom = customPosts.filter((p) => p.id !== id);
+    localStorage.setItem("vikasit_custom_blog_posts", JSON.stringify(updatedCustom));
+    window.dispatchEvent(new Event("vikasit_blogs_updated"));
+    return true;
+  } catch (e) {
+    console.error("Failed to delete blog post from localStorage", e);
+    return false;
+  }
+}
+
 export function getBlogPostBySlug(slug: string): BlogPost | undefined {
   const normalizedSlug = decodeURIComponent(slug).toLowerCase();
-  return BLOG_POSTS.find(
+  const allPosts = getAllBlogPosts();
+  return allPosts.find(
     (post) =>
       post.slug.toLowerCase() === normalizedSlug ||
       String(post.id) === normalizedSlug
@@ -201,13 +253,14 @@ export function getBlogPostBySlug(slug: string): BlogPost | undefined {
 
 export function getRelatedPosts(currentSlug: string, count: number = 3): BlogPost[] {
   const currentPost = getBlogPostBySlug(currentSlug);
-  const filtered = BLOG_POSTS.filter(
+  const allPosts = getAllBlogPosts();
+  const filtered = allPosts.filter(
     (post) => post.slug !== currentPost?.slug && post.id !== currentPost?.id
   );
   if (filtered.length >= count) {
     return filtered.slice(0, count);
   }
-  // Fill from BLOG_POSTS if fewer than count
-  return BLOG_POSTS.slice(0, count);
+  return allPosts.slice(0, count);
 }
+
 

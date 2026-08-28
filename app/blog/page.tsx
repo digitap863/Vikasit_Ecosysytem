@@ -1,17 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BlogHero from "@/components/blog/BlogHero";
 import CategoryFilter from "@/components/blog/CategoryFilter";
 import BlogGrid from "@/components/blog/BlogGrid";
 import BlogSidebar from "@/components/blog/BlogSidebar";
-import { BLOG_POSTS, BLOG_CATEGORIES } from "@/components/blog/blogData";
+import { getAllBlogPosts, BLOG_CATEGORIES, BlogPost } from "@/components/blog/blogData";
 
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sidebarSearch, setSidebarSearch] = useState("");
+  const [posts, setPosts] = useState<BlogPost[]>([]);
 
-  const filteredPosts = BLOG_POSTS.filter((post) => {
+  useEffect(() => {
+    setPosts(getAllBlogPosts());
+
+    const handleUpdate = () => {
+      setPosts(getAllBlogPosts());
+    };
+    window.addEventListener("vikasit_blogs_updated", handleUpdate);
+    return () => window.removeEventListener("vikasit_blogs_updated", handleUpdate);
+  }, []);
+
+  const filteredPosts = posts.filter((post) => {
     const matchesCat =
       selectedCategory === "All" ||
       post.category.toLowerCase() === selectedCategory.toLowerCase();
