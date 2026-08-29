@@ -1,5 +1,4 @@
-import Image from "next/image";
-import HeroText from "@/components/HeroText";
+import BannerScrollSequence from "@/components/BannerScrollSequence";
 import MobileHero from "@/components/MobileHero";
 import TrustedBy from "@/components/TrustedBy";
 import AboutSection from "@/components/AboutSection";
@@ -19,38 +18,10 @@ export default function Home() {
       {/* Mobile View Hero (Visible on mobile screens < 640px) */}
       <MobileHero />
 
-      {/* Desktop View Hero (Visible on sm and larger screens) */}
-      <section className="hidden sm:block relative w-full h-screen min-h-[650px] sm:min-h-[750px] md:min-h-0 overflow-hidden">
-        {/* Top-Left Ambient Warm Radial Glow (295x500 shape) */}
-        <div className="absolute top-[-40px] left-[1%] w-[320px] h-[520px] bg-[#e89b74]/30 rounded-full blur-[95px] pointer-events-none z-[2]" />
-
-        {/* Lower-Left Ambient Warm Radial Glow (295x432 Figma shape) */}
-        <div className="absolute top-[240px] left-[-30px] w-[460px] h-[380px] bg-[#EAE3D2]/40 rounded-full blur-[95px] pointer-events-none z-[2]" />
-
-        {/* Desktop Banner Image */}
-        <Image
-          src="/banner/banner.webp"
-          alt="Vikasit Ecosystem Banner"
-          fill
-          priority
-          className="object-cover"
-        />
-
-        {/* Full-width Bottom Dark Depth Shadow Overlay (for soil texture & contrast) */}
-        <div className="absolute bottom-0 inset-x-0 h-[38%] bg-gradient-to-t from-[#1c140d]/65 via-[#1c140d]/30 to-transparent pointer-events-none z-[3]" />
-
-        {/* Full-width Bottom Cream Gradient Fade Overlay */}
-        <div className="absolute bottom-0 inset-x-0 h-[24%] bg-gradient-to-t from-[#eae4d6] via-[#eae4d6]/75 to-transparent pointer-events-none z-[4]" />
-
-        {/* Hero Content Overlay with Scroll Animations */}
-        <div className="absolute inset-0 pt-[90px] px-6 sm:px-12 md:px-16 lg:px-24 flex items-center md:items-start md:pt-[150px] justify-start z-10 pointer-events-none">
-          <HeroText />
-        </div>
-        <div
-          className="absolute bottom-0 -left-[160px] rounded-full bg-[#EAE3D2] blur-2xl z-0"
-          style={{ width: '295px', height: '432px' }}
-        />
-      </section>
+      {/* Desktop View Hero - GSAP Frame Scroll Sequence Animation */}
+      <div className="hidden sm:block w-full">
+        <BannerScrollSequence />
+      </div>
 
       {/* Trusted By Section */}
       <TrustedBy />
