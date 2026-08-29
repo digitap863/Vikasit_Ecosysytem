@@ -23,14 +23,7 @@ export default function BlogGrid({ posts }: BlogGridProps) {
         )}
       </div>
 
-      {/* Load More Button */}
-      {posts.length > 0 && (
-        <div className="flex justify-center pt-4 pb-2">
-          <button className="px-9 py-2.5 rounded-full bg-[#E6DFD3] text-neutral-800 border border-[#2d2d2d] font-semibold text-sm hover:bg-[#d8d1c3] transition-colors cursor-pointer">
-            Load More
-          </button>
-        </div>
-      )}
+     
     </div>
   );
 }

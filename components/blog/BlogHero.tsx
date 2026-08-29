@@ -11,6 +11,8 @@ interface BlogHeroProps {
 
 export default function BlogHero({ latestPost }: BlogHeroProps) {
   const postHref = latestPost ? `/blog/${latestPost.slug || latestPost.id}` : "";
+  const title = latestPost?.title || "No Blogs Published Yet";
+  const isLongTitle = title.length > 35;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -33,15 +35,15 @@ export default function BlogHero({ latestPost }: BlogHeroProps) {
   };
 
   return (
-    <section className="relative w-full bg-[#EBE4D5] text-[#1A1A1A] overflow-hidden pt-[85px] sm:pt-[120px] pb-6 sm:pb-14">
+    <section className="relative w-full bg-[#EBE4D5] text-[#1A1A1A] overflow-hidden pt-[85px] sm:pt-[110px] lg:pt-[125px] pb-8 sm:pb-14">
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={containerVariants}
-          className="space-y-6 sm:space-y-10"
+          className="space-y-6 sm:space-y-8"
         >
-          {/* Top Breadcrumb Line matching Services page */}
+          {/* Top Breadcrumb Line */}
           <motion.div
             variants={itemVariants}
             className="text-xs font-bold tracking-widest text-[#2E7D32] uppercase font-sans flex items-center gap-1.5"
@@ -53,10 +55,10 @@ export default function BlogHero({ latestPost }: BlogHeroProps) {
             <span className="text-[#2E7D32]">BLOGS</span>
           </motion.div>
 
-          {/* 2-Column Grid matching Services banner */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* 2-Column Grid with No Overlapping elements */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
             {/* Left Content Column */}
-            <div className="lg:col-span-6 space-y-4 sm:space-y-5">
+            <div className="lg:col-span-6 xl:col-span-6 space-y-4 sm:space-y-5">
               <motion.span
                 variants={itemVariants}
                 className="text-xs sm:text-sm font-semibold tracking-wider text-[#5A5A5C] uppercase block font-sans"
@@ -66,28 +68,32 @@ export default function BlogHero({ latestPost }: BlogHeroProps) {
 
               <motion.h1
                 variants={itemVariants}
-                className="text-3xl sm:text-5xl lg:text-[54px] xl:text-[60px] font-extrabold text-[#343433] tracking-tight leading-[1.08] font-farro uppercase"
+                className={`font-extrabold text-[#343433] tracking-tight font-farro uppercase ${
+                  isLongTitle
+                    ? "text-2xl sm:text-3xl lg:text-4xl xl:text-[42px] leading-[1.18]"
+                    : "text-3xl sm:text-4xl lg:text-5xl xl:text-[52px] leading-[1.1]"
+                }`}
               >
-                {latestPost?.title || "No Blogs Published Yet"}
+                {title}
               </motion.h1>
 
               {latestPost ? (
                 <>
                   <motion.div
                     variants={itemVariants}
-                    className="flex flex-wrap items-center gap-3 text-xs sm:text-sm font-semibold uppercase tracking-wide text-neutral-600 font-sans"
+                    className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs sm:text-sm font-semibold uppercase tracking-wide text-neutral-600 font-sans pt-1"
                   >
                     <span>{latestPost.category}</span>
-                    <span className="w-1 h-1 rounded-full bg-neutral-500" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-400" />
                     <span>{latestPost.date}</span>
-                    <span className="w-1 h-1 rounded-full bg-neutral-500" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-neutral-400" />
                     <span>{latestPost.readTime}</span>
                   </motion.div>
 
                   {latestPost.content?.intro && (
                     <motion.p
                       variants={itemVariants}
-                      className="text-neutral-700 text-sm sm:text-lg lg:text-[18px] font-medium leading-relaxed font-satoshi max-w-xl pt-1 sm:pt-2 line-clamp-3"
+                      className="text-neutral-700 text-sm sm:text-base lg:text-[16px] font-medium leading-relaxed font-satoshi max-w-xl line-clamp-3"
                     >
                       {latestPost.content.intro}
                     </motion.p>
@@ -96,7 +102,7 @@ export default function BlogHero({ latestPost }: BlogHeroProps) {
                   <motion.div variants={itemVariants} className="pt-2">
                     <Link
                       href={postHref}
-                      className="inline-flex items-center justify-center rounded-full bg-[#056826] px-7 py-3 text-sm font-bold text-white transition-colors hover:bg-[#034c1c] font-sans"
+                      className="inline-flex items-center justify-center rounded-full bg-[#056826] px-7 py-3 text-sm font-bold text-white transition-all hover:bg-[#034c1c] shadow-sm font-sans"
                     >
                       Read Blog
                     </Link>
@@ -105,16 +111,17 @@ export default function BlogHero({ latestPost }: BlogHeroProps) {
               ) : (
                 <motion.p
                   variants={itemVariants}
-                  className="text-neutral-700 text-sm sm:text-lg lg:text-[18px] font-medium leading-relaxed font-satoshi max-w-xl pt-1 sm:pt-2"
+                  className="text-neutral-700 text-sm sm:text-base font-medium leading-relaxed font-satoshi max-w-xl"
                 >
                   Publish a blog from the admin panel to feature it here.
                 </motion.p>
               )}
             </div>
 
+            {/* Right Clean Featured Image Card (No Overlapping Gradient Overlay) */}
             <motion.div
               variants={itemVariants}
-              className="lg:col-span-6 relative w-full h-[280px] sm:h-[380px] lg:h-[460px] rounded-[24px] sm:rounded-[32px] overflow-hidden bg-[#d8d1c3]"
+              className="lg:col-span-6 xl:col-span-6 relative w-full h-[280px] sm:h-[360px] lg:h-[420px] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#d8d1c3] border border-neutral-300/60 shadow-md"
             >
               {latestPost ? (
                 <Image
@@ -123,7 +130,7 @@ export default function BlogHero({ latestPost }: BlogHeroProps) {
                   fill
                   priority
                   unoptimized={latestPost.image.startsWith("data:")}
-                  className="object-cover object-center filter brightness-[1.02]"
+                  className="object-cover object-center"
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center px-8 text-center">
@@ -132,10 +139,6 @@ export default function BlogHero({ latestPost }: BlogHeroProps) {
                   </span>
                 </div>
               )}
-
-              <div className="absolute inset-y-0 left-0 w-[55%] sm:w-[50%] bg-gradient-to-r from-[#EBE4D5] via-[#EBE4D5]/80 to-transparent z-10 pointer-events-none" />
-              <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#EBE4D5] via-[#EBE4D5]/50 to-transparent z-10 pointer-events-none" />
-              <div className="absolute inset-x-0 top-0 h-[15%] bg-gradient-to-b from-[#EBE4D5]/30 to-transparent z-10 pointer-events-none" />
             </motion.div>
           </div>
         </motion.div>
