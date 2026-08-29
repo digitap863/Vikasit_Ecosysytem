@@ -7,6 +7,7 @@ import AdminSidebar, { AdminTab } from "@/components/admin/AdminSidebar";
 import AdminStats from "@/components/admin/AdminStats";
 import AddBlogForm from "@/components/admin/AddBlogForm";
 import BlogListTable from "@/components/admin/BlogListTable";
+import VideoManager from "@/components/admin/VideoManager";
 import { BlogPost, fetchAllBlogPosts } from "@/lib/blogData";
 
 export default function AdminDashboardPage() {
@@ -91,6 +92,8 @@ export default function AdminDashboardPage() {
               <h2 className="text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl">
                 {activeTab === "list"
                   ? "Articles"
+                  : activeTab === "videos"
+                  ? "Project YouTube Videos"
                   : editingPost
                   ? `Editing: ${editingPost.title}`
                   : "Publish New Article"}
@@ -99,14 +102,14 @@ export default function AdminDashboardPage() {
 
             <div className="flex flex-wrap items-center gap-2">
               <Link
-                href="/blog"
+                href="/projects"
                 target="_blank"
                 className="inline-flex items-center gap-2 rounded-md border border-neutral-300 bg-white px-3 py-2 text-xs font-bold text-neutral-700 transition-colors hover:border-[#056826]/30 hover:text-[#056826]"
               >
                 <svg className="h-3.5 w-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
-                View Live Blog
+                View Projects Site
               </Link>
               <button
                 type="button"
@@ -138,7 +141,7 @@ export default function AdminDashboardPage() {
           )}
 
           {/* Isolated Admin Stats Cards Component */}
-          <AdminStats posts={posts} />
+          {activeTab !== "videos" && <AdminStats posts={posts} />}
 
           {/* Isolated Admin Tab Components */}
           {activeTab === "list" && (
@@ -155,6 +158,7 @@ export default function AdminDashboardPage() {
               }}
             />
           )}
+          {activeTab === "videos" && <VideoManager />}
         </div>
       </main>
     </div>

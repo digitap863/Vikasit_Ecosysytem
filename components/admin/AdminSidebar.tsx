@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-export type AdminTab = "list" | "add";
+export type AdminTab = "list" | "add" | "videos";
 
 interface AdminSidebarProps {
   activeTab: AdminTab;
@@ -42,6 +42,16 @@ export default function AdminSidebar({
       icon: (
         <svg className="h-4 w-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m7-7H5" />
+        </svg>
+      ),
+    },
+    {
+      id: "videos",
+      label: "YouTube Videos",
+      description: "Manage project videos",
+      icon: (
+        <svg className="h-4 w-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
         </svg>
       ),
     },
@@ -107,7 +117,7 @@ export default function AdminSidebar({
             <button
               type="button"
               onClick={onLogout}
-              className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-md border border-neutral-300 px-3 py-2 text-xs font-bold text-neutral-700 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-700"
+              className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-md border border-neutral-300 px-3 py-2 text-xs font-bold text-neutral-700 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-700 cursor-pointer"
             >
               <svg className="h-3.5 w-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

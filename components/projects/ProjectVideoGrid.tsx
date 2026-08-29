@@ -1,265 +1,234 @@
 "use client";
 
-import { useState } from "react";
-import VideoModal from "@/components/VideoModal";
+import React, { useState, useEffect, useCallback } from "react";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
+import { ProjectVideo, INITIAL_PROJECT_VIDEOS, fetchAllProjectVideos } from "@/lib/videoData";
 
-export interface ProjectVideo {
+interface ProjectImage {
   id: string;
   title: string;
-  category: "WMaaS" | "Composting" | "Biomass" | "Automation" | "Field Action";
-  description: string;
-  videoUrl: string;
-  duration?: string;
-  location?: string;
-}
-
-export interface ProjectImage {
-  id: string;
-  title: string;
-  category: "WMaaS" | "Composting" | "Biomass" | "Automation" | "Field Action";
+  category: string;
   description: string;
   imageUrl: string;
   location?: string;
 }
 
-const CATEGORIES = ["All", "WMaaS", "Composting", "Biomass", "Automation", "Field Action"] as const;
-type CategoryFilter = (typeof CATEGORIES)[number];
-
-const allProjectVideos: ProjectVideo[] = [
-  {
-    id: "v1",
-    title: "WMaaS Decentralized Processing Operations",
-    category: "WMaaS",
-    description: "Turnkey decentralized organic waste processing for municipal wards and commercial entities.",
-    videoUrl: "/video/wmas.mp4",
-    duration: "Full Showcase",
-    location: "Field Site Alpha",
-  },
-  {
-    id: "v2",
-    title: "Organic Waste to Bio-Compost Transformation",
-    category: "Biomass",
-    description: "High-speed aerobic processing converting wet organic waste into nutrient-dense soil amendment.",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.27.23 PM.mp4",
-    duration: "Project Demo",
-    location: "Biomass Facility 01",
-  },
-  {
-    id: "v3",
-    title: "Decentralized Composting & Resource Recovery Hub",
-    category: "Composting",
-    description: "Zero-odor community composting units reducing municipal landfill transit emissions.",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.27.23 PM (1).mp4",
-    duration: "Site Highlight",
-    location: "Municipal Ward Hub",
-  },
-  {
-    id: "v4",
-    title: "Automated On-Site Waste Segregation System",
-    category: "Automation",
-    description: "Mechanical segregation lines engineered for high-purity separation of organic fractions.",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.27.23 PM (2).mp4",
-    duration: "Tech Showcase",
-    location: "Automation Yard",
-  },
-  {
-    id: "v5",
-    title: "Institutional Waste Diversion Program",
-    category: "WMaaS",
-    description: "Large-scale institutional waste management partnership across municipal smart city zones.",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.45.24 PM.mp4",
-    duration: "Impact Story",
-    location: "Smart City Sector 04",
-  },
-  {
-    id: "v6",
-    title: "Industrial Biomass Conversion Line",
-    category: "Biomass",
-    description: "High-capacity continuous organic waste conversion for agricultural soil restoration.",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.45.41 PM.mp4",
-    duration: "Field Footage",
-    location: "Resource Hub B",
-  },
-  {
-    id: "v7",
-    title: "Continuous Aerobic Digestion Facility",
-    category: "Composting",
-    description: "Inside tour of zero-emission enclosed composting setup with automated aeration controls.",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.45.56 PM.mp4",
-    duration: "Facility Tour",
-    location: "Processing Center A",
-  },
-  {
-    id: "v8",
-    title: "Modular Smart Composting Unit Deployment",
-    category: "Automation",
-    description: "Rapidly deployable modular composting setup equipped with IoT moisture and temperature monitoring.",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.45.56 PM (1).mp4",
-    duration: "Live Demo",
-    location: "Client Installation Site",
-  },
-  {
-    id: "v9",
-    title: "Primary Wet Waste Shredding & Sizing",
-    category: "Field Action",
-    description: "Heavy-duty pre-shredding line sizing raw wet waste prior to high-temperature microbial action.",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.46.18 PM.mp4",
-    duration: "Action Clip",
-    location: "Segregation Yard",
-  },
-  {
-    id: "v10",
-    title: "Organic Compost Refinement & Sifting",
-    category: "Composting",
-    description: "Final screening, curing, and packaging of fine organic compost for agricultural distribution.",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.46.18 PM (1).mp4",
-    duration: "Output Review",
-    location: "Refining Yard",
-  },
-  {
-    id: "v11",
-    title: "Circular Waste Ecosystem Logistics",
-    category: "WMaaS",
-    description: "Operational overview linking waste generators, localized processing hubs, and soil enrichment.",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.46.19 PM.mp4",
-    duration: "Ecosystem Overview",
-    location: "Central Operations Hub",
-  },
-  {
-    id: "v12",
-    title: "Industrial Bio-Shredder & Mixer in Action",
-    category: "Automation",
-    description: "High-torque twin shaft shredding equipment running with low energy input and zero effluent release.",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.46.19 PM (1).mp4",
-    duration: "Equipment Demo",
-    location: "Heavy Equipment Zone",
-  },
-  {
-    id: "v13",
-    title: "Field Operational Logistics & Throughput Monitoring",
-    category: "Field Action",
-    description: "Daily field operations, material handling, and real-time tonnage tracking by site engineers.",
-    videoUrl: "/you_are_missing_the_side_porti.mp4",
-    duration: "Field Operational",
-    location: "Regional Hub",
-  },
-];
-
 const allProjectImages: ProjectImage[] = [
   {
-    id: "img1",
-    title: "Industrial Hydraulic Baling Machine",
-    category: "Automation",
-    description: "High-density compaction machinery optimizing dry recyclable volume for transport.",
-    imageUrl: "/product/Bailing_machine.png",
-    location: "Processing Yard 01",
+    id: "p-img-1",
+    title: "Vikasit Ecosystems Site Operations",
+    category: "Field Photos",
+    description: "Decentralized waste management project site operational showcase.",
+    imageUrl: "/projects/Vikasit-Ecosystems-12-1024x768-1.webp",
   },
   {
-    id: "img2",
-    title: "Controlled Thermal Treatment Facility",
-    category: "WMaaS",
-    description: "Advanced thermal incinerator unit with multi-stage scrubbers for zero visible emissions.",
-    imageUrl: "/product/Incinerators.png",
-    location: "Thermal Facility B",
+    id: "p-img-2",
+    title: "On-Site Waste Segregation Facility",
+    category: "Field Photos",
+    description: "Primary material sorting and throughput handling at project site.",
+    imageUrl: "/projects/Vikasit-Ecosystems-16-1024x684-1.webp",
   },
   {
-    id: "img3",
-    title: "Heavy-Duty Dual-Shaft Shredder",
-    category: "Automation",
-    description: "High-torque organic shredding unit engineered for uniform feedstock sizing.",
-    imageUrl: "/product/Shedders.png",
-    location: "Biomass Processing Yard",
+    id: "p-img-3",
+    title: "Heavy Equipment Processing Yard",
+    category: "Field Photos",
+    description: "High-volume waste processing machinery running on-site.",
+    imageUrl: "/projects/Vikasit-Ecosystems-17-1024x684-1.webp",
   },
   {
-    id: "img4",
-    title: "Rotary Trommel Screening Assembly",
-    category: "Composting",
-    description: "Precision drum screen separating finished bio-compost from coarse organic matter.",
-    imageUrl: "/product/Trommels.png",
-    location: "Refining Facility",
+    id: "p-img-4",
+    title: "Automated Waste Reduction Unit",
+    category: "Field Photos",
+    description: "Automated machinery converting bulk organic waste into usable material.",
+    imageUrl: "/projects/Vikasit-Ecosystems-18-1024x684-1.webp",
   },
   {
-    id: "img5",
-    title: "Continuous Heavy-Duty Conveyor Line",
-    category: "Automation",
-    description: "Automated material handling system linking primary sorting bays to digestion units.",
-    imageUrl: "/product/conveyors.png",
-    location: "Transfer Hub Alpha",
+    id: "p-img-5",
+    title: "Material Handling & Storage Zone",
+    category: "Field Photos",
+    description: "Organized staging area for processed recyclable material.",
+    imageUrl: "/projects/Vikasit-Ecosystems-21-1024x684-1.webp",
   },
   {
-    id: "img6",
-    title: "Decentralized Field Operations Station",
-    category: "Field Action",
-    description: "Localized waste recovery unit serving surrounding commercial institutions.",
-    imageUrl: "/project1.webp",
-    location: "Regional Hub 02",
+    id: "p-img-6",
+    title: "Decentralized Processing Installation",
+    category: "Field Photos",
+    description: "Field deployment of zero-landfill composting solutions.",
+    imageUrl: "/projects/Vikasit-Ecosystems-24-1024x768-1.webp",
   },
   {
-    id: "img7",
-    title: "Urban Waste Segregation & Diversion Hub",
-    category: "WMaaS",
-    description: "Turnkey municipal waste processing hub handling daily organic waste intake.",
-    imageUrl: "/project2.webp",
-    location: "Smart City Sector 04",
+    id: "p-img-7",
+    title: "Commercial Site Processing Operation",
+    category: "Field Photos",
+    description: "Daily operational workflow at commercial waste transformation site.",
+    imageUrl: "/projects/Vikasit-Ecosystems-25-1024x768-1.webp",
   },
   {
-    id: "img8",
-    title: "Aerobic Digestion & Composting Facility",
-    category: "Composting",
-    description: "High-capacity enclosed composting bay maintaining optimal moisture and aerobic balance.",
-    imageUrl: "/project3.webp",
-    location: "Central Processing Yard",
+    id: "p-img-8",
+    title: "Field Action Infrastructure",
+    category: "Field Photos",
+    description: "Complete waste management plant layout operating at scale.",
+    imageUrl: "/projects/Vikasit-Ecosystems-28-1024x789-1.webp",
   },
   {
-    id: "img9",
-    title: "Vikasit Ecosystem Integrated Operational Workflow",
-    category: "Field Action",
-    description: "End-to-end operational architecture mapping collection, processing, and output distribution.",
-    imageUrl: "/about_page_workflow.png",
-    location: "Operations Command Center",
+    id: "p-img-9",
+    title: "Decentralized Plant Logistics",
+    category: "Field Photos",
+    description: "Overview of site logistics and organic waste collection.",
+    imageUrl: "/projects/Vikasit-Ecosystems-3-1024x683-1.webp",
   },
   {
-    id: "img10",
-    title: "Live Field Processing Demonstration Site",
-    category: "WMaaS",
-    description: "On-site processing showcase demonstrating immediate organic volume reduction.",
-    imageUrl: "/LiveDemo.webp",
-    location: "Client Installation Site",
+    id: "p-img-10",
+    title: "Vruthi Project Site - Overview 01",
+    category: "Field Photos",
+    description: "Field documentation of Vruthi 25 site machinery deployment.",
+    imageUrl: "/projects/Vruthi-25-1.webp",
   },
   {
-    id: "img11",
-    title: "Soil Enrichment & Reforestation Initiative",
-    category: "Biomass",
-    description: "Application of nutrient-rich bio-compost for land rehabilitation and green belt creation.",
-    imageUrl: "/product/forest_image.png",
-    location: "Green Belt Zone",
+    id: "p-img-11",
+    title: "Vruthi Project Site - Material Sorting 03",
+    category: "Field Photos",
+    description: "Sorting and staging area at Vruthi waste management plant.",
+    imageUrl: "/projects/Vruthi-25-3.webp",
   },
   {
-    id: "img12",
-    title: "Modular Waste Transformation Engineering Layout",
-    category: "Automation",
-    description: "Technical architectural blueprint of modular processing hub with automated controls.",
-    imageUrl: "/product/product_side.png",
-    location: "Engineering HQ",
+    id: "p-img-12",
+    title: "Vruthi Project Site - Composting Unit 04",
+    category: "Field Photos",
+    description: "Operational composting machinery processing organic waste.",
+    imageUrl: "/projects/Vruthi-25-4.webp",
+  },
+  {
+    id: "p-img-13",
+    title: "Vruthi Project Site - Equipment Setup 06",
+    category: "Field Photos",
+    description: "Heavy machinery operational setup at Vruthi project site.",
+    imageUrl: "/projects/Vruthi-25-6.webp",
+  },
+  {
+    id: "p-img-14",
+    title: "Vruthi Project Site - Field Action 07",
+    category: "Field Photos",
+    description: "Site engineers monitoring waste throughput at Vruthi site.",
+    imageUrl: "/projects/Vruthi-25-7-scaled.webp",
+  },
+  {
+    id: "p-img-15",
+    title: "Vruthi Project Site - Facility View 08",
+    category: "Field Photos",
+    description: "High-resolution photography of active Vruthi facility.",
+    imageUrl: "/projects/Vruthi-25-8-scaled.webp",
+  },
+  {
+    id: "p-img-16",
+    title: "Vruthi Project Site - Operations 09",
+    category: "Field Photos",
+    description: "Daily operational workflow and material transformation.",
+    imageUrl: "/projects/Vruthi-25-9-scaled.webp",
+  },
+  {
+    id: "p-img-17",
+    title: "Vruthi Project Site - Plant Yard 10",
+    category: "Field Photos",
+    description: "Full yard view of Vruthi waste management infrastructure.",
+    imageUrl: "/projects/Vruthi-25-10-scaled.webp",
+  },
+  {
+    id: "p-img-18",
+    title: "St. Martha Installation - Site View 01",
+    category: "Field Photos",
+    description: "Field deployment photography at St. Martha project location.",
+    imageUrl: "/projects/st-martha-1-1.webp",
+  },
+  {
+    id: "p-img-19",
+    title: "St. Martha Installation - Machine Setup 02",
+    category: "Field Photos",
+    description: "Organic waste converter installation at St. Martha site.",
+    imageUrl: "/projects/st-martha-2-1.webp",
+  },
+  {
+    id: "p-img-20",
+    title: "St. Martha Installation - Operational Run 03",
+    category: "Field Photos",
+    description: "Operational run of Soil Maker OWC unit at St. Martha site.",
+    imageUrl: "/projects/st-martha-3-1.webp",
+  },
+  {
+    id: "p-img-21",
+    title: "St. Martha Installation - Processing Yard 04",
+    category: "Field Photos",
+    description: "High-volume waste processing yard at St. Martha facility.",
+    imageUrl: "/projects/st-martha-4-1.webp",
+  },
+  {
+    id: "p-img-22",
+    title: "St. Martha Installation - Facility Overview 05",
+    category: "Field Photos",
+    description: "Complete plant overview of St. Martha waste management project.",
+    imageUrl: "/projects/st-martha-5-1.webp",
   },
 ];
 
 export default function ProjectVideoGrid() {
   const [activeTab, setActiveTab] = useState<"video" | "image">("video");
-  const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>("All");
-  const [selectedVideo, setSelectedVideo] = useState<ProjectVideo | null>(null);
-  const [selectedImage, setSelectedImage] = useState<ProjectImage | null>(null);
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [videos, setVideos] = useState<ProjectVideo[]>(INITIAL_PROJECT_VIDEOS);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
-  // Filter items based on active category
-  const filteredVideos = allProjectVideos.filter(
-    (v) => selectedCategory === "All" || v.category === selectedCategory
-  );
+  useEffect(() => {
+    const loadVideos = async () => {
+      const data = await fetchAllProjectVideos();
+      if (data && data.length > 0) {
+        setVideos(data);
+      }
+    };
+    loadVideos();
 
-  const filteredImages = allProjectImages.filter(
-    (img) => selectedCategory === "All" || img.category === selectedCategory
-  );
+    if (typeof window !== "undefined") {
+      window.addEventListener("vikasit_videos_updated", loadVideos);
+      return () => window.removeEventListener("vikasit_videos_updated", loadVideos);
+    }
+  }, []);
+
+  const currentImage = selectedImageIndex !== null ? allProjectImages[selectedImageIndex] : null;
+
+  const handlePrevImage = useCallback(() => {
+    if (selectedImageIndex === null || allProjectImages.length === 0) return;
+    setSelectedImageIndex((prev) => (prev! === 0 ? allProjectImages.length - 1 : prev! - 1));
+  }, [selectedImageIndex]);
+
+  const handleNextImage = useCallback(() => {
+    if (selectedImageIndex === null || allProjectImages.length === 0) return;
+    setSelectedImageIndex((prev) => (prev! === allProjectImages.length - 1 ? 0 : prev! + 1));
+  }, [selectedImageIndex]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedImageIndex === null) return;
+      if (e.key === "ArrowLeft") handlePrevImage();
+      if (e.key === "ArrowRight") handleNextImage();
+      if (e.key === "Escape") setSelectedImageIndex(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedImageIndex, handlePrevImage, handleNextImage]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    if (diff > 40) {
+      handleNextImage(); // Swiped left -> Next
+    } else if (diff < -40) {
+      handlePrevImage(); // Swiped right -> Prev
+    }
+    setTouchStartX(null);
+  };
 
   return (
     <section id="video-grid" className="w-full bg-[#EBE4D5] py-16 sm:py-20 md:py-24 px-6 sm:px-10 lg:px-12">
@@ -278,28 +247,27 @@ export default function ProjectVideoGrid() {
           </p>
         </ScrollAnimation>
 
-        {/* Media Type Switcher & Filters Bar */}
+        {/* Media Type Switcher Bar */}
         <div className="flex flex-col items-center gap-6 mb-10">
-          {/* Segmented Control Bar */}
-          <div className="inline-flex p-1 rounded-xl bg-[#1b3022]/10 border border-[#1b3022]/15 shadow-inner">
+          <div className="inline-flex p-1 rounded-xl bg-[#343433]/10 border border-[#1b3022]/15 shadow-inner">
             <button
               onClick={() => setActiveTab("video")}
               className={`flex items-center gap-2 px-5 sm:px-6 py-2 rounded-lg font-farro font-semibold text-xs sm:text-sm transition-all duration-200 cursor-pointer ${
                 activeTab === "video"
-                  ? "bg-[#1b3022] text-white shadow-sm"
+                  ? "bg-[#343433] text-white shadow-sm"
                   : "text-[#1b3022]/75 hover:text-[#1b3022]"
               }`}
             >
               <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
-              Video Footage ({allProjectVideos.length})
+              Video Footage ({videos.length})
             </button>
             <button
               onClick={() => setActiveTab("image")}
               className={`flex items-center gap-2 px-5 sm:px-6 py-2 rounded-lg font-farro font-semibold text-xs sm:text-sm transition-all duration-200 cursor-pointer ${
                 activeTab === "image"
-                  ? "bg-[#1b3022] text-white shadow-sm"
+                  ? "bg-[#343433] text-white shadow-sm"
                   : "text-[#1b3022]/75 hover:text-[#1b3022]"
               }`}
             >
@@ -309,83 +277,23 @@ export default function ProjectVideoGrid() {
               Field Photos ({allProjectImages.length})
             </button>
           </div>
-
-          {/* Category Sub-Filters */}
-          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 py-1 rounded-lg text-xs font-farro font-medium transition-all duration-200 cursor-pointer ${
-                  selectedCategory === cat
-                    ? "bg-[#1b3022] text-white font-semibold shadow-xs"
-                    : "bg-[#1b3022]/5 text-[#1b3022]/80 hover:bg-[#1b3022]/15 border border-[#1b3022]/10"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
         </div>
 
-        {/* Video Grid View */}
+        {/* Video Grid View (YouTube Embedded Player Cards) */}
         {activeTab === "video" && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
-            {filteredVideos.map((video) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+            {videos.map((video) => (
               <div
                 key={video.id}
-                onMouseEnter={() => setHoveredId(video.id)}
-                onMouseLeave={() => setHoveredId(null)}
-                onClick={() => setSelectedVideo(video)}
-                className="group relative rounded-xl overflow-hidden bg-[#162219] border border-[#1b3022]/20 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col justify-between aspect-[4/5]"
+                className="w-full aspect-video rounded-2xl overflow-hidden shadow-lg border border-neutral-400/30 bg-black"
               >
-                {/* Background Video Preview */}
-                <video
-                  src={video.videoUrl}
-                  preload="metadata"
-                  muted
-                  loop
-                  playsInline
-                  autoPlay={hoveredId === video.id}
-                  className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-95 group-hover:scale-103 transition-all duration-500 pointer-events-none"
+                <iframe
+                  src={video.embedUrl}
+                  title={video.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="w-full h-full border-0"
                 />
-
-                {/* Refined Dark Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0e1610] via-black/30 to-black/30 group-hover:from-[#0e1610]/95 transition-opacity duration-300 pointer-events-none" />
-
-                {/* Top Badges */}
-                <div className="relative z-10 p-3.5 flex items-center justify-between gap-2 pointer-events-none">
-                  <span className="text-[10px] font-semibold font-farro uppercase tracking-wider text-emerald-300 bg-black/60 px-2 py-0.5 rounded-md border border-white/10 backdrop-blur-md">
-                    {video.category}
-                  </span>
-                  {video.location && (
-                    <span className="text-[10px] font-medium font-farro text-stone-300 bg-black/60 px-2 py-0.5 rounded-md border border-white/10 backdrop-blur-md flex items-center gap-1">
-                      <svg className="w-3 h-3 fill-current text-emerald-400" viewBox="0 0 24 24">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                      </svg>
-                      {video.location}
-                    </span>
-                  )}
-                </div>
-
-                {/* Center Play Icon Button */}
-                <div className="relative z-10 flex items-center justify-center my-auto pointer-events-none">
-                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/15 backdrop-blur-md border border-white/30 text-white flex items-center justify-center group-hover:scale-105 group-hover:bg-emerald-500 group-hover:border-emerald-400 transition-all duration-300 shadow-md">
-                    <svg className="w-5 h-5 translate-x-0.5 fill-current" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
-                </div>
-
-                {/* Bottom Details */}
-                <div className="relative z-10 p-4">
-                  <h3 className="text-white text-sm sm:text-base font-bold font-farro leading-snug mb-1 line-clamp-1 group-hover:text-emerald-300 transition-colors">
-                    {video.title}
-                  </h3>
-                  <p className="text-stone-300 text-xs font-farro font-light line-clamp-2 leading-relaxed opacity-90">
-                    {video.description}
-                  </p>
-                </div>
               </div>
             ))}
           </div>
@@ -393,55 +301,28 @@ export default function ProjectVideoGrid() {
 
         {/* Image Grid View */}
         {activeTab === "image" && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
-            {filteredImages.map((img) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
+            {allProjectImages.map((img, index) => (
               <div
                 key={img.id}
-                onClick={() => setSelectedImage(img)}
-                className="group relative rounded-xl overflow-hidden bg-[#162219] border border-[#1b3022]/20 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer flex flex-col justify-between aspect-[4/5]"
+                onClick={() => setSelectedImageIndex(index)}
+                className="group relative rounded-xl overflow-hidden bg-stone-900 border border-stone-800 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.01] cursor-pointer aspect-[4/3] flex flex-col justify-end"
               >
-                {/* Background Image */}
+                {/* Image */}
                 <img
                   src={img.imageUrl}
-                  alt={img.title}
-                  className="absolute inset-0 w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-103 transition-all duration-500 pointer-events-none"
+                  alt={img.title || "Project Image"}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
 
-                {/* Dark Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0e1610] via-black/25 to-black/20 group-hover:from-[#0e1610]/95 transition-opacity duration-300 pointer-events-none" />
+                {/* Subtle Dark Gradient Overlay for Title Legibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300 pointer-events-none" />
 
-                {/* Top Badges */}
-                <div className="relative z-10 p-3.5 flex items-center justify-between gap-2 pointer-events-none">
-                  <span className="text-[10px] font-semibold font-farro uppercase tracking-wider text-emerald-300 bg-black/60 px-2 py-0.5 rounded-md border border-white/10 backdrop-blur-md">
-                    {img.category}
-                  </span>
-                  {img.location && (
-                    <span className="text-[10px] font-medium font-farro text-stone-300 bg-black/60 px-2 py-0.5 rounded-md border border-white/10 backdrop-blur-md flex items-center gap-1">
-                      <svg className="w-3 h-3 fill-current text-emerald-400" viewBox="0 0 24 24">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                      </svg>
-                      {img.location}
-                    </span>
-                  )}
-                </div>
-
-                {/* Center Expand Icon */}
-                <div className="relative z-10 flex items-center justify-center my-auto pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-black/50 backdrop-blur-md border border-white/30 text-white flex items-center justify-center group-hover:scale-105 group-hover:bg-emerald-500 group-hover:border-emerald-400 transition-all duration-300 shadow-md">
-                    <svg className="w-5 h-5 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                    </svg>
-                  </div>
-                </div>
-
-                {/* Bottom Details */}
-                <div className="relative z-10 p-4">
-                  <h3 className="text-white text-sm sm:text-base font-bold font-farro leading-snug mb-1 line-clamp-1 group-hover:text-emerald-300 transition-colors">
+                {/* Title Only */}
+                <div className="relative z-10 p-2.5 sm:p-3 pointer-events-none">
+                  <h3 className="text-white text-xs sm:text-sm font-bold font-farro leading-snug line-clamp-1 group-hover:text-emerald-300 transition-colors">
                     {img.title}
                   </h3>
-                  <p className="text-stone-300 text-xs font-farro font-light line-clamp-2 leading-relaxed opacity-90">
-                    {img.description}
-                  </p>
                 </div>
               </div>
             ))}
@@ -449,57 +330,91 @@ export default function ProjectVideoGrid() {
         )}
       </div>
 
-      {/* Video Modal Player */}
-      <VideoModal
-        isOpen={!!selectedVideo}
-        onClose={() => setSelectedVideo(null)}
-        videoUrl={selectedVideo?.videoUrl || null}
-        title={selectedVideo?.title}
-      />
-
-      {/* Image Lightbox Modal */}
-      {selectedImage && (
+      {/* Image Gallery Swiper Lightbox Modal */}
+      {currentImage && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 sm:p-6"
-          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 z-50 flex flex-col justify-between bg-black/95 backdrop-blur-xl p-4 sm:p-6 text-white select-none"
+          onClick={() => setSelectedImageIndex(null)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
+          {/* Top Bar Controls */}
           <div
-            className="relative max-w-4xl w-full bg-[#121c15] rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col max-h-[90vh]"
+            className="flex items-center justify-between w-full z-20 pb-2"
             onClick={(e) => e.stopPropagation()}
           >
+            <div className="px-3.5 py-1 rounded-full bg-white/10 text-xs font-bold font-farro tracking-wider text-stone-200 border border-white/10">
+              {selectedImageIndex! + 1} / {allProjectImages.length}
+            </div>
+
             <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/70 text-stone-300 hover:text-white hover:bg-black flex items-center justify-center border border-white/15 transition-all cursor-pointer"
+              onClick={() => setSelectedImageIndex(null)}
+              className="w-10 h-10 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center border border-white/20 transition-all cursor-pointer shadow-lg text-sm"
+              title="Close (Esc)"
             >
               ✕
             </button>
-            <div className="relative w-full aspect-video bg-black flex items-center justify-center overflow-hidden">
+          </div>
+
+          {/* Main Uncropped Image Showcase with Swiping Arrow Controls */}
+          <div
+            className="relative flex-1 flex items-center justify-center w-full my-auto overflow-hidden px-2 sm:px-12"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Previous Image Arrow Button */}
+            {allProjectImages.length > 1 && (
+              <button
+                onClick={handlePrevImage}
+                className="absolute left-2 sm:left-4 z-30 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-emerald-600 text-white flex items-center justify-center border border-white/20 transition-all cursor-pointer shadow-2xl backdrop-blur-md group"
+                title="Previous Image (←)"
+              >
+                <svg
+                  className="w-6 h-6 -translate-x-0.5 stroke-current stroke-2 group-hover:scale-110 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+            )}
+
+            {/* Complete Uncropped Image Display */}
+            <div className="relative flex items-center justify-center max-w-full max-h-[82vh] transition-all duration-300">
               <img
-                src={selectedImage.imageUrl}
-                alt={selectedImage.title}
-                className="w-full h-full object-contain"
+                key={currentImage.id}
+                src={currentImage.imageUrl}
+                alt={currentImage.title || "Project Image"}
+                className="max-h-[80vh] max-w-[88vw] w-auto h-auto object-contain rounded-lg shadow-2xl transition-all duration-300 animate-fadeIn"
               />
             </div>
-            <div className="p-5 sm:p-6 bg-[#121c15] border-t border-white/10">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-[11px] font-semibold uppercase tracking-wider font-farro text-emerald-400 bg-emerald-950/80 px-2.5 py-0.5 rounded-md border border-emerald-500/30">
-                  {selectedImage.category}
-                </span>
-                {selectedImage.location && (
-                  <span className="text-xs font-farro text-stone-400 flex items-center gap-1 ml-2">
-                    <svg className="w-3.5 h-3.5 fill-current text-emerald-400" viewBox="0 0 24 24">
-                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                    </svg>
-                    {selectedImage.location}
-                  </span>
-                )}
-              </div>
-              <h3 className="text-white text-lg sm:text-xl font-bold font-farro mb-1">
-                {selectedImage.title}
+
+            {/* Next Image Arrow Button */}
+            {allProjectImages.length > 1 && (
+              <button
+                onClick={handleNextImage}
+                className="absolute right-2 sm:right-4 z-30 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-emerald-600 text-white flex items-center justify-center border border-white/20 transition-all cursor-pointer shadow-2xl backdrop-blur-md group"
+                title="Next Image (→)"
+              >
+                <svg
+                  className="w-6 h-6 translate-x-0.5 stroke-current stroke-2 group-hover:scale-110 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            )}
+          </div>
+
+          {/* Bottom Title Capsule Overlay */}
+          <div
+            className="flex items-center justify-center w-full z-20 pt-2"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="bg-black/75 backdrop-blur-md px-6 py-2.5 rounded-full border border-white/15 max-w-2xl text-center shadow-lg">
+              <h3 className="text-white text-xs sm:text-sm font-bold font-farro tracking-wide truncate">
+                {currentImage.title}
               </h3>
-              <p className="text-stone-300 text-xs sm:text-sm font-farro font-normal leading-relaxed opacity-90">
-                {selectedImage.description}
-              </p>
             </div>
           </div>
         </div>
@@ -507,5 +422,3 @@ export default function ProjectVideoGrid() {
     </section>
   );
 }
-
-
