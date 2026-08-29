@@ -5,18 +5,26 @@ import BlogHero from "@/components/blog/BlogHero";
 import CategoryFilter from "@/components/blog/CategoryFilter";
 import BlogGrid from "@/components/blog/BlogGrid";
 import BlogSidebar from "@/components/blog/BlogSidebar";
-import { getAllBlogPosts, BLOG_CATEGORIES, BlogPost } from "@/components/blog/blogData";
+import { fetchAllBlogPosts, BLOG_CATEGORIES, BlogPost } from "@/lib/blogData";
 
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sidebarSearch, setSidebarSearch] = useState("");
   const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const loadPosts = async () => {
+    setIsLoading(true);
+    const data = await fetchAllBlogPosts();
+    setPosts(data);
+    setIsLoading(false);
+  };
 
   useEffect(() => {
-    setPosts(getAllBlogPosts());
+    loadPosts();
 
     const handleUpdate = () => {
-      setPosts(getAllBlogPosts());
+      loadPosts();
     };
     window.addEventListener("vikasit_blogs_updated", handleUpdate);
     return () => window.removeEventListener("vikasit_blogs_updated", handleUpdate);
@@ -35,8 +43,8 @@ export default function BlogPage() {
   return (
     <main className="relative w-full overflow-x-hidden bg-[#EBE4D5] min-h-screen flex flex-col justify-between font-farro">
       <div className="w-full flex-1">
-        {/* Blog Hero Banner matching Services Page header & alignment */}
-        <BlogHero />
+        {/* Latest blog banner */}
+        <BlogHero latestPost={posts[0]} />
 
         <div className="pb-20 px-4 sm:px-6 lg:px-12 max-w-[1320px] mx-auto w-full">
           {/* Category Filter Pills */}

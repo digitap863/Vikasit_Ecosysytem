@@ -1,9 +1,7 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { FiSearch, FiCalendar } from "react-icons/fi";
-import { SIDEBAR_CATEGORIES, POPULAR_POSTS, SidebarCategory, PopularPost } from "./blogData";
+import { FiSearch } from "react-icons/fi";
+import { SIDEBAR_CATEGORIES, SidebarCategory } from "@/lib/blogData";
 
 interface BlogSidebarProps {
   searchValue: string;
@@ -56,6 +54,10 @@ function CategoriesWidget({
   categories: SidebarCategory[];
   onSelect: (name: string) => void;
 }) {
+  if (categories.length === 0) {
+    return null;
+  }
+
   return (
     <div className="bg-white rounded-2xl p-6 border border-neutral-200/80">
       <WidgetHeader title="CATEGORIES" />
@@ -75,42 +77,6 @@ function CategoriesWidget({
   );
 }
 
-// ---- Popular Posts Widget ----
-function PopularPostsWidget({ posts }: { posts: PopularPost[] }) {
-  return (
-    <div className="bg-white rounded-2xl p-6 border border-neutral-200/80">
-      <WidgetHeader title="POPULAR POSTS" width="w-14" />
-      <div className="divide-y divide-neutral-200/80 font-sans">
-        {posts.map((item) => (
-          <Link
-            key={item.id}
-            href={`/blog/building-a-greener-future-through-effective-waste-management`}
-            className="flex items-center gap-3.5 py-3.5 first:pt-1 last:pb-0 group block"
-          >
-            <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 relative bg-neutral-100 border border-neutral-200">
-              <Image
-                src={item.image}
-                alt={item.title}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform"
-              />
-            </div>
-            <div className="space-y-1">
-              <div className="flex items-center gap-1 text-[10px] text-neutral-500">
-                <FiCalendar className="w-3 h-3 text-neutral-400" />
-                <span>{item.date}</span>
-              </div>
-              <h4 className="text-xs font-bold text-neutral-800 group-hover:text-[#056826] uppercase line-clamp-2 leading-snug transition-colors">
-                {item.title}
-              </h4>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 // ---- Composed Sidebar ----
 export default function BlogSidebar({
   searchValue,
@@ -121,7 +87,6 @@ export default function BlogSidebar({
     <div className="lg:col-span-4 space-y-6">
       <SearchWidget value={searchValue} onChange={onSearchChange} />
       <CategoriesWidget categories={SIDEBAR_CATEGORIES} onSelect={onCategorySelect} />
-      <PopularPostsWidget posts={POPULAR_POSTS} />
     </div>
   );
 }

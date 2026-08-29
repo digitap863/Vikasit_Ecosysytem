@@ -1,170 +1,149 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import { BlogPost, deleteBlogPost } from "@/components/blog/blogData";
+import Link from "next/link";
 import { useState } from "react";
+import { BlogPost, deleteBlogPostFromDb } from "@/lib/blogData";
 
 interface BlogListTableProps {
   posts: BlogPost[];
   onRefresh: () => void;
+  onEdit: (post: BlogPost) => void;
 }
 
-export default function BlogListTable({ posts, onRefresh }: BlogListTableProps) {
+export default function BlogListTable({ posts, onRefresh, onEdit }: BlogListTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
 
   const filteredPosts = posts.filter((post) => {
-    const matchesSearch =
-      !searchTerm ||
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.slug.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCat =
-      selectedCategory === "All" ||
-      post.category.toLowerCase() === selectedCategory.toLowerCase();
-    return matchesSearch && matchesCat;
+    const query = searchTerm.toLowerCase();
+    return (
+      !query ||
+      post.title.toLowerCase().includes(query) ||
+      post.slug.toLowerCase().includes(query) ||
+      post.category.toLowerCase().includes(query)
+    );
   });
 
-  const handleDelete = (id: number, title: string) => {
+  const handleDelete = async (id: number, title: string) => {
     if (confirm(`Are you sure you want to delete "${title}"?`)) {
-      deleteBlogPost(id);
+      await deleteBlogPostFromDb(id);
       onRefresh();
     }
   };
 
   return (
-    <div className="w-full bg-[#121c15] rounded-2xl border border-white/10 shadow-xl overflow-hidden">
-      {/* Top Filter Bar */}
-      <div className="p-4 sm:p-6 border-b border-white/10 bg-[#162219] flex flex-col sm:flex-row items-center justify-between gap-4">
+    <section className="overflow-hidden rounded-lg border border-neutral-200 bg-white">
+      <div className="flex flex-col gap-4 border-b border-neutral-200 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
         <div>
-          <h2 className="text-lg font-bold font-farro text-white flex items-center gap-2">
-            Published Articles
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-farro">
-              {filteredPosts.length} Total
-            </span>
-          </h2>
-          <p className="text-xs text-stone-400 font-farro mt-0.5">
-            Manage live blog posts published across the Vikasit Ecosystem platform.
+          <h3 className="text-base font-bold text-neutral-950">Published Articles</h3>
+          <p className="mt-1 text-xs font-medium text-neutral-500">
+            Review, open, and remove articles created in the admin portal.
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
-          {/* Search Box */}
-          <div className="relative flex-1 sm:w-64">
-            <input
-              type="text"
-              placeholder="Search by title or slug..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-black/40 border border-white/15 rounded-xl text-xs text-white placeholder-stone-400 font-farro focus:outline-none focus:border-emerald-500 transition-all"
-            />
-            <svg
-              className="w-4 h-4 text-stone-400 absolute left-3 top-2.5 fill-none stroke-current stroke-2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </div>
+        <div className="relative w-full sm:w-72">
+          <svg
+            className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 fill-none stroke-current stroke-2 text-neutral-400"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Search articles"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            className="h-10 w-full rounded-md border border-neutral-300 bg-white pl-9 pr-3 text-xs font-semibold text-neutral-800 outline-none transition-colors placeholder:text-neutral-400 focus:border-[#056826]"
+          />
         </div>
       </div>
 
-      {/* Table Section */}
-      <div className="w-full overflow-x-auto">
-        <table className="w-full text-left text-xs font-farro border-collapse">
-          <thead>
-            <tr className="bg-black/30 border-b border-white/10 text-stone-400 uppercase tracking-wider text-[10px] font-bold">
-              <th className="py-3.5 px-4 sm:px-6">Article</th>
-              <th className="py-3.5 px-4">Category</th>
-              <th className="py-3.5 px-4">Published Date</th>
-              <th className="py-3.5 px-4">Read Time</th>
-              <th className="py-3.5 px-4 sm:px-6 text-right">Actions</th>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[760px] border-collapse text-left text-xs">
+          <thead className="bg-neutral-50 text-[11px] font-bold uppercase tracking-wide text-neutral-500">
+            <tr>
+              <th className="px-5 py-3">Article</th>
+              <th className="px-4 py-3">Category</th>
+              <th className="px-4 py-3">Date</th>
+              <th className="px-4 py-3">Read Time</th>
+              <th className="px-5 py-3 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/5 text-stone-300">
+          <tbody className="divide-y divide-neutral-200">
             {filteredPosts.length === 0 ? (
               <tr>
-                <td colSpan={5} className="py-12 text-center text-stone-400 font-light">
-                  No articles matching your search criteria.
+                <td colSpan={5} className="px-5 py-14 text-center text-sm font-medium text-neutral-500">
+                  No articles found.
                 </td>
               </tr>
             ) : (
               filteredPosts.map((post) => (
-                <tr
-                  key={post.id}
-                  className="hover:bg-white/[0.03] transition-colors group"
-                >
-                  {/* Article Title & Thumbnail */}
-                  <td className="py-3.5 px-4 sm:px-6 max-w-[320px]">
+                <tr key={post.id} className="transition-colors hover:bg-neutral-50">
+                  <td className="max-w-[380px] px-5 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="relative w-12 h-10 rounded-lg overflow-hidden shrink-0 bg-neutral-900 border border-white/10">
+                      <div className="relative h-12 w-14 shrink-0 overflow-hidden rounded-md border border-neutral-200 bg-neutral-100">
                         {post.image ? (
                           <Image
                             src={post.image}
                             alt={post.title}
                             fill
+                            unoptimized={post.image.startsWith("data:")}
                             className="object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-stone-500 font-bold text-[10px]">
+                          <div className="flex h-full w-full items-center justify-center text-[10px] font-bold text-neutral-400">
                             BLOG
                           </div>
                         )}
                       </div>
-                      <div className="truncate">
-                        <h4 className="text-white font-bold text-xs leading-snug truncate group-hover:text-emerald-400 transition-colors">
-                          {post.title}
-                        </h4>
-                        <p className="text-[10px] text-stone-400 font-mono truncate opacity-75">
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-bold text-neutral-950">{post.title}</p>
+                        <p className="mt-1 truncate font-mono text-[11px] text-neutral-500">
                           /{post.slug}
                         </p>
                       </div>
                     </div>
                   </td>
-
-                  {/* Category */}
-                  <td className="py-3.5 px-4 whitespace-nowrap">
-                    <span className="inline-block px-2.5 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider text-emerald-300 bg-emerald-950/60 border border-emerald-500/20">
+                  <td className="px-4 py-4">
+                    <span className="inline-flex rounded-md bg-[#edf6ef] px-2.5 py-1 text-[11px] font-bold uppercase text-[#056826]">
                       {post.category}
                     </span>
                   </td>
-
-                  {/* Date */}
-                  <td className="py-3.5 px-4 whitespace-nowrap text-stone-300 font-medium">
+                  <td className="whitespace-nowrap px-4 py-4 font-semibold text-neutral-700">
                     {post.date}
                   </td>
-
-                  {/* Read Time */}
-                  <td className="py-3.5 px-4 whitespace-nowrap text-stone-400">
+                  <td className="whitespace-nowrap px-4 py-4 font-medium text-neutral-500">
                     {post.readTime}
                   </td>
-
-                  {/* Actions */}
-                  <td className="py-3.5 px-4 sm:px-6 text-right whitespace-nowrap">
+                  <td className="whitespace-nowrap px-5 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
                       <Link
                         href={`/blog/${post.slug}`}
                         target="_blank"
-                        className="px-2.5 py-1 rounded-md bg-white/10 hover:bg-white/20 text-white text-[11px] font-semibold transition-all inline-flex items-center gap-1"
+                        className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 bg-white px-3 py-1.5 text-[11px] font-bold text-neutral-700 transition-colors hover:border-[#056826]/30 hover:text-[#056826]"
                       >
-                        View
-                        <svg className="w-3 h-3 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+                        <svg className="h-3.5 w-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
+                        View
                       </Link>
-
-                      {/* Custom User-Added Posts allow deletion */}
-                      {post.id > 1000 && (
-                        <button
-                          onClick={() => handleDelete(post.id, post.title)}
-                          className="px-2.5 py-1 rounded-md bg-red-950/50 hover:bg-red-600 text-red-300 hover:text-white text-[11px] font-semibold transition-all cursor-pointer inline-flex items-center gap-1 border border-red-500/30"
-                        >
-                          Delete
-                        </button>
-                      )}
+                      <button
+                        type="button"
+                        onClick={() => onEdit(post)}
+                        className="inline-flex items-center gap-1.5 rounded-md border border-neutral-300 bg-white px-3 py-1.5 text-[11px] font-bold text-neutral-700 transition-colors hover:border-[#056826]/30 hover:text-[#056826]"
+                      >
+                        <svg className="h-3.5 w-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(post.id, post.title)}
+                        className="inline-flex items-center rounded-md border border-red-200 bg-white px-3 py-1.5 text-[11px] font-bold text-red-600 transition-colors hover:bg-red-50"
+                      >
+                        Delete
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -173,6 +152,6 @@ export default function BlogListTable({ posts, onRefresh }: BlogListTableProps) 
           </tbody>
         </table>
       </div>
-    </div>
+    </section>
   );
 }

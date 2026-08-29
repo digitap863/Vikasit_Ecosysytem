@@ -1,135 +1,150 @@
 "use client";
 
+import type React from "react";
 import { useState } from "react";
-import { addBlogPost, BLOG_CATEGORIES, BlogPost, BlogSection } from "@/components/blog/blogData";
+import {
+  addBlogPostToDb,
+  updateBlogPostInDb,
+  BLOG_CATEGORIES,
+  BlogPost,
+  BlogSection,
+} from "@/lib/blogData";
 
 interface AddBlogFormProps {
-  onSuccess: (createdPost: BlogPost) => void;
+  onSuccess: (post: BlogPost) => void;
+  onCancel?: () => void;
+  initialData?: BlogPost | null;
 }
 
-const IMAGE_PRESETS = [
-  { name: "Project 1", url: "/project1.webp" },
-  { name: "Project 2", url: "/project2.webp" },
-  { name: "Project 3", url: "/project3.webp" },
-  { name: "Tree & Nature", url: "/tree.webp" },
-  { name: "Live Demo", url: "/LiveDemo.webp" },
-];
+export default function AddBlogForm({ onSuccess, onCancel, initialData }: AddBlogFormProps) {
+  const isEditing = Boolean(initialData);
 
-export default function AddBlogForm({ onSuccess }: AddBlogFormProps) {
-  const [title, setTitle] = useState("");
-  const [slug, setSlug] = useState("");
-  const [category, setCategory] = useState("waste management");
+  const [title, setTitle] = useState(initialData?.title || "");
+  const [slug, setSlug] = useState(initialData?.slug || "");
+  const [category, setCategory] = useState(initialData?.category || "waste management");
   const [customCategory, setCustomCategory] = useState("");
-  const [readTime, setReadTime] = useState("5 Min Read");
-  const [image, setImage] = useState("/project1.webp");
-  const [intro, setIntro] = useState("");
+  const [readTime, setReadTime] = useState(initialData?.readTime || "5 Min Read");
+  const [image, setImage] = useState(initialData?.image || "/project1.webp");
+  const [uploadedImageName, setUploadedImageName] = useState("");
+  const [intro, setIntro] = useState(initialData?.content?.intro || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [sections, setSections] = useState<BlogSection[]>(
+    initialData?.content?.sections && initialData.content.sections.length > 0
+      ? initialData.content.sections
+      : [
+          {
+            title: "",
+            subtitle: "",
+            paragraphs: [""],
+            bullets: [],
+          },
+        ]
+  );
 
-  // Sections Builder state
-  const [sections, setSections] = useState<BlogSection[]>([
-    {
-      title: "UNDERSTANDING THE CORE CHALLENGES",
-      subtitle: "",
-      paragraphs: [
-        "Sustainable waste management requires a multi-layered approach combining modern engineering with decentralized community participation.",
-      ],
-      bullets: [],
-    },
-  ]);
-
-  // Auto-generate slug from title
-  const handleTitleChange = (val: string) => {
-    setTitle(val);
-    const autoSlug = val
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9\s-]/g, "")
-      .replace(/\s+/g, "-");
-    setSlug(autoSlug);
+  const handleTitleChange = (value: string) => {
+    setTitle(value);
+    setSlug(
+      value
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+    );
   };
 
-  // Section manipulation helpers
-  const handleAddSection = () => {
-    setSections([
-      ...sections,
-      {
-        title: "",
-        subtitle: "",
-        paragraphs: [""],
-        bullets: [],
-      },
+  const updateSection = (index: number, updates: Partial<BlogSection>) => {
+    setSections((current) =>
+      current.map((section, sectionIndex) =>
+        sectionIndex === index ? { ...section, ...updates } : section
+      )
+    );
+  };
+
+  const addSection = () => {
+    setSections((current) => [
+      ...current,
+      { title: "", subtitle: "", paragraphs: [""], bullets: [] },
     ]);
   };
 
-  const handleRemoveSection = (index: number) => {
-    setSections(sections.filter((_, i) => i !== index));
+  const removeSection = (index: number) => {
+    setSections((current) => current.filter((_, sectionIndex) => sectionIndex !== index));
   };
 
-  const handleSectionChange = (index: number, field: keyof BlogSection, value: string) => {
-    const updated = [...sections];
-    updated[index] = { ...updated[index], [field]: value };
-    setSections(updated);
+  const updateParagraph = (sectionIndex: number, paragraphIndex: number, value: string) => {
+    const paragraphs = [...(sections[sectionIndex].paragraphs || [])];
+    paragraphs[paragraphIndex] = value;
+    updateSection(sectionIndex, { paragraphs });
   };
 
-  const handleAddParagraph = (sectionIndex: number) => {
-    const updated = [...sections];
-    const paragraphs = updated[sectionIndex].paragraphs || [];
-    updated[sectionIndex].paragraphs = [...paragraphs, ""];
-    setSections(updated);
+  const addParagraph = (sectionIndex: number) => {
+    updateSection(sectionIndex, {
+      paragraphs: [...(sections[sectionIndex].paragraphs || []), ""],
+    });
   };
 
-  const handleParagraphChange = (sectionIndex: number, pIndex: number, val: string) => {
-    const updated = [...sections];
-    const paragraphs = [...(updated[sectionIndex].paragraphs || [])];
-    paragraphs[pIndex] = val;
-    updated[sectionIndex].paragraphs = paragraphs;
-    setSections(updated);
+  const removeParagraph = (sectionIndex: number, paragraphIndex: number) => {
+    updateSection(sectionIndex, {
+      paragraphs: (sections[sectionIndex].paragraphs || []).filter(
+        (_, index) => index !== paragraphIndex
+      ),
+    });
   };
 
-  const handleRemoveParagraph = (sectionIndex: number, pIndex: number) => {
-    const updated = [...sections];
-    const paragraphs = (updated[sectionIndex].paragraphs || []).filter((_, i) => i !== pIndex);
-    updated[sectionIndex].paragraphs = paragraphs;
-    setSections(updated);
+  const updateBullet = (sectionIndex: number, bulletIndex: number, value: string) => {
+    const bullets = [...(sections[sectionIndex].bullets || [])];
+    bullets[bulletIndex] = value;
+    updateSection(sectionIndex, { bullets });
   };
 
-  const handleAddBullet = (sectionIndex: number) => {
-    const updated = [...sections];
-    const bullets = updated[sectionIndex].bullets || [];
-    updated[sectionIndex].bullets = [...bullets, ""];
-    setSections(updated);
+  const addBullet = (sectionIndex: number) => {
+    updateSection(sectionIndex, {
+      bullets: [...(sections[sectionIndex].bullets || []), ""],
+    });
   };
 
-  const handleBulletChange = (sectionIndex: number, bIndex: number, val: string) => {
-    const updated = [...sections];
-    const bullets = [...(updated[sectionIndex].bullets || [])];
-    bullets[bIndex] = val;
-    updated[sectionIndex].bullets = bullets;
-    setSections(updated);
+  const removeBullet = (sectionIndex: number, bulletIndex: number) => {
+    updateSection(sectionIndex, {
+      bullets: (sections[sectionIndex].bullets || []).filter((_, index) => index !== bulletIndex),
+    });
   };
 
-  const handleRemoveBullet = (sectionIndex: number, bIndex: number) => {
-    const updated = [...sections];
-    const bullets = (updated[sectionIndex].bullets || []).filter((_, i) => i !== bIndex);
-    updated[sectionIndex].bullets = bullets;
-    setSections(updated);
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setErrorMsg("Please upload a valid image file.");
+      return;
+    }
+
+    const maxSizeInBytes = 2 * 1024 * 1024;
+    if (file.size > maxSizeInBytes) {
+      setErrorMsg("Please upload an image smaller than 2 MB.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setImage(reader.result);
+        setUploadedImageName(file.name);
+        setErrorMsg("");
+      }
+    };
+    reader.onerror = () => {
+      setErrorMsg("Could not read the uploaded image. Please try another file.");
+    };
+    reader.readAsDataURL(file);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
     setErrorMsg("");
 
-    if (!title.trim()) {
-      setErrorMsg("Please enter an article title.");
-      return;
-    }
-    if (!slug.trim()) {
-      setErrorMsg("Please enter a valid URL slug.");
-      return;
-    }
-    if (!intro.trim()) {
-      setErrorMsg("Please provide an introduction overview.");
+    if (!title.trim() || !slug.trim() || !intro.trim()) {
+      setErrorMsg("Please complete the title, slug, and introduction before saving.");
       return;
     }
 
@@ -137,13 +152,15 @@ export default function AddBlogForm({ onSuccess }: AddBlogFormProps) {
 
     try {
       const finalCategory = category === "custom" ? customCategory || "General" : category;
-      const todayFormatted = new Date().toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      });
+      const todayFormatted =
+        initialData?.date ||
+        new Date().toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        });
 
-      const newPostData = {
+      const payload = {
         title: title.toUpperCase(),
         slug: slug.toLowerCase(),
         category: finalCategory,
@@ -152,331 +169,346 @@ export default function AddBlogForm({ onSuccess }: AddBlogFormProps) {
         image: image || "/project1.webp",
         content: {
           intro,
-          sections: sections.filter((s) => s.title || (s.paragraphs && s.paragraphs.length > 0)),
+          html: initialData?.content?.html,
+          sections: sections
+            .map((section) => ({
+              ...section,
+              paragraphs: (section.paragraphs || []).filter(Boolean),
+              bullets: (section.bullets || []).filter(Boolean),
+            }))
+            .filter(
+              (section) =>
+                section.title ||
+                section.subtitle ||
+                (section.paragraphs && section.paragraphs.length > 0) ||
+                (section.bullets && section.bullets.length > 0)
+            ),
         },
       };
 
-      const created = addBlogPost(newPostData);
+      let resultPost: BlogPost | null = null;
+      if (initialData) {
+        resultPost = await updateBlogPostInDb(initialData.slug, payload);
+      } else {
+        resultPost = await addBlogPostToDb(payload);
+      }
+
       setIsSubmitting(false);
-      onSuccess(created);
-    } catch (err: unknown) {
+      if (resultPost) {
+        onSuccess(resultPost);
+      } else {
+        setErrorMsg("Failed to save changes.");
+      }
+    } catch {
       setIsSubmitting(false);
-      setErrorMsg("An error occurred while publishing the blog post.");
+      setErrorMsg("An error occurred while saving the article.");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full bg-[#121c15] rounded-2xl border border-white/10 shadow-2xl p-6 sm:p-8 space-y-8 font-farro">
-      {/* Form Header */}
-      <div className="border-b border-white/10 pb-6 flex items-center justify-between">
-        <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-            Publish New Article
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-              Admin Editor
-            </span>
-          </h2>
-          <p className="text-xs text-stone-400 mt-1">
-            Create and publish new blog posts directly to the live Vikasit Ecosystem site.
-          </p>
-        </div>
-      </div>
-
+    <form onSubmit={handleSubmit} className="space-y-6">
       {errorMsg && (
-        <div className="p-4 rounded-xl bg-red-950/60 border border-red-500/40 text-red-300 text-xs font-semibold flex items-center gap-2">
-          <span>⚠️</span> {errorMsg}
+        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-xs font-semibold text-red-700">
+          {errorMsg}
         </div>
       )}
 
-      {/* Meta Information Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Article Title */}
-        <div className="md:col-span-2 space-y-2">
-          <label className="block text-xs font-semibold text-stone-300 uppercase tracking-wider">
-            Article Title <span className="text-emerald-400">*</span>
-          </label>
-          <input
-            type="text"
-            required
-            placeholder="E.g., REVOLUTIONIZING DECENTRALIZED COMPOSTING IN SMART CITIES"
-            value={title}
-            onChange={(e) => handleTitleChange(e.target.value)}
-            className="w-full px-4 py-3 bg-black/40 border border-white/15 rounded-xl text-sm text-white placeholder-stone-500 focus:outline-none focus:border-emerald-500 transition-all font-semibold"
-          />
+      <section className="rounded-lg border border-neutral-200 bg-white">
+        <div className="border-b border-neutral-200 px-5 py-4">
+          <h3 className="text-base font-bold text-neutral-950">Article Details</h3>
+          <p className="mt-1 text-xs font-medium text-neutral-500">
+            Set the title, permalink, category, and banner image.
+          </p>
         </div>
 
-        {/* URL Slug */}
-        <div className="space-y-2">
-          <label className="block text-xs font-semibold text-stone-300 uppercase tracking-wider">
-            URL Slug <span className="text-emerald-400">*</span>
-          </label>
-          <div className="relative">
-            <span className="absolute left-3 top-3 text-xs text-stone-500">/blog/</span>
+        <div className="grid grid-cols-1 gap-5 p-5 md:grid-cols-2">
+          <div className="md:col-span-2">
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-wide text-neutral-600">
+              Article Title
+            </label>
             <input
               type="text"
               required
-              placeholder="revolutionizing-decentralized-composting"
-              value={slug}
-              onChange={(e) => setSlug(e.target.value)}
-              className="w-full pl-16 pr-4 py-2.5 bg-black/40 border border-white/15 rounded-xl text-xs text-emerald-400 font-mono focus:outline-none focus:border-emerald-500 transition-all"
+              placeholder="Revolutionizing decentralized composting"
+              value={title}
+              onChange={(event) => handleTitleChange(event.target.value)}
+              className="h-11 w-full rounded-md border border-neutral-300 bg-white px-3 text-sm font-semibold text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-[#056826]"
             />
           </div>
-        </div>
 
-        {/* Category Selector */}
-        <div className="space-y-2">
-          <label className="block text-xs font-semibold text-stone-300 uppercase tracking-wider">
-            Category <span className="text-emerald-400">*</span>
-          </label>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="w-full px-4 py-2.5 bg-black/40 border border-white/15 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500 transition-all cursor-pointer"
-          >
-            {BLOG_CATEGORIES.filter((c) => c !== "All").map((cat) => (
-              <option key={cat} value={cat} className="bg-neutral-900 text-white">
-                {cat}
-              </option>
-            ))}
-            <option value="custom" className="bg-neutral-900 text-emerald-400">
-              + Add Custom Category
-            </option>
-          </select>
+          <div>
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-wide text-neutral-600">
+              URL Slug
+            </label>
+            <div className="flex h-11 overflow-hidden rounded-md border border-neutral-300 bg-white focus-within:border-[#056826]">
+              <span className="flex items-center border-r border-neutral-200 bg-neutral-50 px-3 font-mono text-xs text-neutral-500">
+                /blog/
+              </span>
+              <input
+                type="text"
+                required
+                value={slug}
+                onChange={(event) => setSlug(event.target.value)}
+                className="min-w-0 flex-1 px-3 font-mono text-xs font-semibold text-neutral-900 outline-none"
+              />
+            </div>
+          </div>
 
-          {category === "custom" && (
+          <div>
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-wide text-neutral-600">
+              Category
+            </label>
+            <select
+              value={category}
+              onChange={(event) => setCategory(event.target.value)}
+              className="h-11 w-full rounded-md border border-neutral-300 bg-white px-3 text-xs font-semibold text-neutral-800 outline-none transition-colors focus:border-[#056826]"
+            >
+              {BLOG_CATEGORIES.filter((item) => item !== "All").map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+              <option value="custom">Add custom category</option>
+            </select>
+            {category === "custom" && (
+              <input
+                type="text"
+                placeholder="Category name"
+                value={customCategory}
+                onChange={(event) => setCustomCategory(event.target.value)}
+                className="mt-2 h-10 w-full rounded-md border border-neutral-300 bg-white px-3 text-xs font-semibold text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-[#056826]"
+              />
+            )}
+          </div>
+
+          <div>
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-wide text-neutral-600">
+              Read Time
+            </label>
             <input
               type="text"
-              placeholder="Enter custom category name..."
-              value={customCategory}
-              onChange={(e) => setCustomCategory(e.target.value)}
-              className="w-full mt-2 px-4 py-2 bg-black/40 border border-emerald-500/50 rounded-xl text-xs text-white focus:outline-none"
+              value={readTime}
+              onChange={(event) => setReadTime(event.target.value)}
+              className="h-11 w-full rounded-md border border-neutral-300 bg-white px-3 text-xs font-semibold text-neutral-800 outline-none transition-colors focus:border-[#056826]"
             />
-          )}
-        </div>
-
-        {/* Read Time */}
-        <div className="space-y-2">
-          <label className="block text-xs font-semibold text-stone-300 uppercase tracking-wider">
-            Read Time
-          </label>
-          <input
-            type="text"
-            placeholder="5 Min Read"
-            value={readTime}
-            onChange={(e) => setReadTime(e.target.value)}
-            className="w-full px-4 py-2.5 bg-black/40 border border-white/15 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
-          />
-        </div>
-
-        {/* Cover Image Picker */}
-        <div className="space-y-2">
-          <label className="block text-xs font-semibold text-stone-300 uppercase tracking-wider">
-            Cover Image URL
-          </label>
-          <input
-            type="text"
-            placeholder="/project1.webp or https://..."
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            className="w-full px-4 py-2.5 bg-black/40 border border-white/15 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500 font-mono"
-          />
-          {/* Presets */}
-          <div className="flex flex-wrap gap-1.5 pt-1">
-            <span className="text-[10px] text-stone-400 self-center mr-1">Presets:</span>
-            {IMAGE_PRESETS.map((preset) => (
-              <button
-                type="button"
-                key={preset.url}
-                onClick={() => setImage(preset.url)}
-                className={`px-2 py-0.5 rounded text-[10px] border transition-all cursor-pointer ${
-                  image === preset.url
-                    ? "bg-emerald-500/30 text-emerald-300 border-emerald-500/50 font-semibold"
-                    : "bg-white/5 text-stone-400 border-white/10 hover:text-white"
-                }`}
-              >
-                {preset.name}
-              </button>
-            ))}
           </div>
-        </div>
-      </div>
 
-      {/* Cover Image Live Preview */}
-      {image && (
-        <div className="p-4 rounded-xl bg-black/30 border border-white/10 space-y-2">
-          <span className="text-[10px] font-semibold text-stone-400 uppercase tracking-wider block">
-            Cover Image Preview
-          </span>
-          <div className="relative w-full h-40 rounded-lg overflow-hidden bg-neutral-900 border border-white/10">
-            <img src={image} alt="Preview" className="w-full h-full object-cover" />
-          </div>
-        </div>
-      )}
-
-      {/* Intro Overview */}
-      <div className="space-y-2">
-        <label className="block text-xs font-semibold text-stone-300 uppercase tracking-wider">
-          Article Introduction Overview <span className="text-emerald-400">*</span>
-        </label>
-        <textarea
-          required
-          rows={3}
-          placeholder="Provide a compelling 2-3 sentence overview introducing the article topic..."
-          value={intro}
-          onChange={(e) => setIntro(e.target.value)}
-          className="w-full p-4 bg-black/40 border border-white/15 rounded-xl text-xs text-white leading-relaxed placeholder-stone-500 focus:outline-none focus:border-emerald-500 transition-all"
-        />
-      </div>
-
-      {/* Article Content Sections Builder */}
-      <div className="space-y-6 pt-4 border-t border-white/10">
-        <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-white">Article Content Sections</h3>
-            <p className="text-xs text-stone-400">Build key section headers, paragraphs, and bullet points.</p>
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-wide text-neutral-600">
+              Cover Image URL
+            </label>
+            <input
+              type="text"
+              value={image}
+              onChange={(event) => {
+                setImage(event.target.value);
+                setUploadedImageName("");
+              }}
+              className="h-11 w-full rounded-md border border-neutral-300 bg-white px-3 font-mono text-xs font-semibold text-neutral-800 outline-none transition-colors focus:border-[#056826]"
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-wide text-neutral-600">
+              Upload Cover Image
+            </label>
+            <label className="flex min-h-28 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-neutral-300 bg-neutral-50 px-4 py-5 text-center transition-colors hover:border-[#056826]/40 hover:bg-[#edf6ef]">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="sr-only"
+              />
+              <svg className="h-6 w-6 fill-none stroke-current stroke-2 text-[#056826]" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 16V4m0 0l-4 4m4-4l4 4M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+              </svg>
+              <span className="mt-2 text-xs font-bold text-neutral-800">
+                {uploadedImageName || "Choose an image"}
+              </span>
+              <span className="mt-1 text-[11px] font-medium text-neutral-500">
+                JPG, PNG, WEBP up to 2 MB
+              </span>
+            </label>
+
+            <div className="mt-4 h-44 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-100">
+              <img src={image} alt="Cover preview" className="h-full w-full object-cover" />
+            </div>
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="mb-2 block text-[11px] font-bold uppercase tracking-wide text-neutral-600">
+              Introduction
+            </label>
+            <textarea
+              required
+              rows={4}
+              placeholder="Write a short overview for the article."
+              value={intro}
+              onChange={(event) => setIntro(event.target.value)}
+              className="w-full resize-none rounded-md border border-neutral-300 bg-white p-3 text-sm font-medium leading-relaxed text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-[#056826]"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="rounded-lg border border-neutral-200 bg-white">
+        <div className="flex flex-col gap-3 border-b border-neutral-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="text-base font-bold text-neutral-950">Article Sections</h3>
+            <p className="mt-1 text-xs font-medium text-neutral-500">
+              Add headings, paragraphs, and bullet points for the article body.
+            </p>
           </div>
           <button
             type="button"
-            onClick={handleAddSection}
-            className="px-3.5 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5"
+            onClick={addSection}
+            className="inline-flex items-center justify-center gap-2 rounded-md bg-[#056826] px-3 py-2 text-xs font-bold text-white transition-colors hover:bg-[#034c1c]"
           >
-            + Add New Section
+            <svg className="h-3.5 w-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m7-7H5" />
+            </svg>
+            Add Section
           </button>
         </div>
 
-        {sections.map((section, sIndex) => (
-          <div
-            key={sIndex}
-            className="p-5 rounded-xl bg-black/30 border border-white/10 space-y-4 relative group"
-          >
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
-                Section #{sIndex + 1}
-              </span>
-              {sections.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => handleRemoveSection(sIndex)}
-                  className="text-xs text-red-400 hover:text-red-300 font-semibold cursor-pointer"
-                >
-                  Remove Section
-                </button>
-              )}
-            </div>
-
-            {/* Section Heading */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-1">
-                <label className="text-[10px] font-semibold text-stone-400 uppercase">
-                  Section Title
-                </label>
-                <input
-                  type="text"
-                  placeholder="E.g., DECENTRALIZED COMPOSTING MECHANISMS"
-                  value={section.title || ""}
-                  onChange={(e) => handleSectionChange(sIndex, "title", e.target.value)}
-                  className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-lg text-xs text-white font-bold uppercase focus:outline-none focus:border-emerald-500"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-[10px] font-semibold text-stone-400 uppercase">
-                  Section Subtitle (Optional)
-                </label>
-                <input
-                  type="text"
-                  placeholder="E.g., HOW AEROBIC DIGESTION REDUCES METHANE"
-                  value={section.subtitle || ""}
-                  onChange={(e) => handleSectionChange(sIndex, "subtitle", e.target.value)}
-                  className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-lg text-xs text-stone-300 focus:outline-none focus:border-emerald-500"
-                />
-              </div>
-            </div>
-
-            {/* Section Paragraphs */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <label className="text-[10px] font-semibold text-stone-400 uppercase">
-                  Paragraph Blocks
-                </label>
-                <button
-                  type="button"
-                  onClick={() => handleAddParagraph(sIndex)}
-                  className="text-[10px] text-emerald-400 hover:underline font-semibold cursor-pointer"
-                >
-                  + Add Paragraph
-                </button>
-              </div>
-
-              {(section.paragraphs || []).map((para, pIndex) => (
-                <div key={pIndex} className="flex gap-2 items-start">
-                  <textarea
-                    rows={2}
-                    placeholder={`Paragraph ${pIndex + 1} text content...`}
-                    value={para}
-                    onChange={(e) => handleParagraphChange(sIndex, pIndex, e.target.value)}
-                    className="flex-1 p-2.5 bg-black/50 border border-white/10 rounded-lg text-xs text-stone-200 leading-relaxed focus:outline-none focus:border-emerald-500"
-                  />
-                  {(section.paragraphs || []).length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveParagraph(sIndex, pIndex)}
-                      className="text-stone-500 hover:text-red-400 text-xs p-1 cursor-pointer"
-                    >
-                      ✕
-                    </button>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Section Bullets */}
-            <div className="space-y-2 pt-2 border-t border-white/5">
-              <div className="flex items-center justify-between">
-                <label className="text-[10px] font-semibold text-stone-400 uppercase">
-                  Bullet Points (Optional)
-                </label>
-                <button
-                  type="button"
-                  onClick={() => handleAddBullet(sIndex)}
-                  className="text-[10px] text-emerald-400 hover:underline font-semibold cursor-pointer"
-                >
-                  + Add Bullet Point
-                </button>
-              </div>
-
-              {(section.bullets || []).map((bullet, bIndex) => (
-                <div key={bIndex} className="flex gap-2 items-center">
-                  <span className="text-emerald-400 text-xs">•</span>
-                  <input
-                    type="text"
-                    placeholder={`Bullet point ${bIndex + 1}...`}
-                    value={bullet}
-                    onChange={(e) => handleBulletChange(sIndex, bIndex, e.target.value)}
-                    className="flex-1 px-3 py-1.5 bg-black/50 border border-white/10 rounded-lg text-xs text-stone-200 focus:outline-none focus:border-emerald-500"
-                  />
+        <div className="space-y-4 p-5">
+          {sections.map((section, sectionIndex) => (
+            <div key={sectionIndex} className="rounded-lg border border-neutral-200 bg-neutral-50 p-4">
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <p className="text-xs font-bold uppercase tracking-wide text-neutral-600">
+                  Section {sectionIndex + 1}
+                </p>
+                {sections.length > 1 && (
                   <button
                     type="button"
-                    onClick={() => handleRemoveBullet(sIndex, bIndex)}
-                    className="text-stone-500 hover:text-red-400 text-xs p-1 cursor-pointer"
+                    onClick={() => removeSection(sectionIndex)}
+                    className="rounded-md border border-red-200 bg-white px-2.5 py-1 text-[11px] font-bold text-red-600 transition-colors hover:bg-red-50"
                   >
-                    ✕
+                    Remove
+                  </button>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <input
+                  type="text"
+                  placeholder="Section title"
+                  value={section.title || ""}
+                  onChange={(event) => updateSection(sectionIndex, { title: event.target.value })}
+                  className="h-10 rounded-md border border-neutral-300 bg-white px-3 text-xs font-bold text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-[#056826]"
+                />
+                <input
+                  type="text"
+                  placeholder="Optional subtitle"
+                  value={section.subtitle || ""}
+                  onChange={(event) =>
+                    updateSection(sectionIndex, { subtitle: event.target.value })
+                  }
+                  className="h-10 rounded-md border border-neutral-300 bg-white px-3 text-xs font-semibold text-neutral-800 outline-none transition-colors placeholder:text-neutral-400 focus:border-[#056826]"
+                />
+              </div>
+
+              <div className="mt-4 space-y-2">
+                <div className="flex items-center justify-between">
+                  <p className="text-[11px] font-bold uppercase tracking-wide text-neutral-500">
+                    Paragraphs
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => addParagraph(sectionIndex)}
+                    className="text-[11px] font-bold text-[#056826] hover:underline"
+                  >
+                    Add paragraph
                   </button>
                 </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+                {(section.paragraphs || []).map((paragraph, paragraphIndex) => (
+                  <div key={paragraphIndex} className="flex gap-2">
+                    <textarea
+                      rows={2}
+                      placeholder={`Paragraph ${paragraphIndex + 1}`}
+                      value={paragraph}
+                      onChange={(event) =>
+                        updateParagraph(sectionIndex, paragraphIndex, event.target.value)
+                      }
+                      className="min-w-0 flex-1 resize-none rounded-md border border-neutral-300 bg-white p-3 text-xs font-medium leading-relaxed text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-[#056826]"
+                    />
+                    {(section.paragraphs || []).length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeParagraph(sectionIndex, paragraphIndex)}
+                        className="h-9 rounded-md border border-neutral-300 bg-white px-2 text-xs font-bold text-neutral-500 hover:text-red-600"
+                      >
+                        x
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
 
-      {/* Submit Button */}
-      <div className="pt-6 border-t border-white/10 flex justify-end">
+              <div className="mt-4 space-y-2">
+                <div className="flex items-center justify-between">
+                  <p className="text-[11px] font-bold uppercase tracking-wide text-neutral-500">
+                    Bullets
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => addBullet(sectionIndex)}
+                    className="text-[11px] font-bold text-[#056826] hover:underline"
+                  >
+                    Add bullet
+                  </button>
+                </div>
+                {(section.bullets || []).map((bullet, bulletIndex) => (
+                  <div key={bulletIndex} className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder={`Bullet ${bulletIndex + 1}`}
+                      value={bullet}
+                      onChange={(event) =>
+                        updateBullet(sectionIndex, bulletIndex, event.target.value)
+                      }
+                      className="h-10 min-w-0 flex-1 rounded-md border border-neutral-300 bg-white px-3 text-xs font-medium text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-[#056826]"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeBullet(sectionIndex, bulletIndex)}
+                      className="rounded-md border border-neutral-300 bg-white px-2 text-xs font-bold text-neutral-500 hover:text-red-600"
+                    >
+                      x
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <div className="flex items-center justify-end gap-3">
+        {onCancel && (
+          <button
+            type="button"
+            onClick={onCancel}
+            className="inline-flex h-11 items-center justify-center rounded-md border border-neutral-300 bg-white px-5 text-sm font-bold text-neutral-700 transition-colors hover:bg-neutral-100"
+          >
+            Cancel
+          </button>
+        )}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-bold font-farro text-sm shadow-xl hover:shadow-emerald-500/20 transition-all duration-300 cursor-pointer disabled:opacity-50"
+          className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-[#056826] px-5 text-sm font-bold text-white transition-colors hover:bg-[#034c1c] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
         >
-          {isSubmitting ? "Publishing Article..." : "🚀 Publish Article Live"}
+          <svg className="h-4 w-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          {isSubmitting
+            ? isEditing
+              ? "Saving..."
+              : "Publishing..."
+            : isEditing
+            ? "Save Changes"
+            : "Publish Article"}
         </button>
       </div>
     </form>

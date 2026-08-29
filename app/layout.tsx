@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Farro } from "next/font/google";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
+import LayoutWrapper from "@/components/LayoutWrapper";
 import "./globals.css";
 
 const farro = Farro({
@@ -32,10 +30,7 @@ export default function RootLayout({
       className={`${farro.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-farro">
-        <Navbar />
-        <div className="flex-1 w-full">{children}</div>
-        <Footer />
-        <WhatsAppButton />
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );

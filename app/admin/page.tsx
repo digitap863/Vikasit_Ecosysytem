@@ -1,39 +1,43 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import AdminHeader from "@/components/admin/AdminHeader";
-import BlogListTable from "@/components/admin/BlogListTable";
+import { useRouter } from "next/navigation";
+import AdminSidebar, { AdminTab } from "@/components/admin/AdminSidebar";
+import AdminStats from "@/components/admin/AdminStats";
 import AddBlogForm from "@/components/admin/AddBlogForm";
-import { getAllBlogPosts, BlogPost } from "@/components/blog/blogData";
+import BlogListTable from "@/components/admin/BlogListTable";
+import { BlogPost, fetchAllBlogPosts } from "@/lib/blogData";
 
 export default function AdminDashboardPage() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [adminEmail, setAdminEmail] = useState("admin@vikasit.com");
-  const [activeTab, setActiveTab] = useState<"list" | "add">("list");
+  const [activeTab, setActiveTab] = useState<AdminTab>("list");
   const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
 
-  // Check auth session
+  const refreshPosts = async () => {
+    const data = await fetchAllBlogPosts();
+    setPosts(data);
+  };
+
   useEffect(() => {
     const token =
       localStorage.getItem("vikasit_admin_token") ||
       sessionStorage.getItem("vikasit_admin_token");
+
     if (!token) {
       router.push("/admin/login");
-    } else {
-      setIsAuthenticated(true);
-      const email = localStorage.getItem("vikasit_admin_email");
-      if (email) setAdminEmail(email);
-      refreshPosts();
+      return;
     }
-  }, [router]);
 
-  const refreshPosts = () => {
-    setPosts(getAllBlogPosts());
-  };
+    setIsAuthenticated(true);
+    const email = localStorage.getItem("vikasit_admin_email");
+    if (email) setAdminEmail(email);
+    refreshPosts();
+  }, [router]);
 
   const handleLogout = () => {
     localStorage.removeItem("vikasit_admin_token");
@@ -42,140 +46,116 @@ export default function AdminDashboardPage() {
     router.push("/admin/login");
   };
 
-  const handlePostCreated = (createdPost: BlogPost) => {
+  const handlePostSaved = (post: BlogPost) => {
     refreshPosts();
+    setEditingPost(null);
     setActiveTab("list");
-    setNotification(`Article "${createdPost.title}" published successfully!`);
-    setTimeout(() => setNotification(null), 6000);
+    setNotification(
+      `Article "${post.title}" ${editingPost ? "updated" : "published"} successfully.`
+    );
+    window.setTimeout(() => setNotification(null), 6000);
+  };
+
+  const handleEditClick = (post: BlogPost) => {
+    setEditingPost(post);
+    setActiveTab("add");
   };
 
   if (!isAuthenticated) {
     return (
-      <div className="w-full min-h-screen bg-[#0e1610] text-white flex items-center justify-center font-farro text-sm">
-        Verifying Admin Access...
+      <div className="flex min-h-screen w-full items-center justify-center bg-[#f6f7f4] text-sm font-semibold text-neutral-600 font-farro">
+        Verifying admin access...
       </div>
     );
   }
 
-  const customPostsCount = posts.filter((p) => p.id > 1000).length;
-
   return (
-    <div className="w-full min-h-screen bg-[#0e1610] text-white flex flex-col font-farro">
-      {/* Top Header */}
-      <AdminHeader userEmail={adminEmail} onLogout={handleLogout} />
+    <div className="min-h-screen bg-[#f6f7f4] text-neutral-950 font-farro lg:flex">
+      {/* Isolated Admin Sidebar Component */}
+      <AdminSidebar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        adminEmail={adminEmail}
+        onLogout={handleLogout}
+        onNewArticleClick={() => setEditingPost(null)}
+      />
 
-      {/* Main Content Area */}
-      <main className="flex-1 max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {/* Success Alert Notification */}
-        {notification && (
-          <div className="p-4 rounded-2xl bg-emerald-950/90 border border-emerald-500/40 text-emerald-300 text-xs sm:text-sm font-semibold flex items-center justify-between shadow-xl animate-fadeIn">
-            <div className="flex items-center gap-2">
-              <span className="text-base">🎉</span>
+      <main className="min-h-screen flex-1 lg:pl-72">
+        {/* Admin Dashboard Header */}
+        <header className="sticky top-0 z-30 border-b border-neutral-200 bg-white/90 backdrop-blur">
+          <div className="flex min-h-16 flex-col gap-3 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-[#056826]">
+                Admin Portal
+              </p>
+              <h2 className="text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl">
+                {activeTab === "list"
+                  ? "Articles"
+                  : editingPost
+                  ? `Editing: ${editingPost.title}`
+                  : "Publish New Article"}
+              </h2>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <Link
+                href="/blog"
+                target="_blank"
+                className="inline-flex items-center gap-2 rounded-md border border-neutral-300 bg-white px-3 py-2 text-xs font-bold text-neutral-700 transition-colors hover:border-[#056826]/30 hover:text-[#056826]"
+              >
+                <svg className="h-3.5 w-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                View Live Blog
+              </Link>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="inline-flex items-center gap-2 rounded-md border border-neutral-300 bg-white px-3 py-2 text-xs font-bold text-neutral-700 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-700 lg:hidden"
+              >
+                <svg className="h-3.5 w-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Logout
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <div className="mx-auto w-full max-w-[1280px] space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+          {notification && (
+            <div className="flex items-center justify-between rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-xs font-semibold text-emerald-800">
               <span>{notification}</span>
+              <button
+                type="button"
+                onClick={() => setNotification(null)}
+                className="rounded-md px-2 py-1 text-emerald-700 hover:bg-emerald-100"
+                aria-label="Dismiss notification"
+              >
+                x
+              </button>
             </div>
-            <button
-              onClick={() => setNotification(null)}
-              className="text-stone-400 hover:text-white text-xs p-1"
-            >
-              ✕
-            </button>
-          </div>
-        )}
+          )}
 
-        {/* Dashboard Overview Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="p-5 rounded-2xl bg-[#121c15] border border-white/10 flex items-center justify-between">
-            <div>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-stone-400 block">
-                Total Published Articles
-              </span>
-              <span className="text-2xl font-bold text-white font-farro mt-1 block">
-                {posts.length}
-              </span>
-            </div>
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-bold border border-emerald-500/30">
-              📰
-            </div>
-          </div>
+          {/* Isolated Admin Stats Cards Component */}
+          <AdminStats posts={posts} />
 
-          <div className="p-5 rounded-2xl bg-[#121c15] border border-white/10 flex items-center justify-between">
-            <div>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-stone-400 block">
-                Custom Published Posts
-              </span>
-              <span className="text-2xl font-bold text-emerald-400 font-farro mt-1 block">
-                {customPostsCount}
-              </span>
-            </div>
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-bold border border-emerald-500/30">
-              ✨
-            </div>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-[#121c15] border border-white/10 flex items-center justify-between">
-            <div>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-stone-400 block">
-                Portal Status
-              </span>
-              <span className="text-xs font-bold text-emerald-300 font-farro mt-2 block flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                Active & Synchronized
-              </span>
-            </div>
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg font-bold border border-emerald-500/30">
-              ⚡
-            </div>
-          </div>
+          {/* Isolated Admin Tab Components */}
+          {activeTab === "list" && (
+            <BlogListTable posts={posts} onRefresh={refreshPosts} onEdit={handleEditClick} />
+          )}
+          {activeTab === "add" && (
+            <AddBlogForm
+              key={editingPost ? editingPost.slug : "new-post"}
+              initialData={editingPost}
+              onSuccess={handlePostSaved}
+              onCancel={() => {
+                setEditingPost(null);
+                setActiveTab("list");
+              }}
+            />
+          )}
         </div>
-
-        {/* Tab Switcher & Action Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-white/10 pb-4">
-          <div className="inline-flex p-1 rounded-xl bg-black/40 border border-white/10">
-            <button
-              onClick={() => setActiveTab("list")}
-              className={`flex items-center gap-2 px-5 py-2 rounded-lg font-farro font-semibold text-xs sm:text-sm transition-all duration-200 cursor-pointer ${
-                activeTab === "list"
-                  ? "bg-emerald-500 text-black shadow-md"
-                  : "text-stone-300 hover:text-white"
-              }`}
-            >
-              <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
-              All Published Articles ({posts.length})
-            </button>
-            <button
-              onClick={() => setActiveTab("add")}
-              className={`flex items-center gap-2 px-5 py-2 rounded-lg font-farro font-semibold text-xs sm:text-sm transition-all duration-200 cursor-pointer ${
-                activeTab === "add"
-                  ? "bg-emerald-500 text-black shadow-md"
-                  : "text-stone-300 hover:text-white"
-              }`}
-            >
-              <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-              </svg>
-              Publish New Article
-            </button>
-          </div>
-
-          <Link
-            href="/blog"
-            target="_blank"
-            className="text-xs font-semibold text-stone-300 hover:text-emerald-400 transition-colors flex items-center gap-1"
-          >
-            Visit Public Blog Page →
-          </Link>
-        </div>
-
-        {/* Dynamic Tab Body */}
-        {activeTab === "list" && (
-          <BlogListTable posts={posts} onRefresh={refreshPosts} />
-        )}
-
-        {activeTab === "add" && (
-          <AddBlogForm onSuccess={handlePostCreated} />
-        )}
       </main>
     </div>
   );

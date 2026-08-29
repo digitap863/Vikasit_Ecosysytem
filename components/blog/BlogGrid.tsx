@@ -1,6 +1,6 @@
 "use client";
 
-import { BlogPost } from "./blogData";
+import { BlogPost } from "@/lib/blogData";
 import BlogCard from "./BlogCard";
 
 interface BlogGridProps {

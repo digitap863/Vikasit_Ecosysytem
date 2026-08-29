@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FiClock, FiCalendar } from "react-icons/fi";
-import { BlogPost } from "./blogData";
+import { BlogPost } from "@/lib/blogData";
 
 interface BlogCardProps {
   post: BlogPost;
@@ -27,6 +27,7 @@ export default function BlogCard({ post, index = 0 }: BlogCardProps) {
             src={post.image}
             alt={post.title}
             fill
+            unoptimized={post.image.startsWith("data:")}
             className="object-cover group-hover:scale-105 transition-transform duration-500"
           />
         </Link>

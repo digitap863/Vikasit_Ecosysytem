@@ -263,12 +263,12 @@ export default function ProductBanner() {
         >
           {/* Specs Dark Card */}
           <div className="bg-[#2B2B2C] text-white p-4 sm:p-5 rounded-2xl shadow-lg w-full max-w-full lg:max-w-[620px] flex-1">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 items-center">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-2 divide-y sm:divide-y-0 sm:divide-x divide-white/20">
               {/* Stat 1 */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 sm:pr-4">
                 <TbBolt className="w-5 h-5 text-[#22C55E] shrink-0" />
                 <div className="font-sans">
-                  <p className="text-xs sm:text-sm font-bold sm:font-normal text-white leading-tight">
+                  <p className="text-xs sm:text-sm font-bold text-white leading-tight">
                     25–2500 Kg/Cycle
                   </p>
                   <p className="text-[11px] text-neutral-300 font-normal leading-tight">
@@ -277,14 +277,11 @@ export default function ProductBanner() {
                 </div>
               </div>
 
-              {/* Divider on sm+ */}
-              <div className="hidden sm:block w-[1px] h-8 bg-white/25 justify-self-center" />
-
               {/* Stat 2 */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 pt-3 sm:pt-0 sm:px-4">
                 <TbBolt className="w-5 h-5 text-[#22C55E] shrink-0" />
                 <div className="font-sans">
-                  <p className="text-xs sm:text-sm font-bold sm:font-normal text-white leading-tight">
+                  <p className="text-xs sm:text-sm font-bold text-white leading-tight">
                     24–48 Hours
                   </p>
                   <p className="text-[11px] text-neutral-300 font-normal leading-tight">
@@ -293,14 +290,11 @@ export default function ProductBanner() {
                 </div>
               </div>
 
-              {/* Divider on sm+ */}
-              <div className="hidden sm:block w-[1px] h-8 bg-white/25 justify-self-center" />
-
               {/* Stat 3 */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 pt-3 sm:pt-0 sm:pl-4">
                 <TbBolt className="w-5 h-5 text-[#22C55E] shrink-0" />
                 <div className="font-sans">
-                  <p className="text-xs sm:text-sm font-bold sm:font-normal text-white leading-tight">
+                  <p className="text-xs sm:text-sm font-bold text-white leading-tight">
                     Better Soil
                   </p>
                   <p className="text-[11px] text-neutral-300 font-normal leading-tight">

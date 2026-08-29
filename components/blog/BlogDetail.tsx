@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FiClock as ClockIcon, FiCalendar as CalendarIcon } from "react-icons/fi";
-import { BlogPost, getRelatedPosts } from "./blogData";
+import { BlogPost, getRelatedPosts } from "@/lib/blogData";
 import BlogCard from "./BlogCard";
 
 interface BlogDetailProps {
@@ -29,6 +29,7 @@ export default function BlogDetail({ post }: BlogDetailProps) {
             alt={post.title}
             fill
             priority
+            unoptimized={post.image.startsWith("data:")}
             className="object-cover object-center"
           />
         </div>
@@ -67,47 +68,54 @@ export default function BlogDetail({ post }: BlogDetailProps) {
       >
         {post.content ? (
           <>
-            {/* Intro Paragraph */}
-            {post.content.intro && (
-              <p className="text-neutral-700 leading-relaxed text-sm sm:text-base">
-                {post.content.intro}
-              </p>
+            {post.content.html ? (
+              <div
+                className="blog-content"
+                dangerouslySetInnerHTML={{ __html: post.content.html }}
+              />
+            ) : (
+              <>
+                {post.content.intro && (
+                  <p className="text-neutral-700 leading-relaxed text-sm sm:text-base">
+                    {post.content.intro}
+                  </p>
+                )}
+
+                {post.content.sections.map((sec, idx) => (
+                  <div key={idx} className="space-y-3 pt-2">
+                    {sec.title && (
+                      <h2 className="font-bold text-base sm:text-lg lg:text-xl text-neutral-900 uppercase tracking-wide font-satoshi mt-6 mb-2">
+                        {sec.title}
+                      </h2>
+                    )}
+
+                    {sec.subtitle && (
+                      <h3 className="font-bold text-sm sm:text-base text-neutral-900 uppercase tracking-wider font-sans mt-4 mb-2">
+                        {sec.subtitle}
+                      </h3>
+                    )}
+
+                    {sec.paragraphs &&
+                      sec.paragraphs.map((p, pIdx) => (
+                        <p key={pIdx} className="text-neutral-700 leading-relaxed">
+                          {p}
+                        </p>
+                      ))}
+
+                    {sec.bullets && (
+                      <ul className="space-y-2.5 my-4 pl-1">
+                        {sec.bullets.map((b, bIdx) => (
+                          <li key={bIdx} className="flex items-start gap-3 text-neutral-700 leading-relaxed">
+                            <span className="w-2 h-2 rounded-full bg-[#056826] mt-2 shrink-0" />
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </>
             )}
-
-            {/* Structured Sections */}
-            {post.content.sections.map((sec, idx) => (
-              <div key={idx} className="space-y-3 pt-2">
-                {sec.title && (
-                  <h2 className="font-bold text-base sm:text-lg lg:text-xl text-neutral-900 uppercase tracking-wide font-satoshi mt-6 mb-2">
-                    {sec.title}
-                  </h2>
-                )}
-
-                {sec.subtitle && (
-                  <h3 className="font-bold text-sm sm:text-base text-neutral-900 uppercase tracking-wider font-sans mt-4 mb-2">
-                    {sec.subtitle}
-                  </h3>
-                )}
-
-                {sec.paragraphs &&
-                  sec.paragraphs.map((p, pIdx) => (
-                    <p key={pIdx} className="text-neutral-700 leading-relaxed">
-                      {p}
-                    </p>
-                  ))}
-
-                {sec.bullets && (
-                  <ul className="space-y-2.5 my-4 pl-1">
-                    {sec.bullets.map((b, bIdx) => (
-                      <li key={bIdx} className="flex items-start gap-3 text-neutral-700 leading-relaxed">
-                        <span className="w-2 h-2 rounded-full bg-[#056826] mt-2 shrink-0" />
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
           </>
         ) : (
           <p className="text-neutral-700 leading-relaxed">
@@ -118,15 +126,19 @@ export default function BlogDetail({ post }: BlogDetailProps) {
 
       {/* 4. Related Posts Section */}
       <section className="mt-16 sm:mt-24 pt-12 border-t border-neutral-300/70">
-        <h2 className="text-center font-bold text-xl sm:text-2xl lg:text-3xl text-neutral-900 uppercase tracking-wider font-satoshi mb-8 sm:mb-12">
-          RELATED POST
-        </h2>
+        {relatedPosts.length > 0 && (
+          <>
+            <h2 className="text-center font-bold text-xl sm:text-2xl lg:text-3xl text-neutral-900 uppercase tracking-wider font-satoshi mb-8 sm:mb-12">
+              RELATED POST
+            </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
-          {relatedPosts.map((relPost, index) => (
-            <BlogCard key={relPost.id} post={relPost} index={index} />
-          ))}
-        </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+              {relatedPosts.map((relPost, index) => (
+                <BlogCard key={relPost.id} post={relPost} index={index} />
+              ))}
+            </div>
+          </>
+        )}
       </section>
     </article>
   );

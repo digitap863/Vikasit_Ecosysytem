@@ -3,8 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { BlogPost } from "@/lib/blogData";
 
-export default function BlogHero() {
+interface BlogHeroProps {
+  latestPost?: BlogPost;
+}
+
+export default function BlogHero({ latestPost }: BlogHeroProps) {
+  const postHref = latestPost ? `/blog/${latestPost.slug || latestPost.id}` : "";
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -50,47 +57,82 @@ export default function BlogHero() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Content Column */}
             <div className="lg:col-span-6 space-y-4 sm:space-y-5">
-              {/* Tagline */}
               <motion.span
                 variants={itemVariants}
                 className="text-xs sm:text-sm font-semibold tracking-wider text-[#5A5A5C] uppercase block font-sans"
               >
-                WASTE MANAGEMENT AS A SERVICE
+                {latestPost ? "LATEST BLOG" : "BLOGS"}
               </motion.span>
 
-              {/* Main Heading */}
               <motion.h1
                 variants={itemVariants}
-                className="text-3xl sm:text-5xl lg:text-[54px] xl:text-[60px] font-extrabold text-[#343433] tracking-tight leading-[1.08] font-farro"
+                className="text-3xl sm:text-5xl lg:text-[54px] xl:text-[60px] font-extrabold text-[#343433] tracking-tight leading-[1.08] font-farro uppercase"
               >
-                Notes From The <br className="hidden sm:inline" />
-                Waste-To-Soil <br className="hidden sm:inline" />
-                <span className="font-normal text-[#343433]">Frontier.</span>
+                {latestPost?.title || "No Blogs Published Yet"}
               </motion.h1>
 
-              {/* Body Description */}
-              <motion.p
-                variants={itemVariants}
-                className="text-neutral-700 text-sm sm:text-lg lg:text-[18px] font-medium leading-relaxed font-satoshi max-w-xl pt-1 sm:pt-2"
-              >
-                Field notes, policy explainers, and product deep-dives from the team building India&apos;s organic-waste infrastructure.
-              </motion.p>
+              {latestPost ? (
+                <>
+                  <motion.div
+                    variants={itemVariants}
+                    className="flex flex-wrap items-center gap-3 text-xs sm:text-sm font-semibold uppercase tracking-wide text-neutral-600 font-sans"
+                  >
+                    <span>{latestPost.category}</span>
+                    <span className="w-1 h-1 rounded-full bg-neutral-500" />
+                    <span>{latestPost.date}</span>
+                    <span className="w-1 h-1 rounded-full bg-neutral-500" />
+                    <span>{latestPost.readTime}</span>
+                  </motion.div>
+
+                  {latestPost.content?.intro && (
+                    <motion.p
+                      variants={itemVariants}
+                      className="text-neutral-700 text-sm sm:text-lg lg:text-[18px] font-medium leading-relaxed font-satoshi max-w-xl pt-1 sm:pt-2 line-clamp-3"
+                    >
+                      {latestPost.content.intro}
+                    </motion.p>
+                  )}
+
+                  <motion.div variants={itemVariants} className="pt-2">
+                    <Link
+                      href={postHref}
+                      className="inline-flex items-center justify-center rounded-full bg-[#056826] px-7 py-3 text-sm font-bold text-white transition-colors hover:bg-[#034c1c] font-sans"
+                    >
+                      Read Blog
+                    </Link>
+                  </motion.div>
+                </>
+              ) : (
+                <motion.p
+                  variants={itemVariants}
+                  className="text-neutral-700 text-sm sm:text-lg lg:text-[18px] font-medium leading-relaxed font-satoshi max-w-xl pt-1 sm:pt-2"
+                >
+                  Publish a blog from the admin panel to feature it here.
+                </motion.p>
+              )}
             </div>
 
-            {/* Right Blended Image Container matching Services banner */}
             <motion.div
               variants={itemVariants}
-              className="lg:col-span-6 relative w-full h-[280px] sm:h-[380px] lg:h-[460px] rounded-[24px] sm:rounded-[32px] overflow-hidden"
+              className="lg:col-span-6 relative w-full h-[280px] sm:h-[380px] lg:h-[460px] rounded-[24px] sm:rounded-[32px] overflow-hidden bg-[#d8d1c3]"
             >
-              <Image
-                src="/banner/blog_banner.webp"
-                alt="Notes From The Waste-To-Soil Frontier Banner"
-                fill
-                priority
-                className="object-cover object-center filter brightness-[1.02]"
-              />
+              {latestPost ? (
+                <Image
+                  src={latestPost.image}
+                  alt={latestPost.title}
+                  fill
+                  priority
+                  unoptimized={latestPost.image.startsWith("data:")}
+                  className="object-cover object-center filter brightness-[1.02]"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center px-8 text-center">
+                  <span className="text-sm font-bold uppercase tracking-widest text-neutral-500 font-sans">
+                    Latest blog banner
+                  </span>
+                </div>
+              )}
 
-              {/* Multi-Directional Soft Gradient Overlay */}
               <div className="absolute inset-y-0 left-0 w-[55%] sm:w-[50%] bg-gradient-to-r from-[#EBE4D5] via-[#EBE4D5]/80 to-transparent z-10 pointer-events-none" />
               <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#EBE4D5] via-[#EBE4D5]/50 to-transparent z-10 pointer-events-none" />
               <div className="absolute inset-x-0 top-0 h-[15%] bg-gradient-to-b from-[#EBE4D5]/30 to-transparent z-10 pointer-events-none" />
