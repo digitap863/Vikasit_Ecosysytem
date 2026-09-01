@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { FiClock as ClockIcon, FiCalendar as CalendarIcon } from "react-icons/fi";
 import { BlogPost, getRelatedPosts } from "@/lib/blogData";
@@ -21,18 +19,13 @@ export default function BlogDetail({ post }: BlogDetailProps) {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="relative w-full px-4 sm:px-6 lg:px-8 mb-10 sm:mb-14"
+        className="w-full max-w-6xl mx-auto mb-8 sm:mb-12 flex justify-center"
       >
-        <div className="relative w-full aspect-[16/8] sm:aspect-[16/7] md:aspect-[16/6] bg-neutral-100">
-          <Image
-            src={post.image}
-            alt={post.title}
-            fill
-            priority
-            unoptimized={post.image.startsWith("data:")}
-            className="object-cover object-center"
-          />
-        </div>
+        <img
+          src={post.image}
+          alt={post.featuredImageAlt || post.title}
+          className="w-full h-auto max-h-[650px] object-contain rounded-xl mx-auto block shadow-sm"
+        />
       </motion.div>
 
       {/* 2. Post Header: Title & Meta Info */}

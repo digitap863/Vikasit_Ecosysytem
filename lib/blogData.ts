@@ -22,6 +22,15 @@ export interface BlogPost {
   readTime: string;
   image: string;
   content?: BlogPostContent;
+  status?: string;
+  shortDescription?: string;
+  author?: string;
+  featuredImageAlt?: string;
+  tags?: string[];
+  metaTitle?: string;
+  metaDescription?: string;
+  canonicalUrl?: string;
+  schemaMarkup?: string;
 }
 
 export interface SidebarCategory {

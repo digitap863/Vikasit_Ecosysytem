@@ -14,7 +14,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  const navItems = ["Home", "About", "Products", "Services", "Projects", "Blogs"];
+  const navItems = ["Home", "About", "Services", "Products", "Projects", "Blogs"];
 
   useEffect(() => {
     if (pathname === "/contact") {

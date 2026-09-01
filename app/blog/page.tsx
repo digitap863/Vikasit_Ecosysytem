@@ -56,16 +56,16 @@ export default function BlogPage() {
 
           {/* Posts Grid + Sidebar */}
           <section className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-4">
-            <div className="lg:col-span-8 order-2 lg:order-1 w-full">
+            <div className="lg:col-span-12 order-2 lg:order-1 w-full">
               <BlogGrid posts={filteredPosts} />
             </div>
-            <div className="lg:col-span-4 order-1 lg:order-2 w-full">
+            {/* <div className="lg:col-span-4 order-1 lg:order-2 w-full">
               <BlogSidebar
                 searchValue={sidebarSearch}
                 onSearchChange={setSidebarSearch}
                 onCategorySelect={setSelectedCategory}
               />
-            </div>
+            </div> */}
           </section>
         </div>
       </div>

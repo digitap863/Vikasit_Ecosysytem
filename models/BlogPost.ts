@@ -22,6 +22,15 @@ export interface IBlogPost extends Document {
   readTime: string;
   image: string;
   content?: IBlogPostContent;
+  status?: string;
+  shortDescription?: string;
+  author?: string;
+  featuredImageAlt?: string;
+  tags?: string[];
+  metaTitle?: string;
+  metaDescription?: string;
+  canonicalUrl?: string;
+  schemaMarkup?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -55,6 +64,15 @@ const BlogPostSchema = new Schema<IBlogPost>(
     readTime: { type: String, default: "5 Min Read" },
     image: { type: String, required: true },
     content: { type: BlogPostContentSchema, default: {} },
+    status: { type: String, default: "Published" },
+    shortDescription: { type: String, default: "" },
+    author: { type: String, default: "Vikasit Team" },
+    featuredImageAlt: { type: String, default: "" },
+    tags: { type: [String], default: [] },
+    metaTitle: { type: String, default: "" },
+    metaDescription: { type: String, default: "" },
+    canonicalUrl: { type: String, default: "" },
+    schemaMarkup: { type: String, default: "" },
   },
   {
     timestamps: true,
