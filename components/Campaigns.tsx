@@ -16,38 +16,50 @@ const defaultVideos: VideoCampaign[] = [
   {
     id: "1",
     title: "Organic Waste Processing & Biomass Transformation",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.27.23 PM.mp4",
+    videoUrl: "/videos/WhatsApp Video 2026-08-20 at 2.45.24 PM.mp4",
     tag: "Campaign 01",
   },
   {
     id: "2",
     title: "Decentralized Composting & Resource Recovery",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.27.23 PM (1).mp4",
+    videoUrl: "/videos/WhatsApp Video 2026-08-20 at 2.45.41 PM.mp4",
     tag: "Campaign 02",
   },
   {
     id: "3",
     title: "On-Site Waste Segregation & Tech Automation",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.27.23 PM (2).mp4",
+    videoUrl: "/videos/WhatsApp Video 2026-08-20 at 2.45.56 PM.mp4",
     tag: "Campaign 03",
   },
   {
     id: "4",
     title: "Sustainable Municipal & Institutional Impact",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.45.24 PM.mp4",
+    videoUrl: "/videos/WhatsApp Video 2026-08-20 at 2.45.56 PM (1).mp4",
     tag: "Campaign 04",
   },
   {
     id: "5",
     title: "Biomass Resource Conversion & Operations",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.45.41 PM.mp4",
+    videoUrl: "/videos/WhatsApp Video 2026-08-20 at 2.46.18 PM.mp4",
     tag: "Campaign 05",
   },
   {
     id: "6",
     title: "Circular Organic Waste Ecosystem",
-    videoUrl: "/Videos/WhatsApp Video 2026-08-20 at 2.46.19 PM.mp4",
+    videoUrl: "/videos/WhatsApp Video 2026-08-20 at 2.46.18 PM (1).mp4",
     tag: "Campaign 06",
+  },
+  {
+    id: "7",
+    title: "Soil Maker OWC Live Facility Operations",
+    videoUrl: "/videos/WhatsApp Video 2026-08-20 at 2.46.18 PM (2).mp4",
+    tag: "Campaign 07",
+  },
+  {
+    id: "8",
+    title: "Community Bulk Waste Management in Action",
+    videoUrl: "/videos/WhatsApp Video 2026-08-20 at 2.46.18 PM (3).mp4",
+    tag: "Campaign 08",
   },
 ];
 
