@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
 import { ProjectVideo, INITIAL_PROJECT_VIDEOS, fetchAllProjectVideos } from "@/lib/videoData";
+import { fetchAllProjectPhotos } from "@/lib/photoData";
 
 interface ProjectImage {
   id: string;
@@ -13,7 +14,7 @@ interface ProjectImage {
   location?: string;
 }
 
-const allProjectImages: ProjectImage[] = [
+const STATIC_PROJECT_IMAGES: ProjectImage[] = [
   {
     id: "p-img-1",
     title: "Vikasit Ecosystems Site Operations",
@@ -173,35 +174,65 @@ const allProjectImages: ProjectImage[] = [
 export default function ProjectVideoGrid() {
   const [activeTab, setActiveTab] = useState<"video" | "image">("video");
   const [videos, setVideos] = useState<ProjectVideo[]>(INITIAL_PROJECT_VIDEOS);
+  const [images, setImages] = useState<ProjectImage[]>(STATIC_PROJECT_IMAGES);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
-  useEffect(() => {
-    const loadVideos = async () => {
-      const data = await fetchAllProjectVideos();
-      if (data && data.length > 0) {
-        setVideos(data);
+  const loadData = useCallback(async () => {
+    try {
+      const fetchedVideos = await fetchAllProjectVideos();
+      if (fetchedVideos && fetchedVideos.length > 0) {
+        setVideos(fetchedVideos);
       }
-    };
-    loadVideos();
 
-    if (typeof window !== "undefined") {
-      window.addEventListener("vikasit_videos_updated", loadVideos);
-      return () => window.removeEventListener("vikasit_videos_updated", loadVideos);
+      const fetchedPhotos = await fetchAllProjectPhotos();
+      if (fetchedPhotos && fetchedPhotos.length > 0) {
+        const formattedPhotos: ProjectImage[] = fetchedPhotos.map((p) => ({
+          id: p.id,
+          title: p.title,
+          category: p.category || "Field Photos",
+          description: p.description || "",
+          imageUrl: p.imageUrl,
+        }));
+
+        const combined = [...formattedPhotos];
+        STATIC_PROJECT_IMAGES.forEach((st) => {
+          if (!combined.some((c) => c.imageUrl === st.imageUrl || c.id === st.id)) {
+            combined.push(st);
+          }
+        });
+        setImages(combined);
+      }
+    } catch (e) {
+      console.error("Error loading project videos/photos:", e);
     }
   }, []);
 
-  const currentImage = selectedImageIndex !== null ? allProjectImages[selectedImageIndex] : null;
+  useEffect(() => {
+    loadData();
+
+    if (typeof window !== "undefined") {
+      window.addEventListener("vikasit_videos_updated", loadData);
+      window.addEventListener("vikasit_photos_updated", loadData);
+      return () => {
+        window.removeEventListener("vikasit_videos_updated", loadData);
+        window.removeEventListener("vikasit_photos_updated", loadData);
+      };
+    }
+  }, [loadData]);
+
+  const currentImage = selectedImageIndex !== null ? images[selectedImageIndex] : null;
 
   const handlePrevImage = useCallback(() => {
-    if (selectedImageIndex === null || allProjectImages.length === 0) return;
-    setSelectedImageIndex((prev) => (prev! === 0 ? allProjectImages.length - 1 : prev! - 1));
-  }, [selectedImageIndex]);
+    if (selectedImageIndex === null || images.length === 0) return;
+    setSelectedImageIndex((prev) => (prev! === 0 ? images.length - 1 : prev! - 1));
+  }, [selectedImageIndex, images.length]);
 
   const handleNextImage = useCallback(() => {
-    if (selectedImageIndex === null || allProjectImages.length === 0) return;
-    setSelectedImageIndex((prev) => (prev! === allProjectImages.length - 1 ? 0 : prev! + 1));
-  }, [selectedImageIndex]);
+    if (selectedImageIndex === null || images.length === 0) return;
+    setSelectedImageIndex((prev) => (prev! === images.length - 1 ? 0 : prev! + 1));
+  }, [selectedImageIndex, images.length]);
+
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -231,7 +262,7 @@ export default function ProjectVideoGrid() {
   };
 
   return (
-    <section id="video-grid" className="w-full bg-[#EBE4D5] py-16 sm:py-20 md:py-24 px-6 sm:px-10 lg:px-12">
+    <section id="video-grid" className="w-full bg-[#EBE4D5]  px-6 sm:px-10 lg:px-12">
       <div className="max-w-[1400px] mx-auto">
         {/* Section Header */}
         <ScrollAnimation variant="fade-up" className="text-center max-w-3xl mx-auto mb-10">
@@ -274,7 +305,7 @@ export default function ProjectVideoGrid() {
               <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              Field Photos ({allProjectImages.length})
+              Field Photos ({images.length})
             </button>
           </div>
         </div>
@@ -302,7 +333,7 @@ export default function ProjectVideoGrid() {
         {/* Image Grid View */}
         {activeTab === "image" && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
-            {allProjectImages.map((img, index) => (
+            {images.map((img, index) => (
               <div
                 key={img.id}
                 onClick={() => setSelectedImageIndex(index)}
@@ -344,7 +375,7 @@ export default function ProjectVideoGrid() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="px-3.5 py-1 rounded-full bg-white/10 text-xs font-bold font-farro tracking-wider text-stone-200 border border-white/10">
-              {selectedImageIndex! + 1} / {allProjectImages.length}
+              {selectedImageIndex! + 1} / {images.length}
             </div>
 
             <button
@@ -362,7 +393,7 @@ export default function ProjectVideoGrid() {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Previous Image Arrow Button */}
-            {allProjectImages.length > 1 && (
+            {images.length > 1 && (
               <button
                 onClick={handlePrevImage}
                 className="absolute left-2 sm:left-4 z-30 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-emerald-600 text-white flex items-center justify-center border border-white/20 transition-all cursor-pointer shadow-2xl backdrop-blur-md group"
@@ -389,7 +420,7 @@ export default function ProjectVideoGrid() {
             </div>
 
             {/* Next Image Arrow Button */}
-            {allProjectImages.length > 1 && (
+            {images.length > 1 && (
               <button
                 onClick={handleNextImage}
                 className="absolute right-2 sm:right-4 z-30 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-emerald-600 text-white flex items-center justify-center border border-white/20 transition-all cursor-pointer shadow-2xl backdrop-blur-md group"

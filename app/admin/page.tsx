@@ -8,6 +8,7 @@ import AdminStats from "@/components/admin/AdminStats";
 import AddBlogForm from "@/components/admin/AddBlogForm";
 import BlogListTable from "@/components/admin/BlogListTable";
 import VideoManager from "@/components/admin/VideoManager";
+import PhotoManager from "@/components/admin/PhotoManager";
 import { BlogPost, fetchAllBlogPosts } from "@/lib/blogData";
 
 export default function AdminDashboardPage() {
@@ -94,6 +95,8 @@ export default function AdminDashboardPage() {
                   ? "Articles"
                   : activeTab === "videos"
                   ? "Project YouTube Videos"
+                  : activeTab === "photos"
+                  ? "Project Photo Gallery"
                   : editingPost
                   ? `Editing: ${editingPost.title}`
                   : "Publish New Article"}
@@ -141,7 +144,7 @@ export default function AdminDashboardPage() {
           )}
 
           {/* Isolated Admin Stats Cards Component */}
-          {activeTab !== "videos" && <AdminStats posts={posts} />}
+          {activeTab !== "videos" && activeTab !== "photos" && <AdminStats posts={posts} />}
 
           {/* Isolated Admin Tab Components */}
           {activeTab === "list" && (
@@ -159,8 +162,10 @@ export default function AdminDashboardPage() {
             />
           )}
           {activeTab === "videos" && <VideoManager />}
+          {activeTab === "photos" && <PhotoManager />}
         </div>
       </main>
     </div>
   );
 }
+

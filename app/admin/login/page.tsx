@@ -97,20 +97,8 @@ export default function AdminLoginPage() {
           </div>
         </div>
 
-        {/* Demo Credentials Box - Minimal & Sleek */}
-        <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/20 text-xs text-stone-300 space-y-1.5">
-          <div className="flex items-center justify-between text-emerald-400 font-semibold text-[11px] uppercase tracking-wider">
-            <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Demo Access
-            </span>
-            <span className="text-[10px] text-stone-400 font-mono">Environment</span>
-          </div>
-          <div className="flex items-center justify-between text-[11px] font-mono text-stone-300 pt-0.5">
-            <span>Email: <strong className="text-emerald-300 font-semibold">admin@vikasit.com</strong></span>
-            <span>Pass: <strong className="text-emerald-300 font-semibold">admin123</strong></span>
-          </div>
-        </div>
+       
+       
 
         {/* Error Alert */}
         {error && (
