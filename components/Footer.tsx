@@ -21,9 +21,38 @@ export default function Footer() {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Thank you for reaching out! We will get in touch with you soon.");
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to submit form. Please try again.");
+      }
+
+      setIsSubmitted(true);
+      setFormData({ name: "", email: "", phone: "", message: "" });
+    } catch (err: any) {
+      console.error("Footer form error:", err);
+      setErrorMessage(err.message || "Failed to send message.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -37,82 +66,110 @@ export default function Footer() {
             Get in touch today!
           </h3>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Name and Email side-by-side */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div>
-                <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">
-                  NAME
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder=""
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full bg-[#131414] border border-neutral-800 focus:border-[#69BD45] rounded-lg px-4 py-2.5 text-sm text-white outline-none transition-colors"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">
-                  EMAIL
-                </label>
-                <input
-                  type="email"
-                  required
-                  placeholder=""
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full bg-[#131414] border border-neutral-800 focus:border-[#69BD45] rounded-lg px-4 py-2.5 text-sm text-white outline-none transition-colors"
-                />
-              </div>
+          {errorMessage && (
+            <div className="mb-4 p-3 bg-red-900/30 border border-red-800 text-red-300 text-xs font-semibold rounded-lg">
+              {errorMessage}
             </div>
+          )}
 
-            {/* Phone Field */}
-            <div>
-              <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">
-                PHONE
-              </label>
-              <input
-                type="tel"
-                placeholder="+91 98765 43210"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full bg-[#131414] border border-neutral-800 focus:border-[#69BD45] rounded-lg px-4 py-2.5 text-sm text-white placeholder-neutral-600 outline-none transition-colors"
-              />
-            </div>
-
-            {/* Message */}
-            <div>
-              <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">
-                MESSAGE
-              </label>
-              <textarea
-                rows={4}
-                required
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="w-full bg-[#131414] border border-neutral-800 focus:border-[#69BD45] rounded-lg px-4 py-3 text-sm text-white outline-none transition-colors resize-none"
-              />
-            </div>
-
-            {/* Buttons Row */}
-            <div className="flex items-center justify-end gap-4 pt-2">
+          {isSubmitted ? (
+            <div className="bg-[#69BD45]/10 border border-[#69BD45]/30 rounded-xl p-6 text-center space-y-3">
+              <h4 className="text-xl font-bold text-[#69BD45]">Thank You!</h4>
+              <p className="text-neutral-300 text-sm">
+                Your message has been sent successfully. We will get back to you soon!
+              </p>
               <button
                 type="button"
-                onClick={() => setFormData({ name: "", email: "", phone: "", message: "" })}
-                className="text-sm font-medium text-neutral-400 hover:text-white transition-colors px-3 py-2"
+                onClick={() => setIsSubmitted(false)}
+                className="text-xs font-bold text-[#69BD45] underline hover:text-[#529c33]"
               >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="bg-[#69BD45] text-black font-bold text-sm px-7 py-2.5 rounded-lg hover:bg-[#43cd1b] transition-all shadow-md active:scale-95"
-              >
-                Send
+                Send another message
               </button>
             </div>
-          </form>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Name and Email side-by-side */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">
+                    NAME
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    disabled={isSubmitting}
+                    placeholder=""
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full bg-[#131414] border border-neutral-800 focus:border-[#69BD45] rounded-lg px-4 py-2.5 text-sm text-white outline-none transition-colors disabled:opacity-50"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">
+                    EMAIL
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    disabled={isSubmitting}
+                    placeholder=""
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full bg-[#131414] border border-neutral-800 focus:border-[#69BD45] rounded-lg px-4 py-2.5 text-sm text-white outline-none transition-colors disabled:opacity-50"
+                  />
+                </div>
+              </div>
+
+              {/* Phone Field */}
+              <div>
+                <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">
+                  PHONE
+                </label>
+                <input
+                  type="tel"
+                  disabled={isSubmitting}
+                  placeholder="+91 98765 43210"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full bg-[#131414] border border-neutral-800 focus:border-[#69BD45] rounded-lg px-4 py-2.5 text-sm text-white placeholder-neutral-600 outline-none transition-colors disabled:opacity-50"
+                />
+              </div>
+
+              {/* Message */}
+              <div>
+                <label className="block text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">
+                  MESSAGE
+                </label>
+                <textarea
+                  rows={4}
+                  required
+                  disabled={isSubmitting}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full bg-[#131414] border border-neutral-800 focus:border-[#69BD45] rounded-lg px-4 py-3 text-sm text-white outline-none transition-colors resize-none disabled:opacity-50"
+                />
+              </div>
+
+              {/* Buttons Row */}
+              <div className="flex items-center justify-end gap-4 pt-2">
+                <button
+                  type="button"
+                  disabled={isSubmitting}
+                  onClick={() => setFormData({ name: "", email: "", phone: "", message: "" })}
+                  className="text-sm font-medium text-neutral-400 hover:text-white transition-colors px-3 py-2 disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="bg-[#69BD45] text-black font-bold text-sm px-7 py-2.5 rounded-lg hover:bg-[#43cd1b] transition-all shadow-md active:scale-95 disabled:opacity-50"
+                >
+                  {isSubmitting ? "Sending..." : "Send"}
+                </button>
+              </div>
+            </form>
+          )}
         </div>
 
         {/* RIGHT COLUMN: Contact Info Details */}

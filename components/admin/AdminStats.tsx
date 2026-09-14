@@ -4,20 +4,23 @@ import { BlogPost } from "@/lib/blogData";
 
 interface AdminStatsProps {
   posts: BlogPost[];
+  totalInquiries?: number;
 }
 
-export default function AdminStats({ posts }: AdminStatsProps) {
+export default function AdminStats({
+  posts,
+  totalInquiries = 0,
+}: AdminStatsProps) {
   const customPostsCount = posts.filter((post) => post.id > 1000).length;
-  const latestPost = posts[0];
 
   const metrics = [
+    {
+      label: "Total Inquiries",
+      value: totalInquiries,
+      detail: "Submissions from website",
+    },
     { label: "Total Articles", value: posts.length, detail: "Published in the CMS" },
     { label: "Custom Posts", value: customPostsCount, detail: "Created from admin" },
-    {
-      label: "Latest Update",
-      value: latestPost ? latestPost.date : "--",
-      detail: latestPost ? latestPost.title : "No article published",
-    },
   ];
 
   return (

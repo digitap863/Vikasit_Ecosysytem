@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AdminSidebar, { AdminTab } from "@/components/admin/AdminSidebar";
@@ -9,21 +9,35 @@ import AddBlogForm from "@/components/admin/AddBlogForm";
 import BlogListTable from "@/components/admin/BlogListTable";
 import VideoManager from "@/components/admin/VideoManager";
 import PhotoManager from "@/components/admin/PhotoManager";
+import ContactMessagesManager from "@/components/admin/ContactMessagesManager";
 import { BlogPost, fetchAllBlogPosts } from "@/lib/blogData";
 
 export default function AdminDashboardPage() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [adminEmail, setAdminEmail] = useState("admin@vikasit.com");
-  const [activeTab, setActiveTab] = useState<AdminTab>("list");
+  const [activeTab, setActiveTab] = useState<AdminTab>("inquiries");
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
+  const [totalInquiries, setTotalInquiries] = useState(0);
 
   const refreshPosts = async () => {
     const data = await fetchAllBlogPosts();
     setPosts(data);
   };
+
+  const fetchInquiryCounts = useCallback(async () => {
+    try {
+      const res = await fetch("/api/admin/contact");
+      const data = await res.json();
+      if (res.ok && data.success && data.counts) {
+        setTotalInquiries(data.counts.total || 0);
+      }
+    } catch (err) {
+      console.error("Failed to fetch inquiry counts:", err);
+    }
+  }, []);
 
   useEffect(() => {
     const token =
@@ -39,7 +53,8 @@ export default function AdminDashboardPage() {
     const email = localStorage.getItem("vikasit_admin_email");
     if (email) setAdminEmail(email);
     refreshPosts();
-  }, [router]);
+    fetchInquiryCounts();
+  }, [router, fetchInquiryCounts]);
 
   const handleLogout = () => {
     localStorage.removeItem("vikasit_admin_token");
@@ -76,7 +91,10 @@ export default function AdminDashboardPage() {
       {/* Isolated Admin Sidebar Component */}
       <AdminSidebar
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={(tab) => {
+          setActiveTab(tab);
+          fetchInquiryCounts();
+        }}
         adminEmail={adminEmail}
         onLogout={handleLogout}
         onNewArticleClick={() => setEditingPost(null)}
@@ -84,14 +102,16 @@ export default function AdminDashboardPage() {
 
       <main className="min-h-screen flex-1 lg:pl-72">
         {/* Admin Dashboard Header */}
-        <header className="sticky top-0 z-30 border-b border-neutral-200 bg-white/90 backdrop-blur">
+        <header className="sticky top-0 z-10 border-b border-neutral-200 bg-white/90 backdrop-blur">
           <div className="flex min-h-16 flex-col gap-3 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
             <div>
               <p className="text-[11px] font-bold uppercase tracking-wider text-[#056826]">
                 Admin Portal
               </p>
               <h2 className="text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl">
-                {activeTab === "list"
+                {activeTab === "inquiries"
+                  ? "Contact Messages & Leads"
+                  : activeTab === "list"
                   ? "Articles"
                   : activeTab === "videos"
                   ? "Project YouTube Videos"
@@ -105,14 +125,14 @@ export default function AdminDashboardPage() {
 
             <div className="flex flex-wrap items-center gap-2">
               <Link
-                href="/projects"
+                href="/contact"
                 target="_blank"
                 className="inline-flex items-center gap-2 rounded-md border border-neutral-300 bg-white px-3 py-2 text-xs font-bold text-neutral-700 transition-colors hover:border-[#056826]/30 hover:text-[#056826]"
               >
                 <svg className="h-3.5 w-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
-                View Projects Site
+                View Contact Form
               </Link>
               <button
                 type="button"
@@ -144,9 +164,12 @@ export default function AdminDashboardPage() {
           )}
 
           {/* Isolated Admin Stats Cards Component */}
-          {activeTab !== "videos" && activeTab !== "photos" && <AdminStats posts={posts} />}
+          {activeTab !== "videos" && activeTab !== "photos" && (
+            <AdminStats posts={posts} totalInquiries={totalInquiries} />
+          )}
 
           {/* Isolated Admin Tab Components */}
+          {activeTab === "inquiries" && <ContactMessagesManager />}
           {activeTab === "list" && (
             <BlogListTable posts={posts} onRefresh={refreshPosts} onEdit={handleEditClick} />
           )}
@@ -168,4 +191,3 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
-

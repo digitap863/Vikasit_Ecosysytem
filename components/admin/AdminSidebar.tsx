@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-export type AdminTab = "list" | "add" | "videos" | "photos";
+export type AdminTab = "list" | "add" | "videos" | "photos" | "inquiries";
 
 interface AdminSidebarProps {
   activeTab: AdminTab;
@@ -25,6 +25,16 @@ export default function AdminSidebar({
     description: string;
     icon: React.ReactNode;
   }> = [
+    {
+      id: "inquiries",
+      label: "Contact Messages",
+      description: "Inquiries & leads from site",
+      icon: (
+        <svg className="h-4 w-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      ),
+    },
     {
       id: "list",
       label: "Articles",
@@ -68,7 +78,7 @@ export default function AdminSidebar({
   ];
 
   return (
-    <aside className="border-b border-neutral-200 bg-white lg:fixed lg:inset-y-0 lg:left-0 lg:w-72 lg:border-b-0 lg:border-r">
+    <aside className="border-b border-neutral-200 bg-white lg:fixed lg:inset-y-0 lg:left-0 lg:w-72 lg:border-b-0 lg:border-r z-20">
       <div className="flex h-full flex-col">
         <div className="flex h-16 items-center gap-3 border-b border-neutral-200 px-5">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#056826] text-sm font-bold text-white">
@@ -76,7 +86,7 @@ export default function AdminSidebar({
           </div>
           <div>
             <h1 className="text-sm font-bold text-neutral-950">Vikasit Admin</h1>
-            <p className="text-[11px] font-medium text-neutral-500">Content manager</p>
+            <p className="text-[11px] font-medium text-neutral-500">Content & Leads Portal</p>
           </div>
         </div>
 
@@ -103,14 +113,14 @@ export default function AdminSidebar({
                 <span
                   className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md border ${
                     isActive
-                      ? "border-[#056826]/20 bg-white"
+                      ? "border-[#056826]/20 bg-white text-[#056826]"
                       : "border-neutral-200 bg-neutral-50"
                   }`}
                 >
                   {item.icon}
                 </span>
-                <span className="min-w-0">
-                  <span className="block text-sm font-bold">{item.label}</span>
+                <span className="flex-1 min-w-0">
+                  <span className="block text-sm font-bold truncate">{item.label}</span>
                   <span className="block truncate text-[11px] font-medium text-neutral-500">
                     {item.description}
                   </span>
