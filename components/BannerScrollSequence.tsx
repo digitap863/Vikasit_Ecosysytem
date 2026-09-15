@@ -141,7 +141,8 @@ export default function BannerScrollSequence() {
     const slide3 = textRef.current?.querySelector(".slide-3");
 
     if (slide1 && slide2 && slide3) {
-      gsap.set([slide1, slide2, slide3], { opacity: 0, y: 25, pointerEvents: "none" });
+      gsap.set(slide1, { opacity: 1, y: 0, pointerEvents: "auto" });
+      gsap.set([slide2, slide3], { opacity: 0, y: 25, pointerEvents: "none" });
 
       // Slide 1 (0% -> 32% Scroll)
       tl.to(slide1, { opacity: 1, y: 0, pointerEvents: "auto", duration: 0.1, ease: "power1.out" }, 0.02)
@@ -207,7 +208,7 @@ export default function BannerScrollSequence() {
         >
           <div className="relative max-w-4xl w-full min-h-[380px] flex items-center">
             {/* Title Slide 1: 0% - 32% Scroll */}
-            <div className="slide-1 absolute inset-0 flex flex-col justify-center pointer-events-auto">
+            <div className="slide-1 absolute inset-0 flex flex-col justify-center pointer-events-auto opacity-100">
               <span className="text-xs md:text-sm font-semibold tracking-wider uppercase text-neutral-900 mb-3 font-farro inline-block bg-white/95 backdrop-blur-md px-3.5 py-1 rounded-full border border-black/10 shadow-xs w-fit">
                 Regenerative Waste Infrastructure
               </span>
@@ -230,7 +231,7 @@ export default function BannerScrollSequence() {
             </div>
 
             {/* Title Slide 2: 36% - 64% Scroll */}
-            <div className="slide-2 absolute inset-0 flex flex-col justify-center pointer-events-auto">
+            <div className="slide-2 absolute inset-0 flex flex-col justify-center pointer-events-none opacity-0 translate-y-6">
               <span className="text-xs md:text-sm font-semibold tracking-wider uppercase text-neutral-900 mb-3 font-farro inline-block bg-white/95 backdrop-blur-md px-3.5 py-1 rounded-full border border-black/10 shadow-xs w-fit">
                 On-Site Composting Automation
               </span>
@@ -253,7 +254,7 @@ export default function BannerScrollSequence() {
             </div>
 
             {/* Title Slide 3: 70% - 100% Scroll */}
-            <div className="slide-3 absolute inset-0 flex flex-col justify-center pointer-events-auto">
+            <div className="slide-3 absolute inset-0 flex flex-col justify-center pointer-events-none opacity-0 translate-y-6">
               <span className="text-xs md:text-sm font-semibold tracking-wider uppercase text-neutral-900 mb-3 font-farro inline-block bg-white/95 backdrop-blur-md px-3.5 py-1 rounded-full border border-black/10 shadow-xs w-fit">
                 Zero-Landfill Circular Economy
               </span>
