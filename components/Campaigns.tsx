@@ -156,25 +156,6 @@ export default function Campaigns({
 
           {/* Navigation Controls (Left/Right Arrows) & View More Link */}
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-            <Link
-              href="/projects"
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-[#2a2d2a]/30 text-xs sm:text-sm font-semibold font-farro text-[#2a2d2a] hover:bg-[#2a2d2a] hover:text-white transition-all duration-300 shadow-sm"
-            >
-              View More
-              <svg
-                className="w-3.5 h-3.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
-            </Link>
             <button
               onClick={handlePrev}
               aria-label="Previous video"
